@@ -35,7 +35,7 @@ public class Teste implements Runnable{
         try {
            System.out.println(palavra + " ");
            for(;;) {
-               file = new FileReader("C:\\Users\\vitor.araujo\\Documents\\NetBeansProjects\\JiraJava\\test\\teste.txt");
+               file = new FileReader("test\\teste.txt");
                lerArq = new BufferedReader(file);
                
                String linha = lerArq.readLine();
