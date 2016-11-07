@@ -136,9 +136,9 @@ public class SplunkXML2Bean {
         }
         System.out.println();
         
-        for (Result result : result){
-            for(Field field : result.getField()){
-                for(Value value : field.getValue()){
+        for (Result resultf : result){
+            for(Field fieldf : resultf.getField()){
+                for(Value value : fieldf.getValue()){
                     for(String text: value.getText() ){
                         System.out.print("| "+text+" \t");
                     }

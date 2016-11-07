@@ -53,8 +53,8 @@ public class Teste implements Runnable{
             return;
         }        
     }
-    //public static void main (String[] args) throws FileNotFoundException{
-      //  Runnable alerta = new Teste("Inicio Alerta!",5000);
-        //new Thread(alerta).start();        
-    //}   
+    public static void main (String[] args) throws FileNotFoundException{
+        Runnable alerta = new Teste("Inicio Alerta!",5000);
+        new Thread(alerta).start();        
+    }   
 }
