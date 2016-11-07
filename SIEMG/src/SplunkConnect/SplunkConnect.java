@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -75,7 +76,11 @@ public class SplunkConnect {
 
         }
 
-        InputStream results = job.getResults();
+        Map <String,Object> arguments = new HashMap<String,Object>();
+        arguments.put("count",0);
+        InputStream results = job.getResults(arguments);
+        
+        //InputStream results = job.getResults();
         
         String line = null;
         FileWriter XMLnew = new FileWriter(ResultadoXML);
