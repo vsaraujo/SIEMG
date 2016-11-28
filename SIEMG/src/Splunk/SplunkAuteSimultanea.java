@@ -5,6 +5,7 @@
  */
 package Splunk;
 
+import Funcionalidades.TimeSIEMG;
 import SplunkFile.SplunkFile;
 import SplunkFile.SplunkFileXML;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class SplunkAuteSimultanea {
     private final Object Bean;
     private final SplunkFile fileresult;
     
-    public SplunkAuteSimultanea(SplunkTime time) throws IOException{
+    public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
         
         String consulta = "index = do_tic_app_ad_fgv | head 5 | table ComputerName";
         
@@ -35,7 +36,7 @@ public class SplunkAuteSimultanea {
         Bean = fileresult.getBean();
         
     }
-    public SplunkXML2Bean getBeanXML() {
+    public SplunkXML2Bean getBean() {
         return (SplunkXML2Bean) Bean;
     }
     

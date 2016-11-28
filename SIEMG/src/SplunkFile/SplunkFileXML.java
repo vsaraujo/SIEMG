@@ -5,8 +5,8 @@
  */
 package SplunkFile;
 
+import Funcionalidades.TimeSIEMG;
 import Splunk.SplunkConnect;
-import Splunk.SplunkTime;
 import Splunk.SplunkXML2Bean;
 import com.splunk.Job;
 import com.splunk.JobArgs;
@@ -34,11 +34,11 @@ public class SplunkFileXML implements SplunkFile {
 
     String busca;
     String caminhoArquivo;
-    SplunkTime time;
+    TimeSIEMG time;
    
     private final File ResultadoXML;
 
-    public SplunkFileXML(String busca, SplunkTime time) throws IOException {
+    public SplunkFileXML(String busca, TimeSIEMG time) throws IOException {
 
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
