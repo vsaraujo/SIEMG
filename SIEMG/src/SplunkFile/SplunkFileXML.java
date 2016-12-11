@@ -118,7 +118,7 @@ public class SplunkFileXML implements SplunkFile {
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
         
-        SplunkXML2Bean Bean= (SplunkXML2Bean) xstream.fromXML(reader);
+        SplunkXML2Bean Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         
         try {
             reader.close();

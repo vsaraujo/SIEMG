@@ -5,8 +5,12 @@
         <group>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/AuteSimultanea.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/SplunkFile/SplunkFileXML.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/TelaLogin.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkAuteSimultanea.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/TesteMain.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/SplunkFile/SplunkFile.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkConnect.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkXML2Bean.java</file>
         </group>
     </open-files>
 </project-private>
