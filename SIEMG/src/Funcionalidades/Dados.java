@@ -12,5 +12,6 @@ package Funcionalidades;
 public interface Dados {
     
     public Object obterDados(TimeSIEMG time);
+    public int getQuantideResult();
       
 }

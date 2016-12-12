@@ -24,8 +24,8 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  */
 public class TelaLogin extends JFrame implements ActionListener{
     
-    private static final int HEIGHT = 90;
-    private static final int WIDTH = 400;
+    private static final int HEIGHT = 150;
+    private static final int WIDTH = 220;
     
     private SplunkConnect splunkcon;
     private boolean status;
@@ -56,7 +56,7 @@ public class TelaLogin extends JFrame implements ActionListener{
             
        setSize(WIDTH, HEIGHT);
        setResizable(false);
-       setLocation(500, 300);
+       setLocation(500, 200);
        setDefaultCloseOperation(EXIT_ON_CLOSE);
        setVisible(true); 
         

@@ -5,7 +5,9 @@
  */
 package Splunk;
 
+import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
+import Monitor.Monitor;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
@@ -21,8 +23,8 @@ import java.awt.event.*;
 
 public class TesteMain {
     public static void main(String[] args) throws IOException {
-        TimeSIEMG time = null;
-        new SplunkAuteSimultanea(time);
+        Runnable alerta = new Monitor(3000);
+        new Thread(alerta).start();     
     }
 }
         

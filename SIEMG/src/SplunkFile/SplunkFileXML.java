@@ -35,6 +35,7 @@ public class SplunkFileXML implements SplunkFile {
     String busca;
     String caminhoArquivo;
     TimeSIEMG time;
+    SplunkConnect consplunk;
    
     private final File ResultadoXML;
 
@@ -56,7 +57,9 @@ public class SplunkFileXML implements SplunkFile {
     public void gerarArquivo() {
         
         try {
-            SplunkConnect consplunk = new SplunkConnect();
+            if(consplunk==null)
+                consplunk = new SplunkConnect();
+            
             Service svc = consplunk.getSvc();
             
             JobArgs jobArgs = new JobArgs();
@@ -65,7 +68,6 @@ public class SplunkFileXML implements SplunkFile {
             jobArgs.setEarliestTime("-1m");
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
-            
 
             Job job = svc.getJobs().create(busca,jobArgs);
             
@@ -90,7 +92,7 @@ public class SplunkFileXML implements SplunkFile {
                 br = new BufferedReader(new InputStreamReader(results, "UTF-8"));
                 while ((line = br.readLine()) != null) {
                     XMLnew.write(line);
-                    System.out.println(line);
+                    //System.out.println(line);
                 }
             }
             br.close();
@@ -126,7 +128,7 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Bean.printConsole();   
+        //Bean.printConsole();   
         
         return Bean;        
     }

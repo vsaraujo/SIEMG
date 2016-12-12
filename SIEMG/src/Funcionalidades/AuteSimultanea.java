@@ -6,7 +6,10 @@
 package Funcionalidades;
 
 import Splunk.SplunkAuteSimultanea;
+import Splunk.SplunkXML2Bean;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,17 +21,32 @@ public class AuteSimultanea implements Dados{
     
     public AuteSimultanea (TimeSIEMG time) throws IOException{
         
-        autesimultanea = new SplunkAuteSimultanea(time);
-        autesimultanea.getBean();
+        obterDados(time);
+        
+        
         
         
     }
-    
+   
     @Override
-    public Object obterDados(TimeSIEMG time) {
+    public SplunkAuteSimultanea obterDados(TimeSIEMG time) {
         
+        try {
+            if(autesimultanea == null)
+                autesimultanea = new SplunkAuteSimultanea(time);
+        } catch (IOException ex) {
+            Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        autesimultanea.gerarNovoArquivo();
+        autesimultanea.getBean().printConsole();
+               
         return autesimultanea;
+    }
+
+    @Override
+    public int getQuantideResult() {
+        return autesimultanea.getBean().getSizeResult();
     }
     
 }

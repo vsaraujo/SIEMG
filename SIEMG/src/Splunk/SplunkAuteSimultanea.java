@@ -16,18 +16,20 @@ import java.io.IOException;
  */
 public class SplunkAuteSimultanea {
     
-    private final Object Bean;
-    private final SplunkFile fileresult;
+    private Object Bean;
+    private SplunkFile fileresult;
     
     public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
         
-        String consulta = "index = do_tic_app_ad_fgv | head 5 | table ComputerName";
+        String consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
         
         // A classe SplunkFileXML retornará um arquivo XML.
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
         
-        fileresult = new SplunkFileXML(consulta,time);
+        if(fileresult==null)
+            fileresult = new SplunkFileXML(consulta,time);
+        
         fileresult.gerarArquivo();
         
         //A classe SplunkXML2Bean faz um parse de um arquivo XML.
@@ -36,6 +38,13 @@ public class SplunkAuteSimultanea {
         Bean = fileresult.getBean();
         
     }
+    
+    public void gerarNovoArquivo(){
+        
+        fileresult.gerarArquivo();
+        Bean = fileresult.getBean();
+    }
+    
     public SplunkXML2Bean getBean() {
         return (SplunkXML2Bean) Bean;
     }

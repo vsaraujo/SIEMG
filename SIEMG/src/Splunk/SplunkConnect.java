@@ -6,20 +6,8 @@
 package Splunk;
 
 import com.splunk.*;       // The entry point to the client library
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.Console;
-import java.io.IOException;
 import java.util.logging.Level;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
  *
@@ -31,11 +19,13 @@ public class SplunkConnect {
     
     private Service svc;
     private ServiceArgs loginArgs;
-    
-    String usuario,senha,servidor = null;
+    private String usuario,senha,servidor = null;
    
     public SplunkConnect() {   
-        TelaLogin login = new TelaLogin(this);
+      efetuarLogin();
+    }
+    public void efetuarLogin(){
+          TelaLogin login = new TelaLogin(this);
         
         while (login.executando()) {
 
@@ -68,8 +58,16 @@ public class SplunkConnect {
         loginArgs.setPort(8089);
 
         // Create a Service instance and log in with the argument map
+        try{
         svc = Service.connect(loginArgs);
+        }catch(RuntimeException e ){
+            
+            System.out.println("Falha de Login");
+            efetuarLogin();
+        }
+        
         //System.out.println(svc.getUsers());
+        //System.out.println(svc.getInfo());
         
         
     }
