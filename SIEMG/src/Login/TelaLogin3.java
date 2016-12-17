@@ -3,80 +3,77 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Splunk;
+package Login;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.awt.image.ImageObserver.HEIGHT;
-import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
  * @author Vítor
  */
-public class TelaLogin extends JFrame implements ActionListener{
-    
+public class TelaLogin3 extends JFrame implements ActionListener {
+
     private static final int HEIGHT = 150;
     private static final int WIDTH = 220;
-    
-    private SplunkConnect splunkcon;
+
+    private Credenciais credenciais;
     private boolean status;
-    
+
     JTextField user = new JTextField(10);
     JTextField srv = new JTextField(10);
     JPasswordField pwd = new JPasswordField(10);
     JButton login = new JButton("Login");
-        
-    public TelaLogin(SplunkConnect con){
-        
-        super("Login - Splunk");
-        splunkcon = con;      
+
+    public TelaLogin3(Credenciais cre) {
+
+        super("Login");
+        credenciais = cre;
         status = Boolean.TRUE;
-      
-       Container pane = getContentPane();
-       setLayout(new FlowLayout());
+
+        Container pane = getContentPane();
+        setLayout(new FlowLayout());
 
         add(new JLabel("Usuario:"));
-            add(user);
+        add(user);
         add(new JLabel("Senha:"));
-            add(pwd);
+        add(pwd);
         add(new JLabel("Servidor:"));
-            add(srv);
+        add(srv);
 
-            add(login);
-                login.addActionListener(this);
-            
-       setSize(WIDTH, HEIGHT);
-       setResizable(false);
-       setLocation(500, 200);
-       setDefaultCloseOperation(EXIT_ON_CLOSE);
-       setVisible(true); 
-        
-        
+        add(login);
+        login.addActionListener(this);
+
+        setSize(WIDTH, HEIGHT);
+        setResizable(false);
+        setLocation(500, 200);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        splunkcon.setUsuario(user.getText());
-        splunkcon.setSenha(pwd.getText());
-        splunkcon.setServidor(srv.getText());
-        
+
+        credenciais.setUsuario(user.getText());
+        credenciais.setSenha(pwd.getText());
+        credenciais.setServidor(srv.getText());
+
         this.dispose();
-        
+
         status = Boolean.FALSE;
-                
+
     }
-    public boolean executando(){
+
+    public boolean executando() {
         return status;
     }
-    
+
 }

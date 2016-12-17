@@ -9,6 +9,8 @@ import Funcionalidades.TimeSIEMG;
 import SplunkFile.SplunkFile;
 import SplunkFile.SplunkFileXML;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.io.IOException;
  */
 public class SplunkAuteSimultanea {
     
-    private Object Bean;
+    private SplunkXML2Bean Bean;
     private SplunkFile fileresult;
     
     public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
@@ -29,24 +31,29 @@ public class SplunkAuteSimultanea {
         
         if(fileresult==null)
             fileresult = new SplunkFileXML(consulta,time);
-        
-        fileresult.gerarArquivo();
-        
-        //A classe SplunkXML2Bean faz um parse de um arquivo XML.
-        //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
-        //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
-        Bean = fileresult.getBean();
+
+        gerarNovoArquivo();
         
     }
     
     public void gerarNovoArquivo(){
         
         fileresult.gerarArquivo();
-        Bean = fileresult.getBean();
+        
+        //A classe SplunkXML2Bean faz um parse de um arquivo XML.
+        //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
+        //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
+        Bean = (SplunkXML2Bean)fileresult.getBean();
+        
     }
     
-    public SplunkXML2Bean getBean() {
-        return (SplunkXML2Bean) Bean;
+    public Map<Integer,List<String>> getMap() {       
+        
+        return Bean.getMap();
+    }
+    
+    public int getSize(){
+        return Bean.getSizeResult();
     }
     
 }

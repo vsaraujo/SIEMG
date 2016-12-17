@@ -9,6 +9,9 @@ import Funcionalidades.AuteSimultanea;
 import Funcionalidades.Dados;
 import Funcionalidades.TimeSIEMG;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,31 +19,34 @@ import java.util.logging.Logger;
  *
  * @author Vítor
  */
-public class Monitor implements Runnable{
-    
+public class Monitor implements Runnable {
+
     private Dados aute;
     private TimeSIEMG time;
     private int delay;
     private int count;
-    
-    
-    public Monitor(int janela) throws IOException{
-        
+
+    public Monitor(int janela) throws IOException {
+
         delay = janela;
         aute = new AuteSimultanea(time);
         count = 0;
     }
-    
-    
 
     @Override
     public void run() {
-        
-        while(aute.getQuantideResult()<6){
-            
-            aute.obterDados(time);
-            
-            System.out.println("Tentativa: "+count+"Resultados: "+aute.getQuantideResult());
+
+        Map<Integer, List<String>> test = new HashMap<Integer, List<String>>();
+
+        while (aute.getQuantideResult() < 6) {
+
+            test = (Map<Integer, List<String>>) aute.obterDados(time);
+
+            for (Map.Entry entry : test.entrySet()) {
+                System.out.println(entry.getKey() + ", " + entry.getValue());
+            }
+
+            System.out.println("Tentativa: " + count + "Resultados: " + aute.getQuantideResult());
             try {
                 Thread.sleep(delay);
             } catch (InterruptedException ex) {
@@ -48,8 +54,8 @@ public class Monitor implements Runnable{
             }
             count++;
         }
-        System.out.println("Resultados: "+aute.getQuantideResult());
-  
+        System.out.println("Resultados: " + aute.getQuantideResult());
+
     }
-    
+
 }
