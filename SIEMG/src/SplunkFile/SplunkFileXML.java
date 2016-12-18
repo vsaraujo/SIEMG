@@ -5,8 +5,8 @@
  */
 package SplunkFile;
 
+import Funcionalidades.TimeSIEMG;
 import Splunk.SplunkConnect;
-import Splunk.SplunkTime;
 import Splunk.SplunkXML2Bean;
 import com.splunk.Job;
 import com.splunk.JobArgs;
@@ -34,11 +34,12 @@ public class SplunkFileXML implements SplunkFile {
 
     String busca;
     String caminhoArquivo;
-    SplunkTime time;
+    TimeSIEMG time;
+    SplunkConnect consplunk;
    
     private final File ResultadoXML;
 
-    public SplunkFileXML(String busca, SplunkTime time) throws IOException {
+    public SplunkFileXML(String busca, TimeSIEMG time) throws IOException {
 
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
@@ -56,7 +57,9 @@ public class SplunkFileXML implements SplunkFile {
     public void gerarArquivo() {
         
         try {
-            SplunkConnect consplunk = new SplunkConnect();
+            if(consplunk==null)
+                consplunk = new SplunkConnect();
+            
             Service svc = consplunk.getSvc();
             
             JobArgs jobArgs = new JobArgs();
@@ -65,7 +68,6 @@ public class SplunkFileXML implements SplunkFile {
             jobArgs.setEarliestTime("-1m");
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
-            
 
             Job job = svc.getJobs().create(busca,jobArgs);
             
@@ -90,7 +92,7 @@ public class SplunkFileXML implements SplunkFile {
                 br = new BufferedReader(new InputStreamReader(results, "UTF-8"));
                 while ((line = br.readLine()) != null) {
                     XMLnew.write(line);
-                    System.out.println(line);
+                    //System.out.println(line);
                 }
             }
             br.close();
@@ -118,7 +120,7 @@ public class SplunkFileXML implements SplunkFile {
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
         
-        SplunkXML2Bean Bean= (SplunkXML2Bean) xstream.fromXML(reader);
+        SplunkXML2Bean Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         
         try {
             reader.close();
@@ -126,7 +128,7 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Bean.printConsole();   
+        //Bean.printConsole();   
         
         return Bean;        
     }

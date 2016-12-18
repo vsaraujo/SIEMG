@@ -5,9 +5,12 @@
  */
 package Splunk;
 
+import Funcionalidades.TimeSIEMG;
 import SplunkFile.SplunkFile;
 import SplunkFile.SplunkFileXML;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,28 +18,42 @@ import java.io.IOException;
  */
 public class SplunkAuteSimultanea {
     
-    private final Object Bean;
-    private final SplunkFile fileresult;
+    private SplunkXML2Bean Bean;
+    private SplunkFile fileresult;
     
-    public SplunkAuteSimultanea(SplunkTime time) throws IOException{
+    public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
         
-        String consulta = "index = do_tic_app_ad_fgv | head 5 | table ComputerName";
+        String consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
         
         // A classe SplunkFileXML retornará um arquivo XML.
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
         
-        fileresult = new SplunkFileXML(consulta,time);
+        if(fileresult==null)
+            fileresult = new SplunkFileXML(consulta,time);
+
+        gerarNovoArquivo();
+        
+    }
+    
+    public void gerarNovoArquivo(){
+        
         fileresult.gerarArquivo();
         
         //A classe SplunkXML2Bean faz um parse de um arquivo XML.
         //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
-        Bean = fileresult.getBean();
+        Bean = (SplunkXML2Bean)fileresult.getBean();
         
     }
-    public SplunkXML2Bean getBeanXML() {
-        return (SplunkXML2Bean) Bean;
+    
+    public Map<Integer,List<String>> getMap() {       
+        
+        return Bean.getMap();
+    }
+    
+    public int getSize(){
+        return Bean.getSizeResult();
     }
     
 }

@@ -5,42 +5,74 @@
  */
 package Splunk;
 
+import Login.Credenciais;
+import Login.TelaLogin;
 import com.splunk.*;       // The entry point to the client library
-import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  *
  * @author vitor.araujo
  */
-public class SplunkConnect {
+public final class SplunkConnect {
 
     private Service svc;
     private ServiceArgs loginArgs;
-   
-    public SplunkConnect() throws IOException {
+    private Credenciais credenciais;
 
-        String[] args = {"", ""};
+    public SplunkConnect() {
+        credenciais = new Credenciais();
+        efetuarLogin();
+    }
+
+    public void efetuarLogin() {
+
+        TelaLogin login = new TelaLogin(credenciais);
+        login.setVisible(Boolean.TRUE);
+
+        while (login.executando()) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(SplunkConnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
         
-        if (args.length != 4) {
-            System.out.println("Usage:\n\tjava SplunkConnect <username> <password> <hostname> <port>");
-            System.out.println("\tE.G. java SplunkConnect admin P@55w0rd 127.0.0.1 8089\n");
-            System.exit(1);
+        login.dispose();
+        System.out.println("Finalizado login");
+        startConection();
+    }
+
+    public void startConection() {
+
+        if (credenciais.isNull()) {
+            efetuarLogin();
         }
 
         HttpService.setSslSecurityProtocol(SSLSecurityProtocol.TLSv1_2);
 
         // Create a map of arguments and add login parameters
         loginArgs = new ServiceArgs();
-        loginArgs.setUsername(args[0]);
-        loginArgs.setPassword(args[1]);
-        loginArgs.setHost(args[2]);
-        loginArgs.setPort(new Integer(args[3]));
+        loginArgs.setUsername(credenciais.getUsuario());
+        loginArgs.setPassword(credenciais.getSenha());
+        loginArgs.setHost(credenciais.getServidor());
+        loginArgs.setPort(8089);
 
         // Create a Service instance and log in with the argument map
-        svc = Service.connect(loginArgs);
-        
-     }
-    
+        try {
+            svc = Service.connect(loginArgs);
+        } catch (RuntimeException e) {
+
+            System.out.println("Falha de Login");
+            efetuarLogin();
+        }
+
+        //System.out.println(svc.getUsers());
+        //System.out.println(svc.getInfo());
+    }
+
     public Service getSvc() {
         return svc;
     }

@@ -2,6 +2,23 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+<<<<<<< HEAD
+        <group>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/AuteSimultanea.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/SplunkFile/SplunkFileXML.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Monitor/Monitor.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkAuteSimultanea.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Login/TelaLogin.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/TesteMain.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkConnect.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkXML2Bean.java</file>
+        </group>
+=======
+        <group/>
+>>>>>>> 7c03935bbaafd0d58f436d4badc2548dcdd2b013
+>>>>>>> testing
     </open-files>
 </project-private>

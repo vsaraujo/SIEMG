@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import SplunkConnect.SplunkConnect;
+import Splunk.SplunkConnect;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -86,7 +86,7 @@ public class SIEMG extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String search = jTextField1.getText();
-        
+        /*
         SplunkConnect SIEMG = null;
         try {
             SIEMG = new SplunkConnect(loginargs);
@@ -100,6 +100,7 @@ public class SIEMG extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(SIEMG.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

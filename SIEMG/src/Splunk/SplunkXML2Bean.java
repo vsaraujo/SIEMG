@@ -4,7 +4,9 @@ package Splunk;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -148,6 +150,43 @@ public class SplunkXML2Bean {
             }
             System.out.println();                  
         }        
+    }
+    
+    public Map<Integer,List<String>> getMap(){
+        
+        Integer i = 0;
+        
+        Map<Integer,List<String>> map = new HashMap<Integer,List<String>>();
+        
+        List<String> lista = new ArrayList<String>();
+        
+        for(String field : meta.getFieldOrder().getField() ){
+            lista.add(field);
+            map.put(i,lista);
+            //System.out.print("| "+field+" \t");            
+        }
+        
+        //System.out.println();
+        
+        for (Result resultf : result){
+            List<String> tmp = new ArrayList<String>();
+            i++;
+            
+            for(Field fieldf : resultf.getField()){
+                for(Value value : fieldf.getValue()){
+                    for(String text: value.getText() ){
+                        tmp.add(text);
+                        map.put(i,tmp);
+                        //System.out.print("| "+text+" \t");
+                    }
+                }
+            }
+            
+            //System.out.println();
+        }      
+        
+        return map;
+        
     }
 
 }

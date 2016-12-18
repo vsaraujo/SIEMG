@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Splunk;
+package Funcionalidades;
 
 /**
  *
  * @author Vítor
  */
-public class SplunkTime {
+public interface Dados {
     
+    public Object obterDados(TimeSIEMG time);
+    public int getQuantideResult();
+      
 }
