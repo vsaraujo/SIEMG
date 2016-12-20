@@ -28,7 +28,7 @@ public final class SplunkConnect {
     public void efetuarLogin() {
 
         TelaLogin login = new TelaLogin(credenciais);
-        login.setVisible(Boolean.TRUE);
+        //login.setVisible(Boolean.TRUE);
 
         while (login.executando()) {
 

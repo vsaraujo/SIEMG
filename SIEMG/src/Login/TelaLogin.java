@@ -5,10 +5,7 @@
  */
 package Login;
 
-import java.awt.Component;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +23,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         credenciais = cre;
         status = Boolean.TRUE;
-        //this.setVisible(Boolean.TRUE);
+        this.setVisible(Boolean.TRUE);
 
         initComponents();
 
