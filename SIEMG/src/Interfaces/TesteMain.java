@@ -28,11 +28,21 @@ import java.util.Map;
 public class TesteMain {
     public static void main(String[] args) throws IOException{
         
-       TimeSIEMG time = new TimeSIEMG(60000);
+       TimeSIEMG time = new TimeSIEMG(120000);
+       TimeSIEMG time2 = new TimeSIEMG(60000);
+       
        //System.out.println("TimeSIEMG criado");
        //final Credenciais cre = new Credenciais();
        //NovoJFrame novo = new NovoJFrame();
        AuteSimultanea aute = new AuteSimultanea(time);
+       AuteSimultanea aute2 = new AuteSimultanea(time2);
+       
+       
+       //Map<Integer,List<String>> map;
+        //map = aute.obterDados(time);
+           
+       
+       //System.out.println(aute);
        
        
        //java.awt.EventQueue.invokeLater(new Runnable() {

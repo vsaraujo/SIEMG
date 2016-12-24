@@ -64,11 +64,11 @@ public class SplunkFileXML implements SplunkFile {
     public void gerarArquivo() {
         
         try {
-            if(consplunk==null)
+            if(consplunk==null){
                    System.out.println("Criando SplunkConnect");
        
                 consplunk = new SplunkConnect();
-            
+            }
             Service svc = consplunk.getSvc();
             
             JobArgs jobArgs = new JobArgs();
@@ -137,7 +137,7 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //Bean.printConsole();   
+        Bean.printConsole();   
         
         return Bean;        
     }

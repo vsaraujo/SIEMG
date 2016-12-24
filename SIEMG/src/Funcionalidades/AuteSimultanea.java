@@ -36,6 +36,7 @@ public class AuteSimultanea implements Dados{
                 System.out.println("Criando SplunkAuteSimultanea");
        
                 autesimultanea = new SplunkAuteSimultanea(time);
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);

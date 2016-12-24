@@ -20,7 +20,7 @@ public class SplunkAuteSimultanea {
     
     private SplunkXML2Bean Bean;
     private SplunkFile fileresult;
-    
+    private static int num = 0;
     public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
         
         String consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
@@ -30,14 +30,16 @@ public class SplunkAuteSimultanea {
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
         
         if(fileresult==null){
-            String nameFile = "ResultadoAute";
+            
+            String nameFile = "ResultadoAute"+num;
              System.out.println("Criando SplunkFileXML");
        
             fileresult = new SplunkFileXML(nameFile,consulta,time);
 
+            num++;
         }
             
-        gerarNovoArquivo();
+        //gerarNovoArquivo();
         
     }
     
@@ -51,7 +53,8 @@ public class SplunkAuteSimultanea {
         //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
         Bean = (SplunkXML2Bean)fileresult.getBean();
-        
+        System.out.println("========Criando arquivo XML");
+       
     }
     
     public Map<Integer,List<String>> getMap() {       

@@ -21,17 +21,11 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin(Credenciais cre) {
 
-           
         credenciais = cre;
         status = Boolean.TRUE;
-        this.setVisible(Boolean.TRUE);
 
-       
-        
-        
         initComponents();
- System.out.println("TelaLogin Visible");
-       
+
     }
 
     /**
@@ -203,6 +197,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
     public boolean executando() {
         return status;
+    }
+
+    public void reinicializando() {
+        status = Boolean.TRUE;
     }
 
     private void setCredenciais() {
