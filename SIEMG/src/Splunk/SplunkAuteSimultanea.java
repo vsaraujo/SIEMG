@@ -29,15 +29,22 @@ public class SplunkAuteSimultanea {
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
         
-        if(fileresult==null)
-            fileresult = new SplunkFileXML(consulta,time);
+        if(fileresult==null){
+            String nameFile = "ResultadoAute";
+             System.out.println("Criando SplunkFileXML");
+       
+            fileresult = new SplunkFileXML(nameFile,consulta,time);
 
+        }
+            
         gerarNovoArquivo();
         
     }
     
     public void gerarNovoArquivo(){
         
+           System.out.println("Criando arquivo XML");
+       
         fileresult.gerarArquivo();
         
         //A classe SplunkXML2Bean faz um parse de um arquivo XML.

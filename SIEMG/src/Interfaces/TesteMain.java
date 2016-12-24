@@ -3,28 +3,58 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Splunk;
+package Interfaces;
 
+import Evento.Evento;
+import Evento.EventoAute;
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
-import java.io.BufferedReader;
-import java.io.Console;
+import Login.Credenciais;
+import Login.NovoJFrame;
+import Login.TelaLogin;
+import Monitor.MonitorSIEMG;
+import Monitor.Monitoramento;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  *
  * @author Vítor
  */
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 public class TesteMain {
-    public static void main(String[] args) throws IOException {
-        Runnable alerta = new Monitor(3000);
-        new Thread(alerta).start();     
+    public static void main(String[] args) throws IOException{
+        
+       TimeSIEMG time = new TimeSIEMG(60000);
+       //System.out.println("TimeSIEMG criado");
+       //final Credenciais cre = new Credenciais();
+       //NovoJFrame novo = new NovoJFrame();
+       AuteSimultanea aute = new AuteSimultanea(time);
+       
+       
+       //java.awt.EventQueue.invokeLater(new Runnable() {
+         //   public void run() {
+           //new NovoJFrame().setVisible(true);
+           //}
+        //});
+
+       
+       
+       //Map<Integer,List<String>> map = new HashMap<Integer,List<String>>();
+       
+       //while(aute.getQuantideResult()<5){
+           
+         //  map = aute.obterDados(time);
+           
+       //}
+       
+       //System.out.println(map);
+    
     }
+               
 }
         
         

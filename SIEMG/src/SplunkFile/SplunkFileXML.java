@@ -34,20 +34,27 @@ public class SplunkFileXML implements SplunkFile {
 
     String busca;
     String caminhoArquivo;
+    String timeEarliest;
     TimeSIEMG time;
     SplunkConnect consplunk;
    
     private final File ResultadoXML;
 
-    public SplunkFileXML(String busca, TimeSIEMG time) throws IOException {
+    public SplunkFileXML(String nameFile,String busca, TimeSIEMG time) throws IOException {
 
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
         }
 
         this.time = time;
-        caminhoArquivo = "src/Resultado/ResultadoXML.xml";        
+        timeEarliest = "-"+time.getExecucao()/1000+"s";
+         System.out.println("Criando timeEarliest = "+timeEarliest);
+       
         
+        caminhoArquivo = "src/Resultado/"+nameFile+".xml";        
+     
+            System.out.println("Criando ResultadoXML = "+caminhoArquivo);
+     
         ResultadoXML = new File(caminhoArquivo);
         ResultadoXML.createNewFile();
 
@@ -58,6 +65,8 @@ public class SplunkFileXML implements SplunkFile {
         
         try {
             if(consplunk==null)
+                   System.out.println("Criando SplunkConnect");
+       
                 consplunk = new SplunkConnect();
             
             Service svc = consplunk.getSvc();
@@ -65,7 +74,7 @@ public class SplunkFileXML implements SplunkFile {
             JobArgs jobArgs = new JobArgs();
             jobArgs.setExecutionMode(JobArgs.ExecutionMode.NORMAL);
             jobArgs.setSearchMode(JobArgs.SearchMode.NORMAL);
-            jobArgs.setEarliestTime("-1m");
+            jobArgs.setEarliestTime(timeEarliest);
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
 

@@ -5,10 +5,12 @@
  */
 package Monitor;
 
+import Evento.Evento;
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.Dados;
 import Funcionalidades.TimeSIEMG;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,18 +21,27 @@ import java.util.logging.Logger;
  *
  * @author Vítor
  */
-public class MonitorSIEMG implements Monitor {
+public class MonitorSIEMG implements Monitoramento {
 
     private Dados aute;
     private TimeSIEMG time;
     private int delay;
     private int count;
+    List<Evento> listEvent;
 
     public MonitorSIEMG(int janela) throws IOException {
 
         delay = janela;
         aute = new AuteSimultanea(time);
         count = 0;
+        listEvent = new ArrayList<Evento>();
+
+    }
+
+    public MonitorSIEMG(Evento ev) {
+    
+        anexarEvento(ev);
+        
     }
 
     public void run() {
@@ -59,17 +70,37 @@ public class MonitorSIEMG implements Monitor {
 
     @Override
     public void anexarEvento(Evento e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+        try {
+           
+            listEvent.add(e);        
+        
+        }
+        catch (NullPointerException evt){
+           System.out.println(evt.toString());
+        }
     }
 
     @Override
     public void removerEvento(Evento e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+        listEvent.remove(e);
+    
     }
 
     @Override
     public void verificarStatus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+        try {
+        
+            for(Evento e: listEvent){
+                System.out.println("ID:"+e.toString()+"Quantidade de resultado: "+e.getStatus());
+            }
+            
+        }
+        catch (NullPointerException evt){
+           System.out.println(evt.toString());
+        }
     }
 
 }

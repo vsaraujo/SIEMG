@@ -21,12 +21,16 @@ public final class SplunkConnect {
     private Credenciais credenciais;
 
     public SplunkConnect() {
+           System.out.println("Criando Credenciais");
+       
         credenciais = new Credenciais();
         efetuarLogin();
     }
 
     public void efetuarLogin() {
 
+           System.out.println("Criando TelaLogin");
+       
         TelaLogin login = new TelaLogin(credenciais);
         //login.setVisible(Boolean.TRUE);
 

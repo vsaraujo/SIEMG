@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Monitor;
+package Evento;
 
 import Funcionalidades.TimeSIEMG;
 
@@ -13,14 +13,8 @@ import Funcionalidades.TimeSIEMG;
  */
 public interface Evento {
     
-    enum status {        
-        STATUS_SEM_RESULTADO,
-        STATUS_COM_RESULTADO,
-        STATUS_EXECUTANDO;
-    }
-    
-    public void criarEvento();
     public int getStatus();
+    public int getIndex();
     public void setParametros(Parametros param);
     public void setJanela(TimeSIEMG janela);
     public void setAgendamento(TimeSIEMG agendamento);
