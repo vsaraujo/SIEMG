@@ -22,8 +22,12 @@ import java.awt.event.*;
 
 public class TesteMain {
     public static void main(String[] args) throws IOException {
-        Runnable alerta = new Monitor(3000);
-        new Thread(alerta).start();     
+        //Runnable alerta = new Monitor(3000);
+        //new Thread(alerta).start();  
+        
+        TimeSIEMG time = new TimeSIEMG();
+        AuteSimultanea aute = new AuteSimultanea(time);
+        
     }
 }
         

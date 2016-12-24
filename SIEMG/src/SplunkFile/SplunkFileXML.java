@@ -128,7 +128,7 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //Bean.printConsole();   
+        Bean.printConsole();   
         
         return Bean;        
     }
