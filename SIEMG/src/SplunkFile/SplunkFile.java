@@ -5,6 +5,9 @@
  */
 package SplunkFile;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author Vítor
@@ -12,6 +15,6 @@ package SplunkFile;
 public interface SplunkFile {
     
     public void gerarArquivo();
-    public Object getBean();
+    public Map<Integer,List<String>> getBean();
     
 }

@@ -14,6 +14,11 @@ public class TimeSIEMG {
     private int janela;
     private int execucao; 
 
+    public TimeSIEMG(int seg) {
+        setExecucao(seg);
+        setJanela(seg);
+    }
+
     public int getJanela() {
         return janela;
     }

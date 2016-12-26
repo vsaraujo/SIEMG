@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/AuteSimultanea.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/SplunkFile/SplunkFileXML.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkAuteSimultanea.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Login/TelaLogin.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/TimeSIEMG.java</file>
@@ -12,6 +13,18 @@
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Monitor/MonitorSIEMG.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkConnect.java</file>
             <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkXML2Bean.java</file>
+=======
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Interfaces/TesteMain.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkAuteSimultanea.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Login/TelaLogin.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Monitoramento/MonitorSIEMG.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/TimeSIEMG.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkConnect.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/Dados.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/SplunkFile/SplunkFile.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Splunk/SplunkXML2Bean.java</file>
+            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Evento/EventoAute.java</file>
+>>>>>>> SIEMG_home
         </group>
     </open-files>
 </project-private>

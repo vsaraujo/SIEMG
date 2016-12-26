@@ -23,7 +23,6 @@ public class TelaLogin extends javax.swing.JFrame {
 
         credenciais = cre;
         status = Boolean.TRUE;
-        this.setVisible(Boolean.TRUE);
 
         initComponents();
 
@@ -52,6 +51,8 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setAlwaysOnTop(true);
+        setLocation(new java.awt.Point(100, 100));
+        setSize(new java.awt.Dimension(0, 0));
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -146,9 +147,11 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        setCredenciais();
-    }//GEN-LAST:event_loginActionPerformed
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            setCredenciais();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -159,17 +162,9 @@ public class TelaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_loginKeyPressed
 
-    private void userKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            setCredenciais();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_userKeyPressed
-
-    private void pwdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            setCredenciais();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdKeyPressed
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        setCredenciais();
+    }//GEN-LAST:event_loginActionPerformed
 
     private void srvKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_srvKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -177,11 +172,17 @@ public class TelaLogin extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_srvKeyPressed
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+    private void pwdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
         }        // TODO add your handling code here:
-    }//GEN-LAST:event_formKeyPressed
+    }//GEN-LAST:event_pwdKeyPressed
+
+    private void userKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            setCredenciais();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_userKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -196,6 +197,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
     public boolean executando() {
         return status;
+    }
+
+    public void reinicializando() {
+        status = Boolean.TRUE;
     }
 
     private void setCredenciais() {

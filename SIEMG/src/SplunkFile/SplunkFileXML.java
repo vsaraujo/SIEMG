@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,20 +35,28 @@ public class SplunkFileXML implements SplunkFile {
 
     String busca;
     String caminhoArquivo;
+    String timeEarliest;
     TimeSIEMG time;
-    SplunkConnect consplunk;
+    SplunkXML2Bean Bean;
+    static SplunkConnect consplunk;
    
     private final File ResultadoXML;
 
-    public SplunkFileXML(String busca, TimeSIEMG time) throws IOException {
+    public SplunkFileXML(String nameFile,String busca, TimeSIEMG time) throws IOException {
 
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
         }
 
         this.time = time;
-        caminhoArquivo = "src/Resultado/ResultadoXML.xml";        
+        timeEarliest = "-"+time.getExecucao()/1000+"s";
+         System.out.println("Criando timeEarliest = "+timeEarliest);
+       
         
+        caminhoArquivo = "src/Resultado/"+nameFile+".xml";        
+     
+            System.out.println("Criando ResultadoXML = "+caminhoArquivo);
+     
         ResultadoXML = new File(caminhoArquivo);
         ResultadoXML.createNewFile();
 
@@ -57,15 +66,17 @@ public class SplunkFileXML implements SplunkFile {
     public void gerarArquivo() {
         
         try {
-            if(consplunk==null)
+            if(consplunk==null){
+                   System.out.println("Criando SplunkConnect");
+       
                 consplunk = new SplunkConnect();
-            
+            }
             Service svc = consplunk.getSvc();
             
             JobArgs jobArgs = new JobArgs();
             jobArgs.setExecutionMode(JobArgs.ExecutionMode.NORMAL);
             jobArgs.setSearchMode(JobArgs.SearchMode.NORMAL);
-            jobArgs.setEarliestTime("-1m");
+            jobArgs.setEarliestTime(timeEarliest);
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
 
@@ -103,7 +114,7 @@ public class SplunkFileXML implements SplunkFile {
     }
 
     @Override
-    public Object getBean() {
+    public Map<Integer,List<String>> getBean() {
     
         FileReader reader = null;
         
@@ -120,7 +131,7 @@ public class SplunkFileXML implements SplunkFile {
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
         
-        SplunkXML2Bean Bean = (SplunkXML2Bean) xstream.fromXML(reader);
+        Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         
         try {
             reader.close();
@@ -130,6 +141,7 @@ public class SplunkFileXML implements SplunkFile {
         
         Bean.printConsole();   
         
-        return Bean;        
+        return Bean.getMap();        
     }
+    
 }

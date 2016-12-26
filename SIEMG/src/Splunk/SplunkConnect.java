@@ -8,7 +8,10 @@ package Splunk;
 import Login.Credenciais;
 import Login.TelaLogin;
 import com.splunk.*;       // The entry point to the client library
+import java.awt.Component;
 import java.util.logging.Level;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,17 +21,34 @@ public final class SplunkConnect {
 
     private Service svc;
     private ServiceArgs loginArgs;
-    private Credenciais credenciais;
+    private final Credenciais credenciais;
+    private TelaLogin login = null;
 
     public SplunkConnect() {
+
+        System.out.println("Criando Credenciais");
         credenciais = new Credenciais();
+        login = new TelaLogin(credenciais);
         efetuarLogin();
+
+    }
+
+    private void abrirTelaLogin() {
+
+        System.out.println("Setando TelaLogin Visible");
+        login.setVisible(true);
+
     }
 
     public void efetuarLogin() {
 
-        TelaLogin login = new TelaLogin(credenciais);
-        //login.setVisible(Boolean.TRUE);
+        System.out.println("Criando TelaLogin");
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                abrirTelaLogin();
+            }
+        });
 
         while (login.executando()) {
 
@@ -39,7 +59,7 @@ public final class SplunkConnect {
             }
 
         }
-        
+
         login.dispose();
         System.out.println("Finalizado login");
         startConection();
@@ -48,6 +68,14 @@ public final class SplunkConnect {
     public void startConection() {
 
         if (credenciais.isNull()) {
+            
+            System.out.println("Start - Credencial Vazia");
+            
+            Component frame = new JFrame();
+            JOptionPane.showMessageDialog(frame , "Favor preencher todos os campos."); 
+
+            login.reinicializando();
+
             efetuarLogin();
         }
 
@@ -63,17 +91,29 @@ public final class SplunkConnect {
         // Create a Service instance and log in with the argument map
         try {
             svc = Service.connect(loginArgs);
+            
+            
+            
         } catch (RuntimeException e) {
 
             System.out.println("Falha de Login");
+            
+            Component frame = new JFrame();
+            JOptionPane.showMessageDialog(frame , "Falha de login. Tente novamente."); 
+            
+            
+            login.reinicializando();
+         
             efetuarLogin();
         }
+        
+        Component frame = new JFrame();
+        JOptionPane.showMessageDialog(frame , "Login realizado com sucesso!"); 
 
-        //System.out.println(svc.getUsers());
-        //System.out.println(svc.getInfo());
+        
     }
 
-    public Service getSvc() {
+    public Service getSvc() {        
         return svc;
     }
 }

@@ -22,7 +22,9 @@ public class AuteSimultanea implements Dados{
     
     public AuteSimultanea (TimeSIEMG time) throws IOException{
         
-        obterDados(time);
+        System.out.println("Inicio AuteSimultanea");
+       
+        //obterDados(time);
         
     }
    
@@ -30,14 +32,22 @@ public class AuteSimultanea implements Dados{
     public Map<Integer,List<String>> obterDados(TimeSIEMG time) {
         
         try {
-            if(autesimultanea == null)
+            if(autesimultanea == null){
+                System.out.println("Criando SplunkAuteSimultanea");
+       
                 autesimultanea = new SplunkAuteSimultanea(time);
+                
+            }
         } catch (IOException ex) {
             Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        autesimultanea.gerarNovoArquivo();
-        //autesimultanea.getBean().printConsole();
+        try {
+            autesimultanea.gerarNovoArquivo();
+            //autesimultanea.getBean().printConsole();
+        } catch (IOException ex) {
+            Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);
+        }
                
         return autesimultanea.getMap();
     }
