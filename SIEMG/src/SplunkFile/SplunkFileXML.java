@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,8 @@ public class SplunkFileXML implements SplunkFile {
     String caminhoArquivo;
     String timeEarliest;
     TimeSIEMG time;
-    SplunkConnect consplunk;
+    SplunkXML2Bean Bean;
+    static SplunkConnect consplunk;
    
     private final File ResultadoXML;
 
@@ -112,7 +114,7 @@ public class SplunkFileXML implements SplunkFile {
     }
 
     @Override
-    public Object getBean() {
+    public Map<Integer,List<String>> getBean() {
     
         FileReader reader = null;
         
@@ -129,7 +131,7 @@ public class SplunkFileXML implements SplunkFile {
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
         
-        SplunkXML2Bean Bean = (SplunkXML2Bean) xstream.fromXML(reader);
+        Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         
         try {
             reader.close();
@@ -137,8 +139,9 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Bean.printConsole();   
+        //Bean.printConsole();   
         
-        return Bean;        
+        return Bean.getMap();        
     }
+    
 }

@@ -18,16 +18,27 @@ import java.util.Map;
  */
 public class SplunkAuteSimultanea {
     
-    private SplunkXML2Bean Bean;
+    private Map<Integer,List<String>> resultados;
     private SplunkFile fileresult;
     private static int num = 0;
+    private final String consulta;
+    private TimeSIEMG time;
+    
     public SplunkAuteSimultanea(TimeSIEMG time) throws IOException{
         
-        String consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
-        
+        consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
+        this.time = time;
         // A classe SplunkFileXML retornará um arquivo XML.
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
+        
+        
+            
+        //gerarNovoArquivo();
+        
+    }
+    
+    public void gerarNovoArquivo() throws IOException{
         
         if(fileresult==null){
             
@@ -37,13 +48,8 @@ public class SplunkAuteSimultanea {
             fileresult = new SplunkFileXML(nameFile,consulta,time);
 
             num++;
-        }
-            
-        //gerarNovoArquivo();
+        }else
         
-    }
-    
-    public void gerarNovoArquivo(){
         
            System.out.println("Criando arquivo XML");
        
@@ -52,18 +58,18 @@ public class SplunkAuteSimultanea {
         //A classe SplunkXML2Bean faz um parse de um arquivo XML.
         //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
-        Bean = (SplunkXML2Bean)fileresult.getBean();
-        System.out.println("========Criando arquivo XML");
+        resultados = fileresult.getBean();
+        System.out.println("Bean atualizado");
        
     }
     
     public Map<Integer,List<String>> getMap() {       
         
-        return Bean.getMap();
+        return resultados;
     }
     
     public int getSize(){
-        return Bean.getSizeResult();
+        return fileresult.getBean().size() - 1;
     }
     
 }

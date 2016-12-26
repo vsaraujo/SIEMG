@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Monitor;
+package Monitoramento;
 
 import Evento.Evento;
 import Funcionalidades.AuteSimultanea;
@@ -24,56 +24,24 @@ import java.util.logging.Logger;
 public class MonitorSIEMG implements Monitoramento {
 
     private Dados aute;
-    private TimeSIEMG time;
-    private int delay;
     private int count;
     List<Evento> listEvent;
 
-    public MonitorSIEMG(int janela) throws IOException {
-
-        delay = janela;
-        aute = new AuteSimultanea(time);
+    public MonitorSIEMG(){
+        
         count = 0;
         listEvent = new ArrayList<Evento>();
 
     }
 
-    public MonitorSIEMG(Evento ev) {
-    
-        anexarEvento(ev);
-        
-    }
-
-    public void run() {
-
-        Map<Integer, List<String>> test = new HashMap<Integer, List<String>>();
-
-        while (aute.getQuantideResult() < 6) {
-
-            test = (Map<Integer, List<String>>) aute.obterDados(time);
-
-            for (Map.Entry entry : test.entrySet()) {
-                System.out.println(entry.getKey() + ", " + entry.getValue());
-            }
-
-            System.out.println("Tentativa: " + count + "Resultados: " + aute.getQuantideResult());
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MonitorSIEMG.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            count++;
-        }
-        System.out.println("Resultados: " + aute.getQuantideResult());
-
-    }
-
+   
     @Override
     public void anexarEvento(Evento e) {
     
         try {
            
-            listEvent.add(e);        
+            listEvent.add(e);       
+            count++;
         
         }
         catch (NullPointerException evt){

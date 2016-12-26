@@ -12,9 +12,10 @@ import Funcionalidades.TimeSIEMG;
 import Login.Credenciais;
 import Login.NovoJFrame;
 import Login.TelaLogin;
-import Monitor.MonitorSIEMG;
-import Monitor.Monitoramento;
+import Monitoramento.MonitorSIEMG;
+import Monitoramento.Monitoramento;
 import java.io.IOException;
+import static java.lang.System.exit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +32,21 @@ public class TesteMain {
        TimeSIEMG time = new TimeSIEMG(120000);
        TimeSIEMG time2 = new TimeSIEMG(60000);
        
-       //System.out.println("TimeSIEMG criado");
-       //final Credenciais cre = new Credenciais();
-       //NovoJFrame novo = new NovoJFrame();
-       AuteSimultanea aute = new AuteSimultanea(time);
-       AuteSimultanea aute2 = new AuteSimultanea(time2);
+       System.out.println("##Inicio da criação do 1 - Evento1##");
+       EventoAute evt1 = new EventoAute(time);
+       evt1.getStatus();
+       System.out.println("##FIM da criação do 1 - Evento1##");
        
+       
+       
+       System.out.println("##Inicio da criação do 2 - Evento2##");
+       EventoAute evt2 = new EventoAute(time2);
+       evt2.getStatus();
+       System.out.println("##FIM da criação do 2 - Evento2");
        
        //Map<Integer,List<String>> map;
         //map = aute.obterDados(time);
-           
+       exit(0);
        
        //System.out.println(aute);
        

@@ -8,44 +8,55 @@ package Evento;
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Vítor
  */
-public class EventoAute implements Evento{
-    
+public class EventoAute implements Evento {
+
     TimeSIEMG time;
     AuteSimultanea aute;
-    
-    public EventoAute(int seg) throws IOException{
-        
+    Map<Integer, List<String>> lista;
+
+    public EventoAute(TimeSIEMG seg) throws IOException {
+
         try {
-            time = new TimeSIEMG(seg);
+            time = seg;
             System.out.println("Classe aute criada");
-            
+
             aute = new AuteSimultanea(time);
-            
-        
-        }
-        catch (NullPointerException e){
-           System.out.println(e.toString());
+
+        } catch (NullPointerException e) {
+            System.out.println(e.toString());
         }
     }
-        
+
     @Override
     public int getStatus() {
-        
+
         int qntresultado = 0;
-        
-        while(qntresultado < 5){
-    
-         aute.obterDados(time);
-         qntresultado = aute.getQuantideResult();
-         
+
+        while (qntresultado < 6) {
+
+            lista = aute.obterDados(time);
+            qntresultado = aute.getQuantideResult();
+
+            System.out.println("============Quantidade de Resultado: " + qntresultado);
+
         }
-        return qntresultado;
+
+        for (Integer i : lista.keySet()){
+            
+            System.out.println(lista.get(i));
+            
+        }
         
+        
+        return qntresultado;
+
     }
 
     @Override
@@ -67,5 +78,5 @@ public class EventoAute implements Evento{
     public void setAgendamento(TimeSIEMG agendamento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
