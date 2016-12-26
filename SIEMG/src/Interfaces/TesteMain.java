@@ -34,18 +34,23 @@ public class TesteMain {
        
        System.out.println("##Inicio da criação do 1 - Evento1##");
        EventoAute evt1 = new EventoAute(time);
-       evt1.getStatus();
+       
+       new Thread(evt1, "New Thread 1").run();              
+       //evt1.getStatus();
        System.out.println("##FIM da criação do 1 - Evento1##");
        
-       
-       
+              
        System.out.println("##Inicio da criação do 2 - Evento2##");
        EventoAute evt2 = new EventoAute(time2);
-       evt2.getStatus();
+       new Thread(evt2, "New Thread 2").run();       
+       //evt2.getStatus();       
        System.out.println("##FIM da criação do 2 - Evento2");
        
        //Map<Integer,List<String>> map;
         //map = aute.obterDados(time);
+        
+        
+        
        exit(0);
        
        //System.out.println(aute);

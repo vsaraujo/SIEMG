@@ -7,19 +7,23 @@ package Evento;
 
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
+import Monitoramento.Monitoramento;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Vítor
  */
-public class EventoAute implements Evento {
+public class EventoAute implements Evento, Runnable {
 
     TimeSIEMG time;
     AuteSimultanea aute;
     Map<Integer, List<String>> lista;
+    Monitoramento monitor;
 
     public EventoAute(TimeSIEMG seg) throws IOException {
 
@@ -39,12 +43,18 @@ public class EventoAute implements Evento {
 
         int qntresultado = 0;
 
-        while (qntresultado < 6) {
+        while (qntresultado < 20) {
 
             lista = aute.obterDados(time);
             qntresultado = aute.getQuantideResult();
 
-            System.out.println("============Quantidade de Resultado: " + qntresultado);
+            System.out.println("============Time: "+time.getJanela()+"Quantidade de Resultado: " + qntresultado);
+            
+            try {
+                Thread.sleep(time.getExecucao()/1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -77,6 +87,13 @@ public class EventoAute implements Evento {
     @Override
     public void setAgendamento(TimeSIEMG agendamento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void run() {
+        
+        getStatus();
+        
     }
 
 }
