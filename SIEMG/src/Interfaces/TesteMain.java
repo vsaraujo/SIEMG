@@ -27,22 +27,30 @@ import java.util.Map;
  */
 
 public class TesteMain {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, InterruptedException{
         
-       TimeSIEMG time = new TimeSIEMG(120000);
-       TimeSIEMG time2 = new TimeSIEMG(60000);
+       TelaLogin teste = null;
+       teste.getInstancia();
+       
+       System.out.println("Inicio da TelaLogin");
+       Thread.sleep(20*1000);
+        
+       TimeSIEMG time = new TimeSIEMG(30);
+       TimeSIEMG time2 = new TimeSIEMG(10);
        
        System.out.println("##Inicio da criação do 1 - Evento1##");
        EventoAute evt1 = new EventoAute(time);
        
-       new Thread(evt1, "New Thread 1").run();              
+       Thread t1 = new Thread(evt1, "New Thread 1");
+       t1.start();
        //evt1.getStatus();
        System.out.println("##FIM da criação do 1 - Evento1##");
        
               
        System.out.println("##Inicio da criação do 2 - Evento2##");
        EventoAute evt2 = new EventoAute(time2);
-       new Thread(evt2, "New Thread 2").run();       
+       Thread t2 = new Thread(evt2, "New Thread 2");       
+       t2.start();
        //evt2.getStatus();       
        System.out.println("##FIM da criação do 2 - Evento2");
        
@@ -50,8 +58,6 @@ public class TesteMain {
         //map = aute.obterDados(time);
         
         
-        
-       exit(0);
        
        //System.out.println(aute);
        

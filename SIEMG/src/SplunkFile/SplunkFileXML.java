@@ -49,7 +49,7 @@ public class SplunkFileXML implements SplunkFile {
         }
 
         this.time = time;
-        timeEarliest = "-"+time.getExecucao()/1000+"s";
+        timeEarliest = "-"+time.getExecucao()+"s";
          System.out.println("Criando timeEarliest = "+timeEarliest);
        
         

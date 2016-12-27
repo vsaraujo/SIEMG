@@ -21,6 +21,7 @@ public class SplunkAuteSimultanea {
     private Map<Integer,List<String>> resultados;
     private SplunkFile fileresult;
     private static int num = 0;
+    private static Boolean status = false;
     private final String consulta;
     private TimeSIEMG time;
     
@@ -32,11 +33,18 @@ public class SplunkAuteSimultanea {
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkFileJSON
         
-        
+        if(status == false){
+            setNum();
+            status = true;
+        }
             
         //gerarNovoArquivo();
         
     }
+    
+    public static void setNum(){        
+        num++;        
+    }    
     
     public void gerarNovoArquivo() throws IOException{
         
@@ -47,7 +55,7 @@ public class SplunkAuteSimultanea {
        
             fileresult = new SplunkFileXML(nameFile,consulta,time);
 
-            num++;
+            
         }else
         
         

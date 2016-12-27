@@ -11,22 +11,40 @@ import java.awt.event.KeyEvent;
  *
  * @author Vítor
  */
-public class TelaLogin extends javax.swing.JFrame {
+public final class TelaLogin extends javax.swing.JFrame {
 
-    private final Credenciais credenciais;
+    private static Credenciais credenciais;
+
+    private static TelaLogin Instancia;
     private boolean status;
 
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin(Credenciais cre) {
+    public TelaLogin() {
 
-        credenciais = cre;
+        //Instancia = new TelaLogin(cre);
+        
+        credenciais = new Credenciais();
         status = Boolean.TRUE;
-
         initComponents();
 
     }
+    
+    public static Credenciais getCredenciais() {
+        return credenciais;
+    }
+
+    public static synchronized TelaLogin getInstancia() {
+        
+        if(Instancia == null){
+                Instancia = new TelaLogin();
+                Instancia.setVisible(true);
+        }
+        
+        return Instancia;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

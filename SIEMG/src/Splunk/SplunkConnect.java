@@ -27,8 +27,9 @@ public final class SplunkConnect {
     public SplunkConnect() {
 
         System.out.println("Criando Credenciais");
-        credenciais = new Credenciais();
-        login = new TelaLogin(credenciais);
+        //credenciais = new Credenciais();
+        login = TelaLogin.getInstancia();
+        credenciais = TelaLogin.getCredenciais();
         efetuarLogin();
 
     }

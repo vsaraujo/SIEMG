@@ -43,7 +43,7 @@ public class EventoAute implements Evento, Runnable {
 
         int qntresultado = 0;
 
-        while (qntresultado < 20) {
+        while (qntresultado < 1) {
 
             lista = aute.obterDados(time);
             qntresultado = aute.getQuantideResult();
@@ -51,7 +51,7 @@ public class EventoAute implements Evento, Runnable {
             System.out.println("============Time: "+time.getJanela()+"Quantidade de Resultado: " + qntresultado);
             
             try {
-                Thread.sleep(time.getExecucao()/1000);
+                Thread.sleep(time.getExecucao()*1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
             }
