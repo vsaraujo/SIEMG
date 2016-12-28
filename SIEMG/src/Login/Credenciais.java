@@ -14,7 +14,8 @@ public class Credenciais {
     private String usuario;
     private String senha;
     private String servidor;
-    
+    private static Credenciais Instancia;
+
     public Credenciais(){
         
         usuario = "";
@@ -56,6 +57,17 @@ public class Credenciais {
 
     public void setServidor(String servidor) {
         this.servidor = servidor;
+    }
+    
+    public static synchronized Credenciais getInstancia() {
+        
+        if (Instancia == null){
+            Instancia = new Credenciais();
+             System.out.println("#Criando Instancia Credenciais");
+        
+        }
+        
+        return Instancia;
     }
 
 }

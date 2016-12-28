@@ -23,13 +23,24 @@ public final class SplunkConnect {
     private ServiceArgs loginArgs;
     private final Credenciais credenciais;
     private TelaLogin login = null;
+    private static SplunkConnect splunkConnect;
+
+    public static SplunkConnect getSplunkConnect() {
+        
+        if(splunkConnect == null){
+            splunkConnect = new SplunkConnect();
+        }
+        
+        return splunkConnect;
+    }
 
     public SplunkConnect() {
 
         System.out.println("Criando Credenciais");
         //credenciais = new Credenciais();
         login = TelaLogin.getInstancia();
-        credenciais = TelaLogin.getCredenciais();
+        credenciais = Credenciais.getInstancia();
+        
         efetuarLogin();
 
     }
@@ -61,7 +72,10 @@ public final class SplunkConnect {
 
         }
 
-        login.dispose();
+        if(!credenciais.isNull()){
+            login.dispose();
+        }
+       // login.dispose();
         System.out.println("Finalizado login");
         startConection();
     }
@@ -85,8 +99,8 @@ public final class SplunkConnect {
         // Create a map of arguments and add login parameters
         loginArgs = new ServiceArgs();
         loginArgs.setUsername(credenciais.getUsuario());
-        loginArgs.setPassword(credenciais.getSenha());
-        loginArgs.setHost(credenciais.getServidor());
+        loginArgs.setPassword(credenciais.getSenha()); 
+        loginArgs.setHost(credenciais.getServidor()); 
         loginArgs.setPort(8089);
 
         // Create a Service instance and log in with the argument map

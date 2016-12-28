@@ -33,11 +33,12 @@ import java.util.logging.Logger;
  */
 public class SplunkFileXML implements SplunkFile {
 
-    String busca;
-    String caminhoArquivo;
-    String timeEarliest;
-    TimeSIEMG time;
-    SplunkXML2Bean Bean;
+    private String busca;
+    private String caminhoArquivo;
+    private String timeEarliest;
+    private TimeSIEMG time;
+    private SplunkXML2Bean Bean;
+    private static Service svc;
     static SplunkConnect consplunk;
    
     private final File ResultadoXML;
@@ -66,12 +67,13 @@ public class SplunkFileXML implements SplunkFile {
     public void gerarArquivo() {
         
         try {
-            if(consplunk==null){
+            //if(consplunk==null){
                    System.out.println("Criando SplunkConnect");
        
-                consplunk = new SplunkConnect();
-            }
-            Service svc = consplunk.getSvc();
+                consplunk = SplunkConnect.getSplunkConnect();
+                
+            //}
+            svc = consplunk.getSvc();
             
             JobArgs jobArgs = new JobArgs();
             jobArgs.setExecutionMode(JobArgs.ExecutionMode.NORMAL);
@@ -79,7 +81,7 @@ public class SplunkFileXML implements SplunkFile {
             jobArgs.setEarliestTime(timeEarliest);
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
-
+            System.out.println("Criando novo Job");
             Job job = svc.getJobs().create(busca,jobArgs);
             
             while (!job.isDone()) {

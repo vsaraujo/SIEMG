@@ -29,11 +29,11 @@ import java.util.Map;
 public class TesteMain {
     public static void main(String[] args) throws IOException, InterruptedException{
         
-       TelaLogin teste = null;
-       teste.getInstancia();
+       //TelaLogin teste = null;
+       //teste.getInstancia();
        
-       System.out.println("Inicio da TelaLogin");
-       Thread.sleep(20*1000);
+       //System.out.println("Inicio da TelaLogin");
+       //Thread.sleep(20*1000);
         
        TimeSIEMG time = new TimeSIEMG(30);
        TimeSIEMG time2 = new TimeSIEMG(10);
@@ -77,7 +77,7 @@ public class TesteMain {
          //  map = aute.obterDados(time);
            
        //}
-       
+       //exit(0);
        //System.out.println(map);
     
     }

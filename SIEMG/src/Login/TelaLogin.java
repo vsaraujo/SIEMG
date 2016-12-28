@@ -25,7 +25,7 @@ public final class TelaLogin extends javax.swing.JFrame {
 
         //Instancia = new TelaLogin(cre);
         
-        credenciais = new Credenciais();
+        credenciais = Credenciais.getInstancia();
         status = Boolean.TRUE;
         initComponents();
 
@@ -40,6 +40,7 @@ public final class TelaLogin extends javax.swing.JFrame {
         if(Instancia == null){
                 Instancia = new TelaLogin();
                 Instancia.setVisible(true);
+                System.out.println("#Criando Instancia Tela Login");
         }
         
         return Instancia;

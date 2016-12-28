@@ -48,7 +48,7 @@ public class EventoAute implements Evento, Runnable {
             lista = aute.obterDados(time);
             qntresultado = aute.getQuantideResult();
 
-            System.out.println("============Time: "+time.getJanela()+"Quantidade de Resultado: " + qntresultado);
+            System.out.println("============Time: "+time.getJanela()+" Quantidade de Resultado: " + qntresultado);
             
             try {
                 Thread.sleep(time.getExecucao()*1000);
