@@ -11,4 +11,35 @@ package Evento;
  */
 class Parametros {
     
+    enum campos{
+        
+        USER,
+        COMPUTADOR,
+        HORA_INIEVENTO,        
+        HORA_FIMEVENTO,        
+        CONTADOR,
+        
+    }
+    
+    enum operadores{
+        
+        IGUAL,
+        NAO_IGUAL,
+        CONTEM,        
+        NAO_CONTEM,        
+        INICIA_COM,
+        TERMINA_COM,
+        MAIOR_QUE,
+        MENOR_QUE,        
+        
+    }
+        
+    private String [][] param;
+    
+    public Parametros(){
+        
+        
+        
+    }
+    
 }

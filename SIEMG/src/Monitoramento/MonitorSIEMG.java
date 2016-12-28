@@ -62,7 +62,7 @@ public class MonitorSIEMG implements Monitoramento {
         try {
         
             for(Evento e: listEvent){
-                System.out.println("ID:"+e.toString()+"Quantidade de resultado: "+e.getStatus());
+                //System.out.println("ID:"+e.toString()+"Quantidade de resultado: "+e.getStatus());
             }
             
         }

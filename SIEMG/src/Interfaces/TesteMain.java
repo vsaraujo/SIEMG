@@ -10,7 +10,6 @@ import Evento.EventoAute;
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
 import Login.Credenciais;
-import Login.NovoJFrame;
 import Login.TelaLogin;
 import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
@@ -19,77 +18,61 @@ import static java.lang.System.exit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Vítor
  */
-
 public class TesteMain {
-    public static void main(String[] args) throws IOException, InterruptedException{
-        
-       //TelaLogin teste = null;
-       //teste.getInstancia();
-       
-       //System.out.println("Inicio da TelaLogin");
-       //Thread.sleep(20*1000);
-        
-       TimeSIEMG time = new TimeSIEMG(30);
-       TimeSIEMG time2 = new TimeSIEMG(10);
-       
-       System.out.println("##Inicio da criação do 1 - Evento1##");
-       EventoAute evt1 = new EventoAute(time);
-       
-       Thread t1 = new Thread(evt1, "New Thread 1");
-       t1.start();
-       //evt1.getStatus();
-       System.out.println("##FIM da criação do 1 - Evento1##");
-       
-              
-       System.out.println("##Inicio da criação do 2 - Evento2##");
-       EventoAute evt2 = new EventoAute(time2);
-       Thread t2 = new Thread(evt2, "New Thread 2");       
-       t2.start();
-       //evt2.getStatus();       
-       System.out.println("##FIM da criação do 2 - Evento2");
-       
-       //Map<Integer,List<String>> map;
-        //map = aute.obterDados(time);
-        
-        
-       
-       //System.out.println(aute);
-       
-       
-       //java.awt.EventQueue.invokeLater(new Runnable() {
-         //   public void run() {
-           //new NovoJFrame().setVisible(true);
-           //}
-        //});
 
-       
-       
-       //Map<Integer,List<String>> map = new HashMap<Integer,List<String>>();
-       
-       //while(aute.getQuantideResult()<5){
-           
-         //  map = aute.obterDados(time);
-           
-       //}
-       //exit(0);
-       //System.out.println(map);
-    
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        TimeSIEMG time = new TimeSIEMG(30);
+        TimeSIEMG time2 = new TimeSIEMG(10);
+        TimeSIEMG time3 = new TimeSIEMG(60);
+
+        int idt1 = 1;
+        int idt2 = 2;
+        int idt3 = 3;
+
+        System.out.println("##Inicio da criação do 1 - Evento1##");
+        EventoAute evt1 = new EventoAute(time, idt1);
+        Thread t1 = new Thread(evt1, "New Thread 1");
+        t1.start();
+        System.out.println("##FIM da criação do 1 - Evento1##");
+
+        System.out.println("##Inicio da criação do 2 - Evento2##");
+        EventoAute evt2 = new EventoAute(time2, idt2);
+        Thread t2 = new Thread(evt2, "New Thread 2");
+        t2.start();
+        System.out.println("##FIM da criação do 2 - Evento2");
+
+        System.out.println("##Inicio da criação do 3 - Evento3##");
+        EventoAute evt3 = new EventoAute(time3, idt3);
+        Thread t3 = new Thread(evt3, "New Thread 3");
+        t3.start();
+        System.out.println("##FIM da criação do 3 - Evento3");
+
+        int fim = 0;
+        
+        while (evt1.getAtivo() || evt2.getAtivo() || evt3.getAtivo()){
+            
+            fim++;
+                    
+            System.out.println("####"+fim+"º Tentativa de finalizar");
+            System.out.println("#### Status evt1 = "+evt1.getAtivo());
+            System.out.println("#### Status evt2 = "+evt2.getAtivo());
+            System.out.println("#### Status evt3 = "+evt3.getAtivo());
+                        
+             try {
+                Thread.sleep(10*1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        exit(0);
     }
-               
 }
-        
-        
-        /*
-        TimeSIEMG time = null;
-        SplunkXML2Bean Bean;
-        SplunkAuteSimultanea AuteSplunk = new SplunkAuteSimultanea(time);
-        Bean = AuteSplunk.getBean();
-        Bean.printConsole();
-        */
-    

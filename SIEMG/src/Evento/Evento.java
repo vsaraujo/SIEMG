@@ -13,7 +13,7 @@ import Funcionalidades.TimeSIEMG;
  */
 public interface Evento {
     
-    public int getStatus();
+    public void getStatus();
     public int getIndex();
     public void setParametros(Parametros param);
     public void setJanela(TimeSIEMG janela);
