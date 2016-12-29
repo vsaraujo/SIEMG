@@ -1,6 +1,5 @@
 package Splunk;
 
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
@@ -13,17 +12,16 @@ import java.util.Map;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Vítor
  */
 @XStreamAlias("results")
 public class SplunkXML2Bean {
-    
+
     @XStreamAlias("meta")
     private Meta meta = new Meta();
-    
+
     @XStreamImplicit(itemFieldName = "result")
     private List<Result> result = new ArrayList();
 
@@ -34,11 +32,11 @@ public class SplunkXML2Bean {
     public void setResult(List<Result> result) {
         this.result = result;
     }
-    
+
     public int getSizeResult() {
         return result.size();
     }
-    
+
     public Meta getMeta() {
         return meta;
     }
@@ -46,10 +44,10 @@ public class SplunkXML2Bean {
     public void setMeta(Meta meta) {
         this.meta = meta;
     }
-    
+
     @XStreamAlias("meta")
     public class Meta {
-        
+
         @XStreamAlias("fieldOrder")
         private FieldOrder fieldOrder = new FieldOrder();
 
@@ -61,9 +59,10 @@ public class SplunkXML2Bean {
             this.fieldOrder = fieldOrder;
         }
     }
-    
+
     @XStreamAlias("fieldOrder")
-    public class FieldOrder {        
+    public class FieldOrder {
+
         @XStreamImplicit(itemFieldName = "field")
         private List<String> field = new ArrayList();
 
@@ -74,15 +73,15 @@ public class SplunkXML2Bean {
         public void setField(List<String> field) {
             this.field = field;
         }
-        
+
         public int getSizeFieldOrder() {
             return field.size();
         }
     }
-    
-    
+
     @XStreamAlias("result")
-    public class Result{        
+    public class Result {
+
         @XStreamImplicit(itemFieldName = "field k=")
         private List<Field> field = new ArrayList();
 
@@ -93,13 +92,15 @@ public class SplunkXML2Bean {
         public void setField(List<Field> field) {
             this.field = field;
         }
+
         public int getSizeFields() {
             return field.size();
         }
     }
-    
+
     @XStreamAlias("field k=")
-    public class Field{
+    public class Field {
+
         @XStreamImplicit(itemFieldName = "value")
         private List<Value> value = new ArrayList();
 
@@ -110,14 +111,15 @@ public class SplunkXML2Bean {
         public void setValue(List<Value> value) {
             this.value = value;
         }
-        
+
         public int getSizeValue() {
             return value.size();
         }
     }
-    
+
     @XStreamAlias("value")
-    public class Value{
+    public class Value {
+
         @XStreamImplicit(itemFieldName = "text")
         private List<String> text = new ArrayList();
 
@@ -128,65 +130,67 @@ public class SplunkXML2Bean {
         public void setText(List<String> text) {
             this.text = text;
         }
+
         public int getSizeValue() {
             return text.size();
         }
     }
-    
-    public void printConsole(){
-        
-        for(String field : meta.getFieldOrder().getField() ){
-            System.out.print("| "+field+" \t");            
+
+    public void printConsole() {
+
+        for (String field : meta.getFieldOrder().getField()) {
+            System.out.print("| " + field + " \t");
         }
         System.out.println();
-        
-        for (Result resultf : result){
-            for(Field fieldf : resultf.getField()){
-                for(Value value : fieldf.getValue()){
-                    for(String text: value.getText() ){
-                        System.out.print("| "+text+" \t");
+
+        for (Result resultf : result) {
+            for (Field fieldf : resultf.getField()) {
+                for (Value value : fieldf.getValue()) {
+                    for (String text : value.getText()) {
+                        System.out.print("| " + text + " \t");
                     }
                 }
             }
-            System.out.println();                  
-        }        
-    }
-    
-    public Map<Integer,List<String>> getMap(){
-        
-        Integer i = 0;
-        
-        Map<Integer,List<String>> map = new HashMap<Integer,List<String>>();
-        
-        List<String> lista = new ArrayList<String>();
-        
-        for(String field : meta.getFieldOrder().getField() ){
-            lista.add(field);
-            map.put(i,lista);
-            //System.out.print("| "+field+" \t");            
+            System.out.println();
         }
-        
+    }
+
+    public Map<Integer, List<String>> getMap() {
+
+        Integer i = 0;
+
+        Map<Integer, List<String>> map = new HashMap<Integer, List<String>>();
+
+        List<String> lista = new ArrayList<String>();
+
+        if (meta != null) {
+            for (String field : meta.getFieldOrder().getField()) {
+                lista.add(field);
+                map.put(i, lista);
+                //System.out.print("| "+field+" \t");            
+            }
+        }
+
         //System.out.println();
-        
-        for (Result resultf : result){
+        for (Result resultf : result) {
             List<String> tmp = new ArrayList<String>();
             i++;
-            
-            for(Field fieldf : resultf.getField()){
-                for(Value value : fieldf.getValue()){
-                    for(String text: value.getText() ){
+
+            for (Field fieldf : resultf.getField()) {
+                for (Value value : fieldf.getValue()) {
+                    for (String text : value.getText()) {
                         tmp.add(text);
-                        map.put(i,tmp);
+                        map.put(i, tmp);
                         //System.out.print("| "+text+" \t");
                     }
                 }
             }
-            
+
             //System.out.println();
-        }      
-        
+        }
+
         return map;
-        
+
     }
 
 }

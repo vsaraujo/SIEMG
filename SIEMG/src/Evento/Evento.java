@@ -15,7 +15,7 @@ public interface Evento {
     
     public void getStatus();
     public int getIndex();
-    public void setParametros(Parametros param);
+    public void setParametros();
     public void setJanela(TimeSIEMG janela);
     public void setAgendamento(TimeSIEMG agendamento);
     

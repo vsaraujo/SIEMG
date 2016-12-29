@@ -70,6 +70,7 @@ public class EventoAute implements Evento, Runnable {
             
         }
         
+        setParametros();
         
        // return qntresultado;
 
@@ -89,8 +90,9 @@ public class EventoAute implements Evento, Runnable {
     }
 
     @Override
-    public void setParametros(Parametros param) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setParametros() {
+        
+        
     }
 
     @Override
