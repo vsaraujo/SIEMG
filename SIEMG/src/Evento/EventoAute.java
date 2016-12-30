@@ -8,6 +8,10 @@ package Evento;
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.Monitoramento;
+import Parametros.Campos;
+import Parametros.GrupoParametros;
+import Parametros.Operadores;
+import Parametros.Parametro;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +29,8 @@ public class EventoAute implements Evento, Runnable {
     private Map<Integer, List<String>> lista;
     private Monitoramento monitor;
     private int idEvento;
-    private Boolean ativo;    
+    private Boolean ativo;
+    private GrupoParametros regras;
 
     public EventoAute(TimeSIEMG seg, int idthread) throws IOException {
 
@@ -35,47 +40,48 @@ public class EventoAute implements Evento, Runnable {
             idEvento = idthread;
             ativo = Boolean.TRUE;
 
-            aute = new AuteSimultanea(time);
+            regras = new GrupoParametros();
+
+            aute = new AuteSimultanea();
 
         } catch (NullPointerException e) {
             System.out.println(e.toString());
         }
     }
-    
 
     @Override
     public void getStatus() {
 
         int qntresultado = 0;
 
-        while (qntresultado < 4) {
+        setParametros();
 
-            lista = aute.obterDados(time);
+        do {
+            lista = aute.obterDados(time, regras);
             qntresultado = aute.getQuantideResult();
 
-            System.out.println("============Time: "+time.getJanela()+" Quantidade de Resultado: " + qntresultado);
-            
-            try {
-                Thread.sleep(time.getExecucao()*1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("============Time: " + time.getJanela() + " Quantidade de Resultado: " + qntresultado);
+
+            if (qntresultado < 1) {
+                try {
+                    Thread.sleep(time.getExecucao() * 1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
-        }
-        
-        System.out.println("## Fim Resultado da Thread: "+idEvento+" com o tempo de: "+time.getExecucao()+"s");
-        for (Integer i : lista.keySet()){
-            
-            System.out.println(lista.get(i));
-            
-        }
-        
-        setParametros();
-        
-       // return qntresultado;
+        } while (qntresultado < 1);
 
+        System.out.println("## Fim Resultado da Thread: " + idEvento + " com o tempo de: " + time.getExecucao() + "s");
+        for (Integer i : lista.keySet()) {
+
+            System.out.println(lista.get(i));
+
+        }
+
+        // return qntresultado;
     }
-    
+
     public Boolean getAtivo() {
         return ativo;
     }
@@ -91,8 +97,9 @@ public class EventoAute implements Evento, Runnable {
 
     @Override
     public void setParametros() {
-        
-        
+
+        regras.setParametro(new Parametro(Campos.CONTADOR, Operadores.MAIOR_QUE, "1"));
+
     }
 
     @Override
@@ -107,15 +114,13 @@ public class EventoAute implements Evento, Runnable {
 
     @Override
     public void run() {
-        
-                
+
         getStatus();
-        
-        System.out.println("####FIM### ID: "+idEvento);
+
+        System.out.println("####FIM### ID: " + idEvento);
 
         setAtivo(Boolean.FALSE);
-           
-        
+
     }
 
 }

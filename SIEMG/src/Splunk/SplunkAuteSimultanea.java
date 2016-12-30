@@ -6,6 +6,7 @@
 package Splunk;
 
 import Funcionalidades.TimeSIEMG;
+import Parametros.GrupoParametros;
 import SplunkFile.SplunkFile;
 import SplunkFile.SplunkFileXML;
 import SplunkFile.SplunkNomeNewFile;
@@ -26,9 +27,12 @@ public class SplunkAuteSimultanea {
     private final String consulta;
     private TimeSIEMG time;
 
-    public SplunkAuteSimultanea(TimeSIEMG time) throws IOException {
+    public SplunkAuteSimultanea(TimeSIEMG time, String param) throws IOException {
 
-        consulta = "sourcetype=WinEventLog:Security EventCode=4625 | rename ComputerName as Computador, user as Usuário, src_ip as IpOrigem | top Computador by Usuário, IpOrigem";
+        
+        consulta = "sourcetype=WinEventLog:Security (user!=*$ AND user!=\"ANONYMOUS LOGON\") (Workstation_Name!=\"DC6041\" AND Workstation_Name!=\"DC6006\" AND Workstation_Name!=\"DC6008\" AND Workstation_Name!=\"ip*\") EventCode=4624 | stats dc(Workstation_Name) as count by user "+param;
+        System.out.println(consulta);
+        
         this.time = time;
         // A classe SplunkFileXML retornará um arquivo XML.
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
@@ -72,6 +76,8 @@ public class SplunkAuteSimultanea {
     }
 
     public int getSize() {
+        
+        //Diminui de 1 para remover o cabeçalho da tabela que é retornada com o resultado.
         return fileresult.getBean().size() - 1;
     }
 

@@ -163,30 +163,32 @@ public class SplunkXML2Bean {
 
         List<String> lista = new ArrayList<String>();
 
-        if (meta != null) {
+        if (meta != null && result != null) {
+
             for (String field : meta.getFieldOrder().getField()) {
                 lista.add(field);
                 map.put(i, lista);
                 //System.out.print("| "+field+" \t");            
             }
-        }
-
-        //System.out.println();
-        for (Result resultf : result) {
-            List<String> tmp = new ArrayList<String>();
-            i++;
-
-            for (Field fieldf : resultf.getField()) {
-                for (Value value : fieldf.getValue()) {
-                    for (String text : value.getText()) {
-                        tmp.add(text);
-                        map.put(i, tmp);
-                        //System.out.print("| "+text+" \t");
-                    }
-                }
-            }
 
             //System.out.println();
+            for (Result resultf : result) {
+                List<String> tmp = new ArrayList<String>();
+                i++;
+
+                for (Field fieldf : resultf.getField()) {
+                    for (Value value : fieldf.getValue()) {
+                        for (String text : value.getText()) {
+                            tmp.add(text);
+                            map.put(i, tmp);
+                            //System.out.print("| "+text+" \t");
+                        }
+                    }
+                }
+
+                //System.out.println();
+            }
+
         }
 
         return map;

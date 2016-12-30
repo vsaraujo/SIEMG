@@ -5,13 +5,15 @@
  */
 package Funcionalidades;
 
+import Parametros.GrupoParametros;
+
 /**
  *
  * @author Vítor
  */
 public interface Dados {
     
-    public Object obterDados(TimeSIEMG time);
+    public Object obterDados(TimeSIEMG time, GrupoParametros param);
     public int getQuantideResult();
       
 }

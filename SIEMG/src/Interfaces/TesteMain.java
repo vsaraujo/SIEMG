@@ -29,13 +29,13 @@ public class TesteMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        TimeSIEMG time = new TimeSIEMG(30);
-        TimeSIEMG time2 = new TimeSIEMG(10);
-        TimeSIEMG time3 = new TimeSIEMG(60);
+        TimeSIEMG time = new TimeSIEMG(120);
+        /*TimeSIEMG time2 = new TimeSIEMG(10);
+        TimeSIEMG time3 = new TimeSIEMG(60);*/
 
         int idt1 = 1;
-        int idt2 = 2;
-        int idt3 = 3;
+        /*int idt2 = 2;
+        int idt3 = 3;*/
 
         System.out.println("##Inicio da criação do 1 - Evento1##");
         EventoAute evt1 = new EventoAute(time, idt1);
@@ -43,7 +43,7 @@ public class TesteMain {
         t1.start();
         System.out.println("##FIM da criação do 1 - Evento1##");
 
-        System.out.println("##Inicio da criação do 2 - Evento2##");
+        /*System.out.println("##Inicio da criação do 2 - Evento2##");
         EventoAute evt2 = new EventoAute(time2, idt2);
         Thread t2 = new Thread(evt2, "New Thread 2");
         t2.start();
@@ -53,18 +53,18 @@ public class TesteMain {
         EventoAute evt3 = new EventoAute(time3, idt3);
         Thread t3 = new Thread(evt3, "New Thread 3");
         t3.start();
-        System.out.println("##FIM da criação do 3 - Evento3");
+        System.out.println("##FIM da criação do 3 - Evento3");*/
 
         int fim = 0;
         
-        while (evt1.getAtivo() || evt2.getAtivo() || evt3.getAtivo()){
+        while (evt1.getAtivo() /*|| evt2.getAtivo() || evt3.getAtivo()*/){
             
             fim++;
                     
             System.out.println("####"+fim+"º Tentativa de finalizar");
             System.out.println("#### Status evt1 = "+evt1.getAtivo());
-            System.out.println("#### Status evt2 = "+evt2.getAtivo());
-            System.out.println("#### Status evt3 = "+evt3.getAtivo());
+            //System.out.println("#### Status evt2 = "+evt2.getAtivo());
+            //System.out.println("#### Status evt3 = "+evt3.getAtivo());
                         
              try {
                 Thread.sleep(10*1000);
