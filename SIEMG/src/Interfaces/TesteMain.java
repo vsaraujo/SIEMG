@@ -13,6 +13,10 @@ import Login.Credenciais;
 import Login.TelaLogin;
 import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
+import Parametros.GrupoParametros;
+import Parametros.Parametro;
+import Parametros.Campos;
+import Parametros.Operadores;
 import java.io.IOException;
 import static java.lang.System.exit;
 import java.util.HashMap;
@@ -29,42 +33,60 @@ public class TesteMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        TimeSIEMG time = new TimeSIEMG(120);
-        /*TimeSIEMG time2 = new TimeSIEMG(10);
-        TimeSIEMG time3 = new TimeSIEMG(60);*/
+        MonitorSIEMG monitor = MonitorSIEMG.getInstancia();
+        
+        TimeSIEMG time = new TimeSIEMG(600);
+        TimeSIEMG time2 = new TimeSIEMG(600);
+        TimeSIEMG time3 = new TimeSIEMG(600);
 
         int idt1 = 1;
-        /*int idt2 = 2;
-        int idt3 = 3;*/
+        int idt2 = 2;
+        int idt3 = 3;
+        
+        GrupoParametros g1 = new GrupoParametros();
+        GrupoParametros g2 = new GrupoParametros();
+        GrupoParametros g3 = new GrupoParametros();
+        
+        g1.setParametro(new Parametro(Campos.USER,Operadores.CONTEM,"www"));
+        g1.setParametro(new Parametro(Campos.CONTADOR,Operadores.MAIOR_QUE,"0"));
+
+        g2.setParametro(new Parametro(Campos.USER,Operadores.CONTEM,"adm"));
+        g2.setParametro(new Parametro(Campos.CONTADOR,Operadores.MAIOR_QUE,"0"));
+        
+        g3.setParametro(new Parametro(Campos.USER,Operadores.CONTEM,"esi"));
+        g3.setParametro(new Parametro(Campos.CONTADOR,Operadores.MAIOR_QUE,"0"));
 
         System.out.println("##Inicio da criação do 1 - Evento1##");
         EventoAute evt1 = new EventoAute(time, idt1);
-        Thread t1 = new Thread(evt1, "New Thread 1");
-        t1.start();
+        evt1.setParametros(g1);
         System.out.println("##FIM da criação do 1 - Evento1##");
-
-        /*System.out.println("##Inicio da criação do 2 - Evento2##");
+        
+        System.out.println("##Inicio da criação do 2 - Evento2##");
         EventoAute evt2 = new EventoAute(time2, idt2);
-        Thread t2 = new Thread(evt2, "New Thread 2");
-        t2.start();
+        evt2.setParametros(g2);        
         System.out.println("##FIM da criação do 2 - Evento2");
 
         System.out.println("##Inicio da criação do 3 - Evento3##");
         EventoAute evt3 = new EventoAute(time3, idt3);
-        Thread t3 = new Thread(evt3, "New Thread 3");
-        t3.start();
-        System.out.println("##FIM da criação do 3 - Evento3");*/
+        evt3.setParametros(g3);
+        System.out.println("##FIM da criação do 3 - Evento3");
 
+        monitor.anexarEvento(evt1);
+        monitor.anexarEvento(evt2);
+        monitor.anexarEvento(evt3);
+        
+        monitor.startEventos();
+        
         int fim = 0;
         
-        while (evt1.getAtivo() /*|| evt2.getAtivo() || evt3.getAtivo()*/){
+        while (evt1.getStatus() || evt2.getStatus() || evt3.getStatus()){
             
             fim++;
                     
             System.out.println("####"+fim+"º Tentativa de finalizar");
-            System.out.println("#### Status evt1 = "+evt1.getAtivo());
-            //System.out.println("#### Status evt2 = "+evt2.getAtivo());
-            //System.out.println("#### Status evt3 = "+evt3.getAtivo());
+            System.out.println("#### Status evt1 = "+evt1.getStatus());
+            System.out.println("#### Status evt2 = "+evt2.getStatus());
+            System.out.println("#### Status evt3 = "+evt3.getStatus());
                         
              try {
                 Thread.sleep(10*1000);

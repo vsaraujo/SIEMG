@@ -23,52 +23,126 @@ import java.util.logging.Logger;
  */
 public class MonitorSIEMG implements Monitoramento {
 
-    private Dados aute;
     private int count;
-    List<Evento> listEvent;
+    private static int indice;
+    private static MonitorSIEMG instancia;
 
-    public MonitorSIEMG(){
-        
+    Map<Integer, Evento> listEvento;
+    Map<Integer, Thread> listThreads;
+
+    public MonitorSIEMG() {
+
         count = 0;
-        listEvent = new ArrayList<Evento>();
+        indice = 0;
+        listEvento = new HashMap<>();
+        listThreads = new HashMap<>();
 
     }
 
-   
     @Override
-    public void anexarEvento(Evento e) {
-    
+    public void anexarEvento(Evento th) {
+
         try {
-           
-            listEvent.add(e);       
+
+            listEvento.put(indice, th);
+            listThreads.put(indice, new Thread((Runnable) th));
+
+            indice++;
             count++;
-        
-        }
-        catch (NullPointerException evt){
-           System.out.println(evt.toString());
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
         }
     }
 
     @Override
     public void removerEvento(Evento e) {
-    
-        listEvent.remove(e);
-    
+
+        for (Integer id : listEvento.keySet()) {
+
+            if (listEvento.get(id).equals(e)) {
+                listEvento.remove(id);
+                listThreads.get(id).stop();
+                listThreads.remove(id);
+                count--;
+                break;
+            }
+
+        }
+
     }
 
     @Override
     public void verificarStatus() {
-    
+
         try {
-        
-            for(Evento e: listEvent){
+
+            for (Integer id : listEvento.keySet()) {
                 //System.out.println("ID:"+e.toString()+"Quantidade de resultado: "+e.getStatus());
             }
-            
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
         }
-        catch (NullPointerException evt){
-           System.out.println(evt.toString());
+    }
+
+    @Override
+    public void startEventos() {
+        try {
+
+            for (Integer id : listThreads.keySet()) {
+                listThreads.get(id).start();
+            }
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
         }
+    }
+
+    @Override
+    public void startEvento(Evento th) {
+
+        try {
+
+            for (Integer id : listEvento.keySet()) {
+                if (listEvento.get(id).equals(th)) {
+                    listThreads.get(id).start();
+                }
+            }
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
+        }
+
+    }
+
+    @Override
+    public void stopEvento(Evento th) {
+
+        try {
+
+            for (Integer id : listEvento.keySet()) {
+                if (listEvento.get(id).equals(th)) {
+                    listThreads.get(id).stop();
+                }
+            }
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
+        }
+
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public static synchronized MonitorSIEMG getInstancia() {
+
+        if (instancia == null) {
+            instancia = new MonitorSIEMG();
+        }
+        return instancia;
     }
 
 }

@@ -29,7 +29,7 @@ public class EventoAute implements Evento, Runnable {
     private Map<Integer, List<String>> lista;
     private Monitoramento monitor;
     private int idEvento;
-    private Boolean ativo;
+    private Boolean status;
     private GrupoParametros regras;
 
     public EventoAute(TimeSIEMG seg, int idthread) throws IOException {
@@ -38,7 +38,8 @@ public class EventoAute implements Evento, Runnable {
             time = seg;
             System.out.println("Classe aute criada");
             idEvento = idthread;
-            ativo = Boolean.TRUE;
+            
+            status = Boolean.TRUE;
 
             regras = new GrupoParametros();
 
@@ -50,12 +51,41 @@ public class EventoAute implements Evento, Runnable {
     }
 
     @Override
-    public void getStatus() {
+    public Boolean getStatus() {
+        return status;
+    }
 
+    @Override
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public int getIndex() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setParametros(GrupoParametros param) {
+        regras = param;
+    }
+
+    @Override
+    public void setJanela(TimeSIEMG janela) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setAgendamento(TimeSIEMG agendamento) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void run() {
         int qntresultado = 0;
 
-        setParametros();
-
+        setStatus(Boolean.TRUE);
+        
         do {
             lista = aute.obterDados(time, regras);
             qntresultado = aute.getQuantideResult();
@@ -79,47 +109,9 @@ public class EventoAute implements Evento, Runnable {
 
         }
 
-        // return qntresultado;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    @Override
-    public int getIndex() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setParametros() {
-
-        regras.setParametro(new Parametro(Campos.CONTADOR, Operadores.MAIOR_QUE, "1"));
-
-    }
-
-    @Override
-    public void setJanela(TimeSIEMG janela) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setAgendamento(TimeSIEMG agendamento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void run() {
-
-        getStatus();
-
         System.out.println("####FIM### ID: " + idEvento);
 
-        setAtivo(Boolean.FALSE);
+        setStatus(Boolean.FALSE);
 
     }
 

@@ -15,6 +15,9 @@ public interface Monitoramento {
 
     public void anexarEvento(Evento e);
     public void removerEvento(Evento e);
+    public void startEventos();
+    public void startEvento(Evento e);
+    public void stopEvento(Evento e);
     public void verificarStatus();
 
 }

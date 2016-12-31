@@ -6,6 +6,7 @@
 package Evento;
 
 import Funcionalidades.TimeSIEMG;
+import Parametros.GrupoParametros;
 
 /**
  *
@@ -13,9 +14,10 @@ import Funcionalidades.TimeSIEMG;
  */
 public interface Evento {
     
-    public void getStatus();
+    public Boolean getStatus();
+    public void setStatus(Boolean status);
     public int getIndex();
-    public void setParametros();
+    public void setParametros(GrupoParametros param);
     public void setJanela(TimeSIEMG janela);
     public void setAgendamento(TimeSIEMG agendamento);
     
