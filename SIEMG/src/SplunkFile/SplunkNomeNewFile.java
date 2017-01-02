@@ -20,7 +20,7 @@ public class SplunkNomeNewFile {
 
     }
 
-    public static int getNum() {
+    public static synchronized int getNum() {
         num++;
         return num;
     }
