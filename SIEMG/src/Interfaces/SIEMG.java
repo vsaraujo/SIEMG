@@ -37,6 +37,7 @@ public class SIEMG extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
@@ -75,6 +76,14 @@ public class SIEMG extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem1);
+
+        jMenuItem4.setText("Evento");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
 
         jMenuBar2.add(jMenu4);
 
@@ -129,6 +138,16 @@ public class SIEMG extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+            
+        Tela_CriarEvento criarEvento = new Tela_CriarEvento();
+        jDesktopPane2.add(criarEvento);
+        criarEvento.setPosicao();
+        criarEvento.setVisible(Boolean.TRUE);
+        
+
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -173,5 +192,6 @@ public class SIEMG extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }
