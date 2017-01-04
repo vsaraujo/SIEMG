@@ -27,17 +27,18 @@ public class EventoAute implements Evento, Runnable {
     private TimeSIEMG time;
     private AuteSimultanea aute;
     private Map<Integer, List<String>> lista;
-    private Monitoramento monitor;
-    private int idEvento;
+    private Monitoramento monitor;    
     private Boolean status;
     private GrupoParametros regras;
+    private String title;
+    private Integer indice;
 
-    public EventoAute(TimeSIEMG seg, int idthread) throws IOException {
+    public EventoAute(TimeSIEMG seg, int idEvento) throws IOException {
 
         try {
             time = seg;
             System.out.println("Classe aute criada");
-            idEvento = idthread;
+            indice = idEvento;
             
             status = Boolean.TRUE;
 
@@ -61,23 +62,8 @@ public class EventoAute implements Evento, Runnable {
     }
 
     @Override
-    public int getIndex() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void setParametros(GrupoParametros param) {
         regras = param;
-    }
-
-    @Override
-    public void setJanela(TimeSIEMG janela) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setAgendamento(TimeSIEMG agendamento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -102,17 +88,37 @@ public class EventoAute implements Evento, Runnable {
 
         } while (qntresultado < 1);
 
-        System.out.println("## Fim Resultado da Thread: " + idEvento + " com o tempo de: " + time.getExecucao() + "s");
+        System.out.println("## Fim Resultado da Thread: " + indice + " com o tempo de: " + time.getExecucao() + "s");
         for (Integer i : lista.keySet()) {
 
             System.out.println(lista.get(i));
 
         }
 
-        System.out.println("####FIM### ID: " + idEvento);
+        System.out.println("####FIM### ID: " + indice);
 
         setStatus(Boolean.FALSE);
 
     }
 
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setIndice(Integer idx) {
+        indice = idx;
+    }
+
+    @Override
+    public Integer getIndice() {
+        return indice;
+    }
+    
 }

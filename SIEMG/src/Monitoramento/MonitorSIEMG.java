@@ -23,8 +23,7 @@ import java.util.logging.Logger;
  */
 public class MonitorSIEMG implements Monitoramento {
 
-    private int count;
-    private static int indice;
+    private Integer count;    
     private static MonitorSIEMG instancia;
 
     Map<Integer, Evento> listEvento;
@@ -32,8 +31,7 @@ public class MonitorSIEMG implements Monitoramento {
 
     public MonitorSIEMG() {
 
-        count = 0;
-        indice = 0;
+        count = 0;        
         listEvento = new HashMap<>();
         listThreads = new HashMap<>();
 
@@ -44,10 +42,9 @@ public class MonitorSIEMG implements Monitoramento {
 
         try {
 
-            listEvento.put(indice, th);
-            listThreads.put(indice, new Thread((Runnable) th));
-
-            indice++;
+            listEvento.put(th.getIndice(), th);
+            listThreads.put(th.getIndice(), new Thread((Runnable) th));
+            
             count++;
 
         } catch (NullPointerException evt) {
@@ -100,12 +97,12 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public void startEvento(Evento th) {
+    public void startEvento(Integer idx) {
 
         try {
 
             for (Integer id : listEvento.keySet()) {
-                if (listEvento.get(id).equals(th)) {
+                if (id.equals(idx)) {
                     listThreads.get(id).start();
                 }
             }
@@ -117,12 +114,12 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public void stopEvento(Evento th) {
+    public void stopEvento(Integer idx) {
 
         try {
 
             for (Integer id : listEvento.keySet()) {
-                if (listEvento.get(id).equals(th)) {
+                if (id.equals(idx)) {
                     listThreads.get(id).stop();
                 }
             }
@@ -133,7 +130,9 @@ public class MonitorSIEMG implements Monitoramento {
 
     }
 
-    public int getCount() {
+    
+    @Override
+    public Integer getCount() {
         return count;
     }
 
@@ -143,6 +142,26 @@ public class MonitorSIEMG implements Monitoramento {
             instancia = new MonitorSIEMG();
         }
         return instancia;
+    }
+    
+    @Override
+    public Map<Integer, Evento> getListEvento() {
+        return listEvento;
+    }
+
+    @Override
+    public void setListEvento(Map<Integer, Evento> listEvento) {
+        this.listEvento = listEvento;
+    }
+
+    @Override
+    public Map<Integer, Thread> getListThreads() {
+        return listThreads;
+    }
+
+    @Override
+    public void setListThreads(Map<Integer, Thread> listThreads) {
+        this.listThreads = listThreads;
     }
 
 }

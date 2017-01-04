@@ -36,7 +36,6 @@ public class SIEMG extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -69,15 +68,7 @@ public class SIEMG extends javax.swing.JFrame {
 
         jMenu4.setText("Inserir");
 
-        jMenuItem1.setText("Grupo de Parametros");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem1);
-
-        jMenuItem4.setText("Evento");
+        jMenuItem4.setText("Gerenciar Eventos");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -115,15 +106,6 @@ public class SIEMG extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
-        Tela_GrupoParametros grupoParam = new Tela_GrupoParametros();
-        jDesktopPane2.add(grupoParam);
-        grupoParam.setPosicao();
-        grupoParam.setVisible(Boolean.TRUE);
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
         Tela_MonitorSIEMG monitor = new Tela_MonitorSIEMG();
@@ -140,7 +122,7 @@ public class SIEMG extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
             
-        Tela_CriarEvento criarEvento = new Tela_CriarEvento();
+        Tela_GerenciarEventos criarEvento = new Tela_GerenciarEventos();
         jDesktopPane2.add(criarEvento);
         criarEvento.setPosicao();
         criarEvento.setVisible(Boolean.TRUE);
@@ -189,7 +171,6 @@ public class SIEMG extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

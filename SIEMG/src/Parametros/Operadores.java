@@ -18,6 +18,18 @@ public enum Operadores {
     INICIA_COM,
     TERMINA_COM,
     MAIOR_QUE,
-    MENOR_QUE
+    MENOR_QUE;
 
+    public static Operadores getValue(Object get) {
+
+        Operadores operadores = null;
+        for (Operadores op : operadores.values()) {
+
+            if (op.equals(get)) {
+                return op;
+            }
+        }
+        return null;
+
+    }
 }

@@ -15,10 +15,12 @@ import Parametros.GrupoParametros;
 public interface Evento {
     
     public Boolean getStatus();
-    public void setStatus(Boolean status);
-    public int getIndex();
+    public void setStatus(Boolean status);    
     public void setParametros(GrupoParametros param);
-    public void setJanela(TimeSIEMG janela);
-    public void setAgendamento(TimeSIEMG agendamento);
+    public void setTitle(String title);
+    public void setIndice(Integer idx);
+    public Integer getIndice();
+    public String getTitle();
+    
     
 }

@@ -17,6 +17,14 @@ public class GrupoParametros {
     Map<Integer, Parametro> map;
     private int idx;
 
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
     public GrupoParametros() {
 
         map = new HashMap<>();

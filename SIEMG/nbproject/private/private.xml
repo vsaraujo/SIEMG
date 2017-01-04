@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Interfaces/SIEMG.java</file>
-            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_GrupoParametros.java</file>
-            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_MonitorSIEMG.java</file>
-            <file>file:/C:/Users/Vítor/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_CriarEvento.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Evento/Evento.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_MonitorSIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_GerenciarEventos.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/SIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/AuteSimultanea.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Parametros/Campos.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Evento/EventoAute.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Monitoramento/MonitorSIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Monitoramento/Monitoramento.java</file>
         </group>
     </open-files>
 </project-private>
