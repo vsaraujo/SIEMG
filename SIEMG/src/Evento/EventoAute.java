@@ -27,6 +27,7 @@ public class EventoAute implements Evento, Runnable {
     private TimeSIEMG time;
     private AuteSimultanea aute;
     private Map<Integer, List<String>> lista;
+
     private Monitoramento monitor;    
     private Boolean status;
     private GrupoParametros regras;
@@ -119,6 +120,11 @@ public class EventoAute implements Evento, Runnable {
     @Override
     public Integer getIndice() {
         return indice;
+    }
+    
+    @Override
+    public Map<Integer, List<String>> getListaResultados() {
+        return lista;
     }
     
 }

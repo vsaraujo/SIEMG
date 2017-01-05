@@ -7,6 +7,8 @@ package Evento;
 
 import Funcionalidades.TimeSIEMG;
 import Parametros.GrupoParametros;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,6 +23,7 @@ public interface Evento {
     public void setIndice(Integer idx);
     public Integer getIndice();
     public String getTitle();
+    public Map<Integer, List<String>> getListaResultados();
     
     
 }
