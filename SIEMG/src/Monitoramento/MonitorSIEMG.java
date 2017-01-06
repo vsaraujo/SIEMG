@@ -23,17 +23,20 @@ import java.util.logging.Logger;
  */
 public class MonitorSIEMG implements Monitoramento {
 
+    
     private Integer count;    
-    private static MonitorSIEMG instancia;
+    private static Monitoramento instancia;
 
     Map<Integer, Evento> listEvento;
     Map<Integer, Thread> listThreads;
+    Map<Integer, Thread.State> listStatus;
 
     public MonitorSIEMG() {
 
         count = 0;        
         listEvento = new HashMap<>();
         listThreads = new HashMap<>();
+        listStatus = new HashMap<>();
 
     }
 
@@ -44,6 +47,9 @@ public class MonitorSIEMG implements Monitoramento {
 
             listEvento.put(th.getIndice(), th);
             listThreads.put(th.getIndice(), new Thread((Runnable) th));
+            listStatus.put(th.getIndice(), th.getStatus());
+            
+            th.setMonitor(this);
             
             count++;
 
@@ -136,7 +142,7 @@ public class MonitorSIEMG implements Monitoramento {
         return count;
     }
 
-    public static synchronized MonitorSIEMG getInstancia() {
+    public static synchronized Monitoramento getInstancia() {
 
         if (instancia == null) {
             instancia = new MonitorSIEMG();
@@ -162,6 +168,27 @@ public class MonitorSIEMG implements Monitoramento {
     @Override
     public void setListThreads(Map<Integer, Thread> listThreads) {
         this.listThreads = listThreads;
+    }
+
+    @Override
+    public void setStatus(Evento e,Thread.State status) {
+        
+        try {
+
+            for (Integer id : listEvento.keySet()) {
+                if (id.equals(e.getIndice())) {
+                    listStatus.put(id, status);
+                }
+            }
+
+        } catch (NullPointerException evt) {
+            System.out.println(evt.toString());
+        }
+    }
+
+    @Override
+    public Thread.State getStatus(Evento e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

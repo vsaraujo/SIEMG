@@ -485,8 +485,12 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         }
         
         evento.setParametros(gpparam);
+        System.out.println("Parametro setado");
         evento.setTitle(jTNomeEvento.getText());
+        
+        
         monitor.anexarEvento(evento);
+        System.out.println("Evento Anexando...");
         
         DefaultTableModel tbEventos = (DefaultTableModel)jTable_Eventos.getModel();
         String [] infoEvt = {evento.getIndice().toString(),evento.getTitle()};

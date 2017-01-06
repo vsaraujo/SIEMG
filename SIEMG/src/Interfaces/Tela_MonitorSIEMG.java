@@ -37,6 +37,18 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
+    
+    private void atualizarTabeladeEventos(){
+        
+        DefaultTableModel tbEventos = (DefaultTableModel)jTMonitorEventos.getModel();
+
+        for(Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()){
+
+            String [] infoEvt = {evento.getValue().getIndice().toString(),evento.getValue().getTitle(),evento.getValue().getStatus().toString()};
+            tbEventos.addRow(infoEvt);
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -192,20 +204,12 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um evento para inicializar");
-        }
-        
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         
-        DefaultTableModel tbEventos = (DefaultTableModel)jTMonitorEventos.getModel();
-
-        for(Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()){
-
-            String [] infoEvt = {evento.getValue().getIndice().toString(),evento.getValue().getTitle(),"Executando"};
-            tbEventos.addRow(infoEvt);
-
-        }
+        atualizarTabeladeEventos();
         
     }//GEN-LAST:event_formInternalFrameOpened
 

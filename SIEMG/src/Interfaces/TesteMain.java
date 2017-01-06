@@ -33,7 +33,7 @@ public class TesteMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        MonitorSIEMG monitor = MonitorSIEMG.getInstancia();
+        //MonitorSIEMG monitor = MonitorSIEMG.getInstancia();
         
         TimeSIEMG time = new TimeSIEMG(600);
         TimeSIEMG time2 = new TimeSIEMG(600);
@@ -71,29 +71,29 @@ public class TesteMain {
         evt3.setParametros(g3);
         System.out.println("##FIM da criação do 3 - Evento3");
 
-        monitor.anexarEvento(evt1);
-        monitor.anexarEvento(evt2);
-        monitor.anexarEvento(evt3);
+        //monitor.anexarEvento(evt1);
+        //monitor.anexarEvento(evt2);
+        //monitor.anexarEvento(evt3);
         
-        monitor.startEventos();
+        //monitor.startEventos();
         
         int fim = 0;
         
-        while (evt1.getStatus() || evt2.getStatus() || evt3.getStatus()){
-            
-            fim++;
-                    
-            System.out.println("####"+fim+"º Tentativa de finalizar");
-            System.out.println("#### Status evt1 = "+evt1.getStatus());
-            System.out.println("#### Status evt2 = "+evt2.getStatus());
-            System.out.println("#### Status evt3 = "+evt3.getStatus());
-                        
-             try {
-                Thread.sleep(10*1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        while (evt1.getStatus() || evt2.getStatus() || evt3.getStatus()){
+//            
+//            fim++;
+//                    
+//            System.out.println("####"+fim+"º Tentativa de finalizar");
+//            System.out.println("#### Status evt1 = "+evt1.getStatus());
+//            System.out.println("#### Status evt2 = "+evt2.getStatus());
+//            System.out.println("#### Status evt3 = "+evt3.getStatus());
+//                        
+//             try {
+//                Thread.sleep(10*1000);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
         
         exit(0);
     }

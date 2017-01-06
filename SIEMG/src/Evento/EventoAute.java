@@ -29,7 +29,8 @@ public class EventoAute implements Evento, Runnable {
     private Map<Integer, List<String>> lista;
 
     private Monitoramento monitor;    
-    private Boolean status;
+
+    private Thread.State status;
     private GrupoParametros regras;
     private String title;
     private Integer indice;
@@ -41,25 +42,27 @@ public class EventoAute implements Evento, Runnable {
             System.out.println("Classe aute criada");
             indice = idEvento;
             
-            status = Boolean.TRUE;
-
+            this.status = Thread.State.NEW;
+            System.out.println("GetState = "+ this.getStatus());
             regras = new GrupoParametros();
 
             aute = new AuteSimultanea();
 
         } catch (NullPointerException e) {
+            
             System.out.println(e.toString());
         }
     }
 
     @Override
-    public Boolean getStatus() {
+    public Thread.State getStatus() {
         return status;
     }
 
     @Override
-    public void setStatus(Boolean status) {
+    public void setStatus(Thread.State status) {
         this.status = status;
+        monitor.setStatus(this, status);
     }
 
     @Override
@@ -71,7 +74,7 @@ public class EventoAute implements Evento, Runnable {
     public void run() {
         int qntresultado = 0;
 
-        setStatus(Boolean.TRUE);
+        setStatus(Thread.State.RUNNABLE);        
         
         do {
             lista = aute.obterDados(time, regras);
@@ -98,7 +101,7 @@ public class EventoAute implements Evento, Runnable {
 
         System.out.println("####FIM### ID: " + indice);
 
-        setStatus(Boolean.FALSE);
+        setStatus(Thread.State.TERMINATED);        
 
     }
 
@@ -125,6 +128,10 @@ public class EventoAute implements Evento, Runnable {
     @Override
     public Map<Integer, List<String>> getListaResultados() {
         return lista;
+    }
+    @Override
+    public void setMonitor(Monitoramento monitor) {
+        this.monitor = monitor;
     }
     
 }
