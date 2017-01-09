@@ -6,6 +6,7 @@
 package Evento;
 
 import Funcionalidades.TimeSIEMG;
+import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
 import Parametros.GrupoParametros;
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.Map;
  */
 public interface Evento {
     
-    public Thread.State getStatus();
-    public void setStatus(Thread.State status);    
+    public MonitorStatus getStatus();
+    public void setStatus(MonitorStatus status);    
     public void setParametros(GrupoParametros param);
     public void setTitle(String title);
     public void setIndice(Integer idx);

@@ -7,6 +7,7 @@ package Evento;
 
 import Funcionalidades.AuteSimultanea;
 import Funcionalidades.TimeSIEMG;
+import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
 import Parametros.Campos;
 import Parametros.GrupoParametros;
@@ -30,7 +31,7 @@ public class EventoAute implements Evento, Runnable {
 
     private Monitoramento monitor;    
 
-    private Thread.State status;
+    private MonitorStatus status;
     private GrupoParametros regras;
     private String title;
     private Integer indice;
@@ -42,7 +43,7 @@ public class EventoAute implements Evento, Runnable {
             System.out.println("Classe aute criada");
             indice = idEvento;
             
-            this.status = Thread.State.NEW;
+            this.status = MonitorStatus.DESLIGADO;
             System.out.println("GetState = "+ this.getStatus());
             regras = new GrupoParametros();
 
@@ -55,12 +56,12 @@ public class EventoAute implements Evento, Runnable {
     }
 
     @Override
-    public Thread.State getStatus() {
+    public MonitorStatus getStatus() {
         return status;
     }
 
     @Override
-    public void setStatus(Thread.State status) {
+    public void setStatus(MonitorStatus status) {
         this.status = status;
         monitor.setStatus(this, status);
     }
@@ -74,7 +75,7 @@ public class EventoAute implements Evento, Runnable {
     public void run() {
         int qntresultado = 0;
 
-        setStatus(Thread.State.RUNNABLE);        
+        setStatus(MonitorStatus.LIGADO);        
         
         do {
             lista = aute.obterDados(time, regras);
@@ -101,7 +102,7 @@ public class EventoAute implements Evento, Runnable {
 
         System.out.println("####FIM### ID: " + indice);
 
-        setStatus(Thread.State.TERMINATED);        
+        setStatus(MonitorStatus.DISPARADO);        
 
     }
 

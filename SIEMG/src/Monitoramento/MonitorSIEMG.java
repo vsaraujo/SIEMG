@@ -29,7 +29,7 @@ public class MonitorSIEMG implements Monitoramento {
 
     Map<Integer, Evento> listEvento;
     Map<Integer, Thread> listThreads;
-    Map<Integer, Thread.State> listStatus;
+    Map<Integer, MonitorStatus> listStatus;
 
     public MonitorSIEMG() {
 
@@ -154,6 +154,11 @@ public class MonitorSIEMG implements Monitoramento {
     public Map<Integer, Evento> getListEvento() {
         return listEvento;
     }
+    
+    @Override
+    public Map<Integer, MonitorStatus> getListStatus() {
+        return listStatus;
+    }    
 
     @Override
     public void setListEvento(Map<Integer, Evento> listEvento) {
@@ -169,9 +174,9 @@ public class MonitorSIEMG implements Monitoramento {
     public void setListThreads(Map<Integer, Thread> listThreads) {
         this.listThreads = listThreads;
     }
-
+    
     @Override
-    public void setStatus(Evento e,Thread.State status) {
+    public void setStatus(Evento e,MonitorStatus status) {
         
         try {
 
@@ -187,7 +192,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public Thread.State getStatus(Evento e) {
+    public MonitorStatus getStatus(Evento e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
