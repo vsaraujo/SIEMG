@@ -26,6 +26,6 @@ public interface Monitoramento {
     public Map<Integer, Evento> getListEvento();
     public void setListEvento(Map<Integer, Evento> listEvento);
     public Map<Integer, Thread> getListThreads();
-    public void setListThreads(Map<Integer, Thread> listThreads);    
+    public void setListThreads(Map<Integer, Thread> listThreads);  
 
 }

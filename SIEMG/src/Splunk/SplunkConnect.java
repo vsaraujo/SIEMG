@@ -32,7 +32,7 @@ public final class SplunkConnect {
         return splunkConnect;
     }
 
-    public SplunkConnect() {
+    private SplunkConnect() {
 
         System.out.println("Criando Credenciais");
         login = TelaLogin.getInstancia();

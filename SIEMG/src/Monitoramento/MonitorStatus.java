@@ -11,9 +11,8 @@ package Monitoramento;
  */
 public enum MonitorStatus {
     
-    EXECUTANDO,
-    PARADO,
-    FINALIZADO,
-    PAUSADO,    
+    LIGADO,
+    DESLIGADO,
+    DISPARADO,  
     
 }
