@@ -5,12 +5,10 @@
  */
 package Interfaces;
 
-import Evento.Evento;
-import Evento.EventoAute;
-import Funcionalidades.AuteSimultanea;
+import Evento.AlertaAuteSimples;
+import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Login.Credenciais;
-import Login.TelaLogin;
 import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
 import Parametros.GrupoParametros;
@@ -24,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Evento.Alerta;
 
 /**
  *
@@ -57,17 +56,17 @@ public class TesteMain {
         g3.setParametro(new Parametro(Campos.CONTADOR,Operadores.MAIOR_QUE,"0"));
 
         System.out.println("##Inicio da criação do 1 - Evento1##");
-        EventoAute evt1 = new EventoAute(time, idt1);
+        AlertaAuteSimples evt1 = new AlertaAuteSimples(time, idt1);
         evt1.setParametros(g1);
         System.out.println("##FIM da criação do 1 - Evento1##");
         
         System.out.println("##Inicio da criação do 2 - Evento2##");
-        EventoAute evt2 = new EventoAute(time2, idt2);
+        AlertaAuteSimples evt2 = new AlertaAuteSimples(time2, idt2);
         evt2.setParametros(g2);        
         System.out.println("##FIM da criação do 2 - Evento2");
 
         System.out.println("##Inicio da criação do 3 - Evento3##");
-        EventoAute evt3 = new EventoAute(time3, idt3);
+        AlertaAuteSimples evt3 = new AlertaAuteSimples(time3, idt3);
         evt3.setParametros(g3);
         System.out.println("##FIM da criação do 3 - Evento3");
 
@@ -91,7 +90,7 @@ public class TesteMain {
 //             try {
 //                Thread.sleep(10*1000);
 //            } catch (InterruptedException ex) {
-//                Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(AlertaAuteSimples.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
         

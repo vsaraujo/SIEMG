@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author vitor.araujo
  */
-public interface Evento {
+public interface Alerta {
     
     public MonitorStatus getStatus();
     public void setStatus(MonitorStatus status);    

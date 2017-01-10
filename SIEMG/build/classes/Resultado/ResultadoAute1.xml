@@ -1,1 +1,1 @@
-<results preview='0'/>
+<?xml version='1.0' encoding='UTF-8'?><results preview='0'><meta><fieldOrder><field groupby_rank="0">user</field><field>count</field></fieldOrder></meta>	<result offset='0'>		<field k='user'>			<value><text>felipe.quintella</text></value>		</field>		<field k='count'>			<value><text>1</text></value>		</field>	</result></results>

@@ -5,7 +5,6 @@
  */
 package Interfaces;
 
-import Evento.Evento;
 import Monitoramento.MonitorSIEMG;
 import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
@@ -27,6 +26,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import Evento.Alerta;
 
 /**
  *
@@ -53,14 +53,13 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
     private void atualizarTabeladeEventos() {
 
         DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
-
-        //tbEventos.getDataVector().removeAllElements();
         
-        while(tbEventos.getRowCount() > 0) {
+        //tbEventos.getDataVector().removeAllElements();
+        while (tbEventos.getRowCount() > 0) {
             tbEventos.removeRow(0);
         }
 
-        for (Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()) {
+        for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
 
             String[] infoEvt = {evento.getValue().getIndice().toString(), evento.getValue().getTitle(), evento.getValue().getStatus().toString()};
             tbEventos.addRow(infoEvt);
@@ -84,7 +83,6 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -117,8 +115,6 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Parar");
-
         jButton3.setText("Visualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,21 +127,21 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(98, 98, 98)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(98, 98, 98))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton3});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -171,7 +167,6 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             jTMonitorEventos.getColumnModel().getColumn(0).setHeaderValue("Id");
             jTMonitorEventos.getColumnModel().getColumn(1).setHeaderValue("Evento");
             jTMonitorEventos.getColumnModel().getColumn(2).setHeaderValue("Status");
-            jTMonitorEventos.getColumnModel().getColumn(2).setCellRenderer(null);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -223,7 +218,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
             int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
 
-            for (Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()) {
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
                     monitor.startEvento(id);
@@ -239,6 +234,8 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
+        jTMonitorEventos.setDefaultRenderer(Object.class, new RenderSIEMG());        
+        
         atualizarTabeladeEventos();
         Timer timer = new Timer(5 * 1000, new ActionListener() {
 
@@ -259,7 +256,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
             int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
 
-            for (Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()) {
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
 
@@ -282,12 +279,38 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTMonitorEventos;
     // End of variables declaration//GEN-END:variables
+
+    private class RenderSIEMG extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+            String status = (String) jTMonitorEventos.getModel().getValueAt(row, 2);
+
+            if (status.equals(MonitorStatus.DESLIGADO.toString())) {                
+                setForeground(Color.BLACK);
+                setBackground(Color.WHITE);
+
+            } else if (status.equals(MonitorStatus.LIGADO.toString())) {                
+                setForeground(Color.BLACK);
+                setBackground(Color.GREEN);
+
+            } else if (status.equals(MonitorStatus.DISPARADO.toString())) {                
+                setForeground(Color.WHITE);
+                setBackground(Color.RED);
+            }
+
+            return this;
+        }
+
+    }
 
 }

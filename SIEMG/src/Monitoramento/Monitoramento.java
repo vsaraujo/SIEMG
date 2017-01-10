@@ -5,8 +5,8 @@
  */
 package Monitoramento;
 
-import Evento.Evento;
 import java.util.Map;
+import Evento.Alerta;
 
 /**
  *
@@ -14,17 +14,17 @@ import java.util.Map;
  */
 public interface Monitoramento {
 
-    public void anexarEvento(Evento e);
-    public void removerEvento(Evento e);
+    public void anexarEvento(Alerta e);
+    public void removerEvento(Alerta e);
     public void startEventos();
     public void startEvento(Integer idx);
     public void stopEvento(Integer idx);    
     public void verificarStatus();
-    public void setStatus(Evento e,MonitorStatus status);
-    public MonitorStatus getStatus(Evento e);
+    public void setStatus(Alerta e,MonitorStatus status);
+    public MonitorStatus getStatus(Alerta e);
     public Integer getCount();
-    public Map<Integer, Evento> getListEvento();
-    public void setListEvento(Map<Integer, Evento> listEvento);
+    public Map<Integer, Alerta> getListEvento();
+    public void setListEvento(Map<Integer, Alerta> listEvento);
     public Map<Integer, Thread> getListThreads();
     public void setListThreads(Map<Integer, Thread> listThreads);  
     public Map<Integer, MonitorStatus> getListStatus();

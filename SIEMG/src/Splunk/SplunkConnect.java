@@ -7,7 +7,7 @@ package Splunk;
 
 import Funcionalidades.Avisos;
 import Login.Credenciais;
-import Login.TelaLogin;
+import Interfaces.Tela_Login;
 import com.splunk.*;       // The entry point to the client library
 import java.util.logging.Level;
 
@@ -20,7 +20,7 @@ public final class SplunkConnect {
     private Service svc;
     private ServiceArgs loginArgs;
     private final Credenciais credenciais;
-    private TelaLogin login = null;
+    private Tela_Login login = null;
     private static SplunkConnect splunkConnect;    
 
     public static synchronized SplunkConnect getSplunkConnect() {
@@ -35,7 +35,7 @@ public final class SplunkConnect {
     private SplunkConnect() {
 
         System.out.println("Criando Credenciais");
-        login = TelaLogin.getInstancia();
+        login = Tela_Login.getInstancia();
         credenciais = Credenciais.getInstancia();
 
         efetuarLogin();

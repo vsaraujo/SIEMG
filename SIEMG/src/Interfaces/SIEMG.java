@@ -122,7 +122,7 @@ public class SIEMG extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
             
-        Tela_GerenciarEventos criarEvento = new Tela_GerenciarEventos();
+        Tela_GerenciarAlertas criarEvento = new Tela_GerenciarAlertas();
         jDesktopPane2.add(criarEvento);
         criarEvento.setPosicao();
         criarEvento.setVisible(Boolean.TRUE);

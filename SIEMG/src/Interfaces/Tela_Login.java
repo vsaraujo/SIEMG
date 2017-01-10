@@ -3,27 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Login;
+package Interfaces;
 
+import Login.Credenciais;
 import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Vítor
  */
-public final class TelaLogin extends javax.swing.JFrame {
+public final class Tela_Login extends javax.swing.JFrame {
 
     private static Credenciais credenciais;
 
-    private static TelaLogin Instancia;
+    private static Tela_Login Instancia;
     private boolean status;
 
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin() {
+    public Tela_Login() {
 
-        //Instancia = new TelaLogin(cre);
+        //Instancia = new Tela_Login(cre);
         
         credenciais = Credenciais.getInstancia();
         status = Boolean.TRUE;
@@ -35,10 +36,10 @@ public final class TelaLogin extends javax.swing.JFrame {
         return credenciais;
     }
 
-    public static synchronized TelaLogin getInstancia() {
+    public static synchronized Tela_Login getInstancia() {
         
         if(Instancia == null){
-                Instancia = new TelaLogin();
+                Instancia = new Tela_Login();
                 Instancia.setVisible(true);
                 System.out.println("#Criando Instancia Tela Login");
         }

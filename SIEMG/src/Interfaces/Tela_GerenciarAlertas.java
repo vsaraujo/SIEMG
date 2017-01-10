@@ -5,9 +5,8 @@
  */
 package Interfaces;
 
-import Evento.Evento;
-import Evento.EventoAute;
-import Funcionalidades.AuteSimultanea;
+import Evento.AlertaAuteSimples;
+import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
@@ -30,12 +29,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Evento.Alerta;
 
 /**
  *
  * @author Vítor
  */
-public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
+public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
     
     private static int indice;
     private Monitoramento monitor;
@@ -43,7 +43,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
     /**
      * Creates new form CriarEvento
      */
-    public Tela_GerenciarEventos() {
+    public Tela_GerenciarAlertas() {
         monitor = MonitorSIEMG.getInstancia();
         initComponents();
     }
@@ -117,7 +117,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Intervalo de execução:");
 
-        jCTipoEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Autenticação Simultânea", "Falha de Login" }));
+        jCTipoEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Autenticação Simples", "Falha de Login" }));
         jCTipoEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCTipoEventoActionPerformed(evt);
@@ -431,7 +431,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         
         TimeSIEMG time = new TimeSIEMG(Integer.parseInt(jTextField1.getText()));
         GrupoParametros gpparam = new GrupoParametros();
-        Evento evento = null;
+        Alerta evento = null;
 
         Map<Integer, List> map = new HashMap<>();
 
@@ -476,12 +476,12 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
                 case 1:
                     System.out.println("Indice 1!!!");
                     System.out.println("Evento AuteSimultanea criado!!!");
-                    evento = new EventoAute(time, indice);                    
+                    evento = new AlertaAuteSimples(time, indice);                    
                     break;
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(Tela_GerenciarEventos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tela_GerenciarAlertas.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         evento.setParametros(gpparam);
@@ -496,15 +496,34 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         String [] infoEvt = {evento.getIndice().toString(),evento.getTitle()};
         tbEventos.addRow(infoEvt);
         indice++;
+        
+        limparcampos();
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void limparcampos() {
+        
+        DefaultTableModel tbParam = (DefaultTableModel) jTable_Parametros.getModel();
+        
+        while(tbParam.getRowCount() > 0) {
+            tbParam.removeRow(0);
+        }
+        
+        jTextField1.setText("");
+        jCTipoEvento.setSelectedIndex(0);
+        jCOperador.setSelectedIndex(0);
+        jTNomeEvento.setText("");
+        jTValor.setText("");
+     
+    }
+    
+    
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         
         DefaultTableModel tbEventos = (DefaultTableModel)jTable_Eventos.getModel();
         
-        for(Map.Entry<Integer, Evento> evento : monitor.getListEvento().entrySet()){
+        for(Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()){
             
             String [] infoEvt = {evento.getValue().getIndice().toString(),evento.getValue().getTitle()};            
             tbEventos.addRow(infoEvt);
@@ -543,4 +562,5 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable_Parametros;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }

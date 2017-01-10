@@ -20,12 +20,12 @@ import java.util.logging.Logger;
  *
  * @author Vítor
  */
-public class AuteSimultanea implements Dados{
+public class AuteSimples implements Dados{
 
     private SplunkAuteSimultanea autesimultanea;
     private Map<Integer,Parametro> listaregras;
     
-    public AuteSimultanea () throws IOException{
+    public AuteSimples () throws IOException{
         
         //listaregras = new HashMap<>();
         
@@ -45,14 +45,14 @@ public class AuteSimultanea implements Dados{
                 
             }
         } catch (IOException ex) {
-            Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AuteSimples.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
             autesimultanea.gerarNovoArquivo();
             //autesimultanea.getBean().printConsole();
         } catch (IOException ex) {
-            Logger.getLogger(AuteSimultanea.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AuteSimples.class.getName()).log(Level.SEVERE, null, ex);
         }
                
         return autesimultanea.getMap();

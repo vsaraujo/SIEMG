@@ -5,7 +5,7 @@
  */
 package Evento;
 
-import Funcionalidades.AuteSimultanea;
+import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
@@ -23,10 +23,10 @@ import java.util.logging.Logger;
  *
  * @author Vítor
  */
-public class EventoAute implements Evento, Runnable {
+public class AlertaAuteSimples implements Alerta, Runnable {
 
     private TimeSIEMG time;
-    private AuteSimultanea aute;
+    private AuteSimples aute;
     private Map<Integer, List<String>> lista;
 
     private Monitoramento monitor;    
@@ -36,7 +36,7 @@ public class EventoAute implements Evento, Runnable {
     private String title;
     private Integer indice;
 
-    public EventoAute(TimeSIEMG seg, int idEvento) throws IOException {
+    public AlertaAuteSimples(TimeSIEMG seg, int idEvento) throws IOException {
 
         try {
             time = seg;
@@ -47,7 +47,7 @@ public class EventoAute implements Evento, Runnable {
             System.out.println("GetState = "+ this.getStatus());
             regras = new GrupoParametros();
 
-            aute = new AuteSimultanea();
+            aute = new AuteSimples();
 
         } catch (NullPointerException e) {
             
@@ -87,7 +87,7 @@ public class EventoAute implements Evento, Runnable {
                 try {
                     Thread.sleep(time.getExecucao() * 1000);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(EventoAute.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AlertaAuteSimples.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 

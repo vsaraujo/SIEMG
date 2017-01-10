@@ -5,8 +5,7 @@
  */
 package Monitoramento;
 
-import Evento.Evento;
-import Funcionalidades.AuteSimultanea;
+import Funcionalidades.AuteSimples;
 import Funcionalidades.Dados;
 import Funcionalidades.TimeSIEMG;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Evento.Alerta;
 
 /**
  *
@@ -27,7 +27,7 @@ public class MonitorSIEMG implements Monitoramento {
     private Integer count;    
     private static Monitoramento instancia;
 
-    Map<Integer, Evento> listEvento;
+    Map<Integer, Alerta> listEvento;
     Map<Integer, Thread> listThreads;
     Map<Integer, MonitorStatus> listStatus;
 
@@ -41,7 +41,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public void anexarEvento(Evento th) {
+    public void anexarEvento(Alerta th) {
 
         try {
 
@@ -59,7 +59,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public void removerEvento(Evento e) {
+    public void removerEvento(Alerta e) {
 
         for (Integer id : listEvento.keySet()) {
 
@@ -151,7 +151,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
     
     @Override
-    public Map<Integer, Evento> getListEvento() {
+    public Map<Integer, Alerta> getListEvento() {
         return listEvento;
     }
     
@@ -161,7 +161,7 @@ public class MonitorSIEMG implements Monitoramento {
     }    
 
     @Override
-    public void setListEvento(Map<Integer, Evento> listEvento) {
+    public void setListEvento(Map<Integer, Alerta> listEvento) {
         this.listEvento = listEvento;
     }
 
@@ -176,7 +176,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
     
     @Override
-    public void setStatus(Evento e,MonitorStatus status) {
+    public void setStatus(Alerta e,MonitorStatus status) {
         
         try {
 
@@ -192,7 +192,7 @@ public class MonitorSIEMG implements Monitoramento {
     }
 
     @Override
-    public MonitorStatus getStatus(Evento e) {
+    public MonitorStatus getStatus(Alerta e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
