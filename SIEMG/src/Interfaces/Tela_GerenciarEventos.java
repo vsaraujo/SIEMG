@@ -91,7 +91,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Gerenciar Eventos");
+        setTitle("Gerenciar Alertas");
         setToolTipText("");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -113,9 +113,9 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel3.setText("Nome do evento:");
+        jLabel3.setText("Nome do alerta:");
 
-        jLabel2.setText("Tempo de execução:");
+        jLabel2.setText("Intervalo de execução:");
 
         jCTipoEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Autenticação Simultânea", "Falha de Login" }));
         jCTipoEvento.addActionListener(new java.awt.event.ActionListener() {
@@ -124,10 +124,10 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Tipo de Evento:");
+        jLabel1.setText("Tipo de alerta:");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("Informações do evento:");
+        jLabel9.setText("Informações do alerta:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -200,7 +200,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         }
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setText("Eventos:");
+        jLabel10.setText("Alertas:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -235,16 +235,16 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Escolha o operador:");
 
-        jLabel7.setText("Valor do Parâmetro:");
+        jLabel7.setText("Valor do filtro:");
 
-        jButton5.setText("Cadastrar parâmetro");
+        jButton5.setText("Inserir filtro");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        jButton7.setText("Excluir parâmetro");
+        jButton7.setText("Excluir filttro");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -252,7 +252,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Parâmetros do evento:");
+        jLabel8.setText("Filtros do alerta:");
 
         javax.swing.GroupLayout jPCamposLayout = new javax.swing.GroupLayout(jPCampos);
         jPCampos.setLayout(jPCamposLayout);
@@ -357,7 +357,7 @@ public class Tela_GerenciarEventos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)))

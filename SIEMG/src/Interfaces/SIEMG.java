@@ -68,7 +68,7 @@ public class SIEMG extends javax.swing.JFrame {
 
         jMenu4.setText("Inserir");
 
-        jMenuItem4.setText("Gerenciar Eventos");
+        jMenuItem4.setText("Gerenciar alertas");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -80,7 +80,7 @@ public class SIEMG extends javax.swing.JFrame {
 
         jMenu1.setText("Monitor");
 
-        jMenuItem2.setText("Exibir Monitor");
+        jMenuItem2.setText("Exibir monitor");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
