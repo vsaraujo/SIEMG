@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Evento;
+package Alertas;
 
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.MonitorStatus;
@@ -26,7 +26,6 @@ public interface Alerta {
     public Integer getIndice();
     public String getTitle();
     public Map<Integer, List<String>> getListaResultados();
-    public void setMonitor(Monitoramento monitor);
-    
+    public void setMonitor(Monitoramento monitor);    
     
 }

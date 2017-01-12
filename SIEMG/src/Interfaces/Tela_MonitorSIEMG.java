@@ -26,7 +26,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import Evento.Alerta;
+import Alertas.Alerta;
 
 /**
  *
@@ -84,6 +84,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTMonitorEventos = new javax.swing.JTable();
@@ -122,6 +123,13 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setText("Restart");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -129,12 +137,14 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(98, 98, 98))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton3});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +152,8 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -227,7 +238,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um evento para inicializar");
+            JOptionPane.showMessageDialog(null, "Selecione um alerta para inicializar");
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -271,14 +282,42 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um evento para inicializar");
+            JOptionPane.showMessageDialog(null, "Selecione um alerta para visualizar resultados");
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+          if (jTMonitorEventos.getSelectedRow() != -1) {
+
+            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
+            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
+
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
+
+                if (evento.getKey().equals(id)) {
+                    
+                    if(evento.getValue().getStatus() == MonitorStatus.DISPARADO)
+                        monitor.restartEvento(id);
+                    else
+                        JOptionPane.showMessageDialog(null, "Alerta não foi disparado!");
+
+                }
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um alerta para restartar");
+        }
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

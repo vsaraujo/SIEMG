@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -19,7 +20,7 @@ import javax.swing.table.TableModel;
  */
 public class Tela_Resultados extends javax.swing.JInternalFrame {
 
-    private Map<Integer, List<String>> result;
+    private Map<Integer, List<String>> result = null;
 
     /**
      * Creates new form Tela_Resultados
@@ -116,25 +117,29 @@ public class Tela_Resultados extends javax.swing.JInternalFrame {
 
         DefaultTableModel dataModel = (DefaultTableModel) jTResultados.getModel();
 
-        for (Integer idx : result.keySet()) {
+        if (result != null) {
+            for (Integer idx : result.keySet()) {
 
-            Iterator ilista = result.get(idx).iterator();
+                Iterator ilista = result.get(idx).iterator();
 
-            if (cab) {
-                while (ilista.hasNext()) {
-                    dataModel.addColumn(ilista.next());
+                if (cab) {
+                    while (ilista.hasNext()) {
+                        dataModel.addColumn(ilista.next());
+                    }
+                    cab = Boolean.FALSE;
+
+                } else {
+
+                    Vector dados = new Vector();
+
+                    while (ilista.hasNext()) {
+                        dados.add(ilista.next());
+                    }
+                    dataModel.addRow(dados);
                 }
-                cab = Boolean.FALSE;
-
-            } else {
-
-                Vector dados = new Vector();
-
-                while (ilista.hasNext()) {
-                    dados.add(ilista.next());
-                }
-                dataModel.addRow(dados);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Não há resultados!");
         }
     }//GEN-LAST:event_formInternalFrameOpened
 

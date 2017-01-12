@@ -4,7 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_MonitorSIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Alertas/Alerta.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/Tela_GerenciarAlertas.java</file>
             <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Funcionalidades/Avisos.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Interfaces/SIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Alertas/AlertaAuteSimples.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Monitoramento/MonitorSIEMG.java</file>
+            <file>file:/C:/Users/vitor.araujo/Documents/NetBeansProjects/SIEMG/src/Monitoramento/Monitoramento.java</file>
         </group>
     </open-files>
 </project-private>

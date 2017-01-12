@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import Evento.AlertaAuteSimples;
+import Alertas.AlertaAuteSimples;
 import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.MonitorSIEMG;
@@ -29,7 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Evento.Alerta;
+import Alertas.Alerta;
 
 /**
  *

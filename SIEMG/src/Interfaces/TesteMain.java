@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import Evento.AlertaAuteSimples;
+import Alertas.AlertaAuteSimples;
 import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Login.Credenciais;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Evento.Alerta;
+import Alertas.Alerta;
 
 /**
  *

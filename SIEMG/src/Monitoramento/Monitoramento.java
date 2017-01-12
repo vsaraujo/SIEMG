@@ -6,7 +6,7 @@
 package Monitoramento;
 
 import java.util.Map;
-import Evento.Alerta;
+import Alertas.Alerta;
 
 /**
  *
@@ -18,6 +18,7 @@ public interface Monitoramento {
     public void removerEvento(Alerta e);
     public void startEventos();
     public void startEvento(Integer idx);
+    public void restartEvento(Integer idx);
     public void stopEvento(Integer idx);    
     public void verificarStatus();
     public void setStatus(Alerta e,MonitorStatus status);
