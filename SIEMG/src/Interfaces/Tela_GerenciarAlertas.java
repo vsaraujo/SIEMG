@@ -6,45 +6,40 @@
 package Interfaces;
 
 import Alertas.AlertaAuteSimples;
-import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
-import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
 import Parametros.Campos;
 import Parametros.GrupoParametros;
 import Parametros.Operadores;
 import Parametros.Parametro;
 import java.awt.Dimension;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Alertas.Alerta;
+import Alertas.AlertaTipo;
 
 /**
  *
  * @author Vítor
  */
 public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
-    
+
     private static int indice;
-    private Monitoramento monitor;
-    
+    private final Monitoramento monitor;
+
     /**
      * Creates new form CriarEvento
      */
     public Tela_GerenciarAlertas() {
-        monitor = MonitorSIEMG.getInstancia();
+        monitor = Monitoramento.getInstancia();
         initComponents();
     }
 
@@ -65,14 +60,14 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTNomeEvento = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        jTIntervalo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jCTipoEvento = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_Eventos = new javax.swing.JTable();
+        jTable_Alertas = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jPCampos = new javax.swing.JPanel();
         jCCampo = new javax.swing.JComboBox<>();
@@ -89,6 +84,7 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Gerenciar Alertas");
@@ -115,9 +111,9 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Nome do alerta:");
 
-        jLabel2.setText("Intervalo de execução:");
+        jLabel2.setText("Intervalo de execução (segundos):");
 
-        jCTipoEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Autenticação Simples", "Falha de Login" }));
+        jCTipoEvento.setModel(new DefaultComboBoxModel(AlertaTipo.values()));
         jCTipoEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCTipoEventoActionPerformed(evt);
@@ -146,7 +142,7 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTNomeEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCTipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(89, 89, 89))
         );
@@ -156,7 +152,7 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
                 .addComponent(jLabel9)
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -171,7 +167,7 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable_Eventos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Alertas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -194,9 +190,9 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable_Eventos);
-        if (jTable_Eventos.getColumnModel().getColumnCount() > 0) {
-            jTable_Eventos.getColumnModel().getColumn(0).setPreferredWidth(1);
+        jScrollPane1.setViewportView(jTable_Alertas);
+        if (jTable_Alertas.getColumnModel().getColumnCount() > 0) {
+            jTable_Alertas.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -346,35 +342,55 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setText("Editar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setText("Excluir");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,15 +404,17 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
                         .addComponent(jPCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(jButton2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -417,10 +435,9 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        DefaultTableModel tbParametros = (DefaultTableModel) jTable_Parametros.getModel();
-
         String[] dados = {jCCampo.getSelectedItem().toString(), jCOperador.getSelectedItem().toString(), jTValor.getText()};
-        tbParametros.addRow(dados);
+        inserirDadosNaTabela(dados, (DefaultTableModel) jTable_Parametros.getModel());
+
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -428,112 +445,334 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         int idx = 0;
-        
-        TimeSIEMG time = new TimeSIEMG(Integer.parseInt(jTextField1.getText()));
-        GrupoParametros gpparam = new GrupoParametros();
-        Alerta evento = null;
+        int timenum = 0;
 
-        Map<Integer, List> map = new HashMap<>();
-
-        for (int i = 0; i < jTable_Parametros.getRowCount(); i++) {
-
-            List<Object> linhas = new ArrayList<>();
-
-            for (int j = 0; j < jTable_Parametros.getColumnCount(); j++) {
-
-                linhas.add(jTable_Parametros.getValueAt(i, j).toString());
-                System.out.print(linhas.get(j));
-            }
-            System.out.println("=====");
-            map.put(idx, linhas);
-            idx++;
-
-        }
-
-        for (Integer ind : map.keySet()) {
-
-            List<String> liststrg = new ArrayList<>();
-            liststrg = map.get(ind);
-            System.out.println("Valor do campo ="+liststrg.get(0));
-            System.out.println("Valor do operador ="+liststrg.get(1));
-            Campos cmp = Campos.valueOf(liststrg.get(0));
-            Operadores op = Operadores.valueOf(liststrg.get(1));
-            String vlr = (String) liststrg.get(2);
-
-            System.out.println("valor do Operador = "+op);
-            Parametro param = new Parametro(cmp, op, vlr);
-            gpparam.setParametro(param);
-
-        }
-        
         try {
+            timenum = Integer.parseInt(jTIntervalo.getText());
 
-            switch (jCTipoEvento.getSelectedIndex()) {
+            TimeSIEMG time = new TimeSIEMG(timenum);
+            GrupoParametros gpparam = new GrupoParametros();
+            Alerta evento = null;
 
-                case 0:
-                    JOptionPane.showMessageDialog(null, "Escolha um tipo de Evento!");
-                    break;
-                case 1:
-                    System.out.println("Indice 1!!!");
-                    System.out.println("Evento AuteSimultanea criado!!!");
-                    evento = new AlertaAuteSimples(time, indice);                    
-                    break;
+            Map<Integer, List> map = new HashMap<>();
+
+            for (int i = 0; i < jTable_Parametros.getRowCount(); i++) {
+
+                List<Object> linhas = new ArrayList<>();
+
+                for (int j = 0; j < jTable_Parametros.getColumnCount(); j++) {
+
+                    linhas.add(jTable_Parametros.getValueAt(i, j).toString());
+                    System.out.print(linhas.get(j));
+                }
+                System.out.println("=====");
+                map.put(idx, linhas);
+                idx++;
+
             }
 
-        } catch (IOException ex) {
-            Logger.getLogger(Tela_GerenciarAlertas.class.getName()).log(Level.SEVERE, null, ex);
+            for (Integer ind : map.keySet()) {
+
+                List<String> liststrg = new ArrayList<>();
+                liststrg = map.get(ind);
+                System.out.println("Valor do campo =" + liststrg.get(0));
+                System.out.println("Valor do operador =" + liststrg.get(1));
+                Campos cmp = Campos.valueOf(liststrg.get(0));
+                Operadores op = Operadores.valueOf(liststrg.get(1));
+                String vlr = (String) liststrg.get(2);
+
+                System.out.println("valor do Operador = " + op);
+                Parametro param = new Parametro(cmp, op, vlr);
+                gpparam.setParametro(param);
+
+            }
+
+            try {
+
+                switch (jCTipoEvento.getSelectedIndex()) {
+
+                    //AlertaTipo.AUTENTICACAO_SIMPLES
+                    case 0:
+                        System.out.println("Indice 1!!!");
+                        System.out.println("Evento AuteSimultanea criado!!!");
+                        evento = new AlertaAuteSimples(time, indice);
+                        break;
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(Tela_GerenciarAlertas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            evento.setParametros(gpparam);
+            System.out.println("Parametro setado");
+            evento.setTitle(jTNomeEvento.getText());
+
+            monitor.anexarEvento(evento);
+            System.out.println("Evento Anexando...");
+
+            DefaultTableModel tbEventos = (DefaultTableModel) jTable_Alertas.getModel();
+            String[] infoEvt = {evento.getIndice().toString(), evento.getTitle()};
+            tbEventos.addRow(infoEvt);
+            indice++;
+
+            limparcampos();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Intervalo de execução(segundos) inválido.");
+
         }
-        
-        evento.setParametros(gpparam);
-        System.out.println("Parametro setado");
-        evento.setTitle(jTNomeEvento.getText());
-        
-        
-        monitor.anexarEvento(evento);
-        System.out.println("Evento Anexando...");
-        
-        DefaultTableModel tbEventos = (DefaultTableModel)jTable_Eventos.getModel();
-        String [] infoEvt = {evento.getIndice().toString(),evento.getTitle()};
-        tbEventos.addRow(infoEvt);
-        indice++;
-        
-        limparcampos();
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void limparcampos() {
-        
+
         DefaultTableModel tbParam = (DefaultTableModel) jTable_Parametros.getModel();
-        
-        while(tbParam.getRowCount() > 0) {
+
+        while (tbParam.getRowCount() > 0) {
             tbParam.removeRow(0);
         }
-        
-        jTextField1.setText("");
+
+        jTIntervalo.setText("");
         jCTipoEvento.setSelectedIndex(0);
         jCOperador.setSelectedIndex(0);
         jTNomeEvento.setText("");
         jTValor.setText("");
-     
+
     }
     
-    
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+    private void atualizarTabelaAlertas() {
         
-        DefaultTableModel tbEventos = (DefaultTableModel)jTable_Eventos.getModel();
+        DefaultTableModel tbAlertas = (DefaultTableModel) jTable_Alertas.getModel();
         
-        for(Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()){
-            
-            String [] infoEvt = {evento.getValue().getIndice().toString(),evento.getValue().getTitle()};            
-            tbEventos.addRow(infoEvt);
-            
+        while (tbAlertas.getRowCount() > 0) {
+            tbAlertas.removeRow(0);
         }
         
+        for (Map.Entry<Integer, Alerta> alerta : monitor.getListEvento().entrySet()) {
+        
+            String[] dados = {alerta.getValue().getIndice().toString(), alerta.getValue().getTitle()};
+            inserirDadosNaTabela(dados, tbAlertas);
+            
+        }
+    }
+
+    private void preenchercampos(Alerta alerta) {
+
+        limparcampos();
+
+        DefaultTableModel tbParam = (DefaultTableModel) jTable_Parametros.getModel();
+
+        GrupoParametros grp = alerta.getParametros();
+
+        for (Map.Entry<Integer, Parametro> idParam : grp.getMapParametros().entrySet()) {
+
+            Parametro tmparam = idParam.getValue();
+            String[] dados = {tmparam.getCampo().toString(), tmparam.getOperador().toString(), tmparam.getValor()};
+            inserirDadosNaTabela(dados, (DefaultTableModel) jTable_Parametros.getModel());
+
+        }
+        jTNomeEvento.setText(alerta.getTitle());
+        jTIntervalo.setText(Integer.toString(alerta.getIntervalo().getJanela()));
+        jCTipoEvento.setSelectedIndex(alerta.getTipo().ordinal());
+
+    }
+    
+    private void salvarAlerta(Alerta alerta) {
+        
+        int idx = 0;
+        int timenum = 0;
+
+        try {
+            timenum = Integer.parseInt(jTIntervalo.getText());
+
+            TimeSIEMG time = new TimeSIEMG(timenum);
+            GrupoParametros gpparam = new GrupoParametros();
+            Alerta evento = null;
+
+            Map<Integer, List> map = new HashMap<>();
+
+            for (int i = 0; i < jTable_Parametros.getRowCount(); i++) {
+
+                List<Object> linhas = new ArrayList<>();
+
+                for (int j = 0; j < jTable_Parametros.getColumnCount(); j++) {
+
+                    linhas.add(jTable_Parametros.getValueAt(i, j).toString());
+                    System.out.print(linhas.get(j));
+                }
+                System.out.println("=====");
+                map.put(idx, linhas);
+                idx++;
+
+            }
+
+            for (Integer ind : map.keySet()) {
+
+                List<String> liststrg = new ArrayList<>();
+                liststrg = map.get(ind);
+                System.out.println("Valor do campo =" + liststrg.get(0));
+                System.out.println("Valor do operador =" + liststrg.get(1));
+                Campos cmp = Campos.valueOf(liststrg.get(0));
+                Operadores op = Operadores.valueOf(liststrg.get(1));
+                String vlr = (String) liststrg.get(2);
+
+                System.out.println("valor do Operador = " + op);
+                Parametro param = new Parametro(cmp, op, vlr);
+                gpparam.setParametro(param);
+
+            }
+
+            try {
+
+                switch (jCTipoEvento.getSelectedIndex()) {
+
+                    /*
+                     * Criação do alerta do tipo = AlertaTipo.AUTENTICACAO_SIMPLES
+                     */                    
+                    case 0:
+                        System.out.println("Indice 1!!!");
+                        System.out.println("Evento AuteSimultanea criado!!!");
+                        evento = new AlertaAuteSimples(time, alerta.getIndice());
+                        break;
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(Tela_GerenciarAlertas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            evento.setParametros(gpparam);
+            System.out.println("Parametro setado");
+            evento.setTitle(jTNomeEvento.getText());
+            
+            monitor.removerEvento(alerta);
+            monitor.anexarEvento(evento);
+            
+            System.out.println("Evento Anexando...");
+            
+            DefaultTableModel tbEventos = (DefaultTableModel) jTable_Alertas.getModel();
+            String[] infoEvt = {evento.getIndice().toString(), evento.getTitle()};
+            tbEventos.addRow(infoEvt);
+            
+            limparcampos();            
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Intervalo de execução(segundos) inválido.");
+
+        }
+        
+    }
+
+    private void excluirAlerta(Alerta alerta) {
+
+        monitor.removerEvento(alerta);
+
+    }
+
+    private void inserirDadosNaTabela(String[] dados, DefaultTableModel jTable) {
+        jTable.addRow(dados);
+    }
+
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+
+        DefaultTableModel tbEventos = (DefaultTableModel) jTable_Alertas.getModel();
+
+        for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
+
+            String[] infoEvt = {evento.getValue().getIndice().toString(), evento.getValue().getTitle()};
+            tbEventos.addRow(infoEvt);
+
+        }
+
     }//GEN-LAST:event_formInternalFrameActivated
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        if (jTable_Alertas.getSelectedRow() != -1) {
+
+            DefaultTableModel tbAlertas = (DefaultTableModel) jTable_Alertas.getModel();
+            int id = Integer.parseInt(tbAlertas.getValueAt(jTable_Alertas.getSelectedRow(), 0).toString());
+
+            for (Map.Entry<Integer, Alerta> alerta : monitor.getListEvento().entrySet()) {
+                if (alerta.getKey().equals(id)) {
+                    preenchercampos(alerta.getValue());
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um alerta a ser editado.");
+        }
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        if (jTable_Alertas.getSelectedRow() != -1) {
+
+            DefaultTableModel tbAlertas = (DefaultTableModel) jTable_Alertas.getModel();
+            int id = Integer.parseInt(tbAlertas.getValueAt(jTable_Alertas.getSelectedRow(), 0).toString());
+
+            for (Map.Entry<Integer, Alerta> alerta : monitor.getListEvento().entrySet()) {
+                if (alerta.getKey().equals(id)) {
+
+                    int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir o alerta '" + alerta.getValue().getTitle() + "'?", "Excluir?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                    if (opcao == JOptionPane.YES_OPTION) {
+
+                        excluirAlerta(alerta.getValue());
+                        atualizarTabelaAlertas();
+                        JOptionPane.showMessageDialog(null, "Alerta '" + alerta.getValue().getTitle() + "' excluído.");
+                        break;
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Alerta não excluído.");
+                    }
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um alerta a ser excluído.");
+        }
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+          if (jTable_Alertas.getSelectedRow() != -1) {
+
+            DefaultTableModel tbAlertas = (DefaultTableModel) jTable_Alertas.getModel();
+            int id = Integer.parseInt(tbAlertas.getValueAt(jTable_Alertas.getSelectedRow(), 0).toString());
+
+            for (Map.Entry<Integer, Alerta> alerta : monitor.getListEvento().entrySet()) {
+                if (alerta.getKey().equals(id)) {
+
+                    int opcao = JOptionPane.showOptionDialog(null, "Deseja salvar o alerta '" + alerta.getValue().getTitle() + "'?", "Salvar?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                    if (opcao == JOptionPane.YES_OPTION) {
+
+                        salvarAlerta(alerta.getValue());
+                        atualizarTabelaAlertas();
+                        JOptionPane.showMessageDialog(null, "Alerta salvo com sucesso.");
+                        break;
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Alerta não foi salvo.");
+                    }
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um alerta para salvar.");
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -556,11 +795,12 @@ public class Tela_GerenciarAlertas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTIntervalo;
     private javax.swing.JTextField jTNomeEvento;
     private javax.swing.JTextField jTValor;
-    private javax.swing.JTable jTable_Eventos;
+    private javax.swing.JTable jTable_Alertas;
     private javax.swing.JTable jTable_Parametros;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
+    
 }

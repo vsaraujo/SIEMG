@@ -5,8 +5,10 @@
  */
 package Interfaces;
 
+import java.io.File;
 import static java.lang.System.exit;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,8 +20,20 @@ public class SIEMG extends javax.swing.JFrame {
      * Creates new form SIEMG
      */
     public SIEMG() {
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);        
         initComponents();
+    }
+    private int removerResultados() {
+        
+        File folder = new File("src/Resultado/");
+        if (folder.isDirectory()) {
+            File[] xml = folder.listFiles();
+            for (File toDelete : xml) {
+                toDelete.delete();                
+            }
+        }
+        return EXIT_ON_CLOSE;
+     
     }
 
     /**
@@ -40,8 +54,13 @@ public class SIEMG extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(removerResultados());
         setTitle("SIEMG");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
         jDesktopPane2.setLayout(jDesktopPane2Layout);
@@ -112,23 +131,29 @@ public class SIEMG extends javax.swing.JFrame {
         jDesktopPane2.add(monitor);
         monitor.setPosicao();
         monitor.setVisible(Boolean.TRUE);
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        exit(0);
-        // TODO add your handling code here:
+
+        removerResultados();
+        exit(0);        
+        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-            
+
         Tela_GerenciarAlertas criarEvento = new Tela_GerenciarAlertas();
         jDesktopPane2.add(criarEvento);
         criarEvento.setPosicao();
         criarEvento.setVisible(Boolean.TRUE);
-        
+
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -175,4 +200,6 @@ public class SIEMG extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -5,7 +5,6 @@
  */
 package Interfaces;
 
-import Monitoramento.MonitorSIEMG;
 import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
 import java.awt.Color;
@@ -13,19 +12,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import Alertas.Alerta;
 
 /**
@@ -41,7 +34,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
      * Creates new form Tela_MonitorSIEMG
      */
     public Tela_MonitorSIEMG() {
-        monitor = MonitorSIEMG.getInstancia();
+        monitor = Monitoramento.getInstancia();
         initComponents();
     }
 
@@ -232,7 +225,12 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
-                    monitor.startEvento(id);
+                    
+                    if(evento.getValue().getStatus() == MonitorStatus.DESLIGADO)
+                        monitor.startEvento(id);
+                    else
+                        JOptionPane.showMessageDialog(null, "Alerta já foi inicializado!");
+                    
                 }
 
             }

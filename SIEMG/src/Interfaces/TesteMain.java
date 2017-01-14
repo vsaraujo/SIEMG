@@ -9,7 +9,6 @@ import Alertas.AlertaAuteSimples;
 import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Login.Credenciais;
-import Monitoramento.MonitorSIEMG;
 import Monitoramento.Monitoramento;
 import Parametros.GrupoParametros;
 import Parametros.Parametro;

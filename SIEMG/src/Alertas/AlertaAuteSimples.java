@@ -9,10 +9,7 @@ import Funcionalidades.AuteSimples;
 import Funcionalidades.TimeSIEMG;
 import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
-import Parametros.Campos;
 import Parametros.GrupoParametros;
-import Parametros.Operadores;
-import Parametros.Parametro;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +27,7 @@ public class AlertaAuteSimples implements Alerta, Runnable {
     private Map<Integer, List<String>> lista;
 
     private Monitoramento monitor;    
+    private AlertaTipo tipo;
 
     private MonitorStatus status;
     private GrupoParametros regras;
@@ -39,6 +37,8 @@ public class AlertaAuteSimples implements Alerta, Runnable {
     public AlertaAuteSimples(TimeSIEMG seg, int idEvento) throws IOException {
 
         try {
+            
+            setTipo(AlertaTipo.AUTENTICACAO_SIMPLES);
             time = seg;
             System.out.println("Classe aute criada");
             indice = idEvento;
@@ -133,6 +133,26 @@ public class AlertaAuteSimples implements Alerta, Runnable {
     @Override
     public void setMonitor(Monitoramento monitor) {
         this.monitor = monitor;
+    }
+
+    @Override
+    public void setTipo(AlertaTipo tipo) {
+        this.tipo = tipo;
+    }
+
+    @Override
+    public AlertaTipo getTipo() {
+        return tipo;
+    }
+
+    @Override
+    public GrupoParametros getParametros() {
+        return regras;        
+    }
+
+    @Override
+    public TimeSIEMG getIntervalo() {
+        return time;
     }
     
 }

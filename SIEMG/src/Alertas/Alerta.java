@@ -26,6 +26,10 @@ public interface Alerta {
     public Integer getIndice();
     public String getTitle();
     public Map<Integer, List<String>> getListaResultados();
-    public void setMonitor(Monitoramento monitor);    
+    public void setMonitor(Monitoramento monitor);
+    public void setTipo(AlertaTipo tipo);
+    public AlertaTipo getTipo();
+    public GrupoParametros getParametros();
+    public TimeSIEMG getIntervalo();
     
 }
