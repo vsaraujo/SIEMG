@@ -28,8 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private final Monitoramento monitor;
-    private Color corlinha;
-
+   
     /**
      * Creates new form Tela_MonitorSIEMG
      */
