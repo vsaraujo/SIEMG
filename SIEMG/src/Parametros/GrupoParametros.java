@@ -14,8 +14,13 @@ import java.util.Map;
  */
 public class GrupoParametros {
 
-    Map<Integer, Parametro> map;
+    private final Map<Integer, Parametro> map;
     private int idx;
+
+    public GrupoParametros() {
+        map = new HashMap<>();
+        idx = 0;
+    }
 
     public int getIdx() {
         return idx;
@@ -25,36 +30,20 @@ public class GrupoParametros {
         this.idx = idx;
     }
 
-    public GrupoParametros() {
-
-        map = new HashMap<>();
-        idx = 0;
-
-    }
-
     public void setParametro(Parametro param) {
-
         map.put(idx, param);
         idx++;
-
     }
 
     public Parametro getParametro(int id) {
-
         return map.get(id);
-
     }
     
     public void removeParametro(int id){
-        
         map.remove(id);
-        
     }
 
     public Map<Integer, Parametro> getMapParametros() {
-
         return map;
-
     }
-
 }

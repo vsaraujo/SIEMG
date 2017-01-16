@@ -6,14 +6,16 @@
 package Funcionalidades;
 
 import Parametros.GrupoParametros;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Vítor
  */
-public interface Dados {
+public interface Funcionalidades {
     
-    public Object obterDados(TimeSIEMG time, GrupoParametros param);
+    public Map<Integer, List<String>> obterDados(TimeSIEMG time, GrupoParametros param);
     public int getQuantideResult();
       
 }

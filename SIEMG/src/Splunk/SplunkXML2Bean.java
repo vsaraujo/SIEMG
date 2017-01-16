@@ -138,20 +138,23 @@ public class SplunkXML2Bean {
 
     public void printConsole() {
 
-        for (String field : meta.getFieldOrder().getField()) {
-            System.out.print("| " + field + " \t");
-        }
-        System.out.println();
+        if (meta != null && result != null) {
 
-        for (Result resultf : result) {
-            for (Field fieldf : resultf.getField()) {
-                for (Value value : fieldf.getValue()) {
-                    for (String text : value.getText()) {
-                        System.out.print("| " + text + " \t");
-                    }
-                }
+            for (String field : meta.getFieldOrder().getField()) {
+                System.out.print("| " + field + " \t");
             }
             System.out.println();
+
+            for (Result resultf : result) {
+                for (Field fieldf : resultf.getField()) {
+                    for (Value value : fieldf.getValue()) {
+                        for (String text : value.getText()) {
+                            System.out.print("| " + text + " \t");
+                        }
+                    }
+                }
+                System.out.println();
+            }
         }
     }
 
@@ -159,21 +162,19 @@ public class SplunkXML2Bean {
 
         Integer i = 0;
 
-        Map<Integer, List<String>> map = new HashMap<Integer, List<String>>();
+        Map<Integer, List<String>> map = new HashMap<>();
 
-        List<String> lista = new ArrayList<String>();
+        List<String> lista = new ArrayList<>();
 
         if (meta != null && result != null) {
 
             for (String field : meta.getFieldOrder().getField()) {
                 lista.add(field);
                 map.put(i, lista);
-                //System.out.print("| "+field+" \t");            
             }
 
-            //System.out.println();
             for (Result resultf : result) {
-                List<String> tmp = new ArrayList<String>();
+                List<String> tmp = new ArrayList<>();
                 i++;
 
                 for (Field fieldf : resultf.getField()) {
@@ -181,18 +182,11 @@ public class SplunkXML2Bean {
                         for (String text : value.getText()) {
                             tmp.add(text);
                             map.put(i, tmp);
-                            //System.out.print("| "+text+" \t");
                         }
                     }
                 }
-
-                //System.out.println();
             }
-
         }
-
         return map;
-
     }
-
 }

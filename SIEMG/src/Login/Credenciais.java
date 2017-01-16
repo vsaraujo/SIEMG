@@ -16,7 +16,7 @@ public class Credenciais {
     private String servidor;
     private static Credenciais Instancia;
 
-    public Credenciais(){
+    private Credenciais(){
         
         usuario = "";
         senha = "";
@@ -63,8 +63,6 @@ public class Credenciais {
         
         if (Instancia == null){
             Instancia = new Credenciais();
-             System.out.println("#Criando Instancia Credenciais");
-        
         }
         
         return Instancia;

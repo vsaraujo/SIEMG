@@ -20,16 +20,4 @@ public enum Operadores {
     MAIOR_QUE,
     MENOR_QUE;
 
-    public static Operadores getValue(Object get) {
-
-        Operadores operadores = null;
-        for (Operadores op : operadores.values()) {
-
-            if (op.equals(get)) {
-                return op;
-            }
-        }
-        return null;
-
-    }
 }

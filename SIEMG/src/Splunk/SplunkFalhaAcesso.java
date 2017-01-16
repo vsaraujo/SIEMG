@@ -6,7 +6,6 @@
 package Splunk;
 
 import Funcionalidades.TimeSIEMG;
-import Parametros.GrupoParametros;
 import SplunkFile.SplunkFile;
 import SplunkFile.SplunkFileXML;
 import SplunkFile.SplunkNomeNewFile;
@@ -18,21 +17,18 @@ import java.util.Map;
  *
  * @author Vítor
  */
-public class SplunkAuteSimultanea {
+public class SplunkFalhaAcesso {
 
     private Map<Integer, List<String>> resultados;
     private SplunkFile fileresult;
-    private static SplunkNomeNewFile num;
     private static Boolean status = false;
     private final String consulta;
-    private TimeSIEMG time;
+    private final TimeSIEMG time;
 
-    public SplunkAuteSimultanea(TimeSIEMG time, String param) throws IOException {
+    public SplunkFalhaAcesso(TimeSIEMG time, String param) throws IOException {
 
-        
-        consulta = "sourcetype=WinEventLog:Security (user!=*$ AND user!=\"ANONYMOUS LOGON\") (Workstation_Name!=\"DC6041\" AND Workstation_Name!=\"DC6006\" AND Workstation_Name!=\"DC6008\" AND Workstation_Name!=\"ip*\") EventCode=4624 | stats dc(Workstation_Name) as count by user "+param;
-        System.out.println(consulta);
-        
+        consulta = "sourcetype=WinEventLog:Security EventCode=4625 user!=\"*$\" | stats count by user,ComputerName" + param;
+
         this.time = time;
         // A classe SplunkFileXML retornará um arquivo XML.
         // Para que seja retornado um tipo diferente, basta utilizar a classe correspondente.
@@ -42,23 +38,16 @@ public class SplunkAuteSimultanea {
             status = true;
         }
 
-        //gerarNovoArquivo();
     }
 
     public void gerarNovoArquivo() throws IOException {
 
-       if (fileresult == null) {
-            
-            num = SplunkNomeNewFile.getInstancia();
+        if (fileresult == null) {
 
-            String nameFile = "ResultadoAute" + num.getNum();
-            System.out.println("Criando SplunkFileXML");
-
+            String nameFile = "ResultadoFalha" + SplunkNomeNewFile.getNum();
             fileresult = new SplunkFileXML(nameFile, consulta, time);
 
-       } else {
-            System.out.println("Criando arquivo XML");
-       }
+        }
 
         fileresult.gerarArquivo();
 
@@ -66,8 +55,7 @@ public class SplunkAuteSimultanea {
         //Para fazer a transformação de um arquivo diferente, basta utilizar a classe correspondente.
         //Exemplo: Para arquivos do tipo JSON usar a classe SplunkJSON2Bean
         resultados = fileresult.getBean();
-        System.out.println("Bean atualizado");
-
+ 
     }
 
     public Map<Integer, List<String>> getMap() {
@@ -76,7 +64,7 @@ public class SplunkAuteSimultanea {
     }
 
     public int getSize() {
-        
+
         //Diminui de 1 para remover o cabeçalho da tabela que é retornada com o resultado.
         return fileresult.getBean().size() - 1;
     }

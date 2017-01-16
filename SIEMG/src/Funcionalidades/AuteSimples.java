@@ -9,7 +9,7 @@ import Parametros.Campos;
 import Parametros.GrupoParametros;
 import Parametros.Operadores;
 import Parametros.Parametro;
-import Splunk.SplunkAuteSimultanea;
+import Splunk.SplunkAuteSimples;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +20,15 @@ import java.util.logging.Logger;
  *
  * @author Vítor
  */
-public class AuteSimples implements Dados{
+public class AuteSimples implements Funcionalidades{
 
-    private SplunkAuteSimultanea autesimultanea;
+    private SplunkAuteSimples autesimples;
     private Map<Integer,Parametro> listaregras;
     
     public AuteSimples () throws IOException{
         
-        //listaregras = new HashMap<>();
+        autesimples = null;
+        listaregras = null;
         
     }
    
@@ -38,29 +39,25 @@ public class AuteSimples implements Dados{
         String parametros = converterParametroTOString(listaregras);        
         
         try {
-            if(autesimultanea == null){
-                System.out.println("Criando SplunkAuteSimultanea");
-       
-                autesimultanea = new SplunkAuteSimultanea(time,parametros);
-                
+            if(autesimples == null){
+                autesimples = new SplunkAuteSimples(time,parametros);
             }
         } catch (IOException ex) {
             Logger.getLogger(AuteSimples.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
-            autesimultanea.gerarNovoArquivo();
-            //autesimultanea.getBean().printConsole();
+            autesimples.gerarNovoArquivo();
         } catch (IOException ex) {
             Logger.getLogger(AuteSimples.class.getName()).log(Level.SEVERE, null, ex);
         }
                
-        return autesimultanea.getMap();
+        return autesimples.getMap();
     }
 
     @Override
     public int getQuantideResult() {
-        return autesimultanea.getSize();
+        return autesimples.getSize();
     }
 
     private String converterParametroTOString(Map<Integer, Parametro> listaregras) {
@@ -84,25 +81,24 @@ public class AuteSimples implements Dados{
         
         String cmp = "";       
         
-        if(campo.equals(Campos.COMPUTADOR)){
-            
-            cmp = "Workstation_Name";
-            
-        }else if(campo.equals(Campos.CONTADOR)){
-            
-            cmp = "count";
-            
-        }else if(campo.equals(Campos.HORA_FIMEVENTO)){
-            
-            cmp = "lastTime";
-            
-        }else if(campo.equals(Campos.HORA_INIEVENTO)){
-            
-            cmp = "firstTime";
-            
-        }else if(campo.equals(Campos.USER)){
-            
-            cmp = "user";
+        switch (campo) {
+            case COMPUTADOR:
+                cmp = "Workstation_Name";
+                break;
+            case CONTADOR:
+                cmp = "count";
+                break;
+            case HORA_FIMEVENTO:
+                cmp = "lastTime";
+                break;
+            case HORA_INIEVENTO:
+                cmp = "firstTime";
+                break;
+            case USER:
+                cmp = "user";
+                break;
+            default:
+                break;
         }        
         
         return cmp;
@@ -113,38 +109,33 @@ public class AuteSimples implements Dados{
         
         String op = "";       
         
-        if(operador.equals(Operadores.CONTEM)){
-            
-            op = "| where like("+cmp+",\"%"+vlr+"%\")";
-            
-        }else if(operador.equals(Operadores.IGUAL)){
-            
-            op = "| where like("+cmp+",\""+vlr+"\")";
-            
-        }else if(operador.equals(Operadores.INICIA_COM)){
-            
-            op = "| where like("+cmp+",\""+vlr+"%\")";
-            
-        }else if(operador.equals(Operadores.MAIOR_QUE)){
-            
-            op = "| where "+cmp+" > "+vlr;
-            
-        }else if(operador.equals(Operadores.MENOR_QUE)){
-            
-            op = "| where "+cmp+" < "+vlr;
-            
-        }else if(operador.equals(Operadores.NAO_CONTEM)){
-            
-            op = "| where NOT like("+cmp+",\"%"+vlr+"%\")";
-            
-        }else if(operador.equals(Operadores.NAO_IGUAL)){
-            
-            op = "| where NOT like("+cmp+",\""+vlr+"\")";
-            
-        }else if(operador.equals(Operadores.TERMINA_COM)){
-            
-            op = "| where like("+cmp+",\"%"+vlr+"\")";
-            
+        switch (operador) {
+            case CONTEM:
+                op = "| where like("+cmp+",\"%"+vlr+"%\")";
+                break;
+            case IGUAL:
+                op = "| where like("+cmp+",\""+vlr+"\")";
+                break;
+            case INICIA_COM:
+                op = "| where like("+cmp+",\""+vlr+"%\")";
+                break;
+            case MAIOR_QUE:
+                op = "| where "+cmp+" > "+vlr;
+                break;
+            case MENOR_QUE:
+                op = "| where "+cmp+" < "+vlr;
+                break;
+            case NAO_CONTEM:
+                op = "| where NOT like("+cmp+",\"%"+vlr+"%\")";
+                break;
+            case NAO_IGUAL:
+                op = "| where NOT like("+cmp+",\""+vlr+"\")";
+                break;
+            case TERMINA_COM:
+                op = "| where like("+cmp+",\"%"+vlr+"\")";
+                break;
+            default:
+                break;
         }
         
         return op;

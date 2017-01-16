@@ -17,7 +17,7 @@ public class Parametro {
 
     public Parametro(Campos campo, Operadores operador, String valor) {
 
-        this.campo = campo;        
+        this.campo = campo;
         this.operador = operador;
         this.valor = valor;
 

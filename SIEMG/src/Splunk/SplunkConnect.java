@@ -5,10 +5,12 @@
  */
 package Splunk;
 
-import Funcionalidades.Avisos;
 import Login.Credenciais;
 import Interfaces.Tela_Login;
-import com.splunk.*;       // The entry point to the client library
+import com.splunk.HttpService;
+import com.splunk.SSLSecurityProtocol;
+import com.splunk.Service;
+import com.splunk.ServiceArgs;
 import java.util.logging.Level;
 
 /**
@@ -28,13 +30,11 @@ public final class SplunkConnect {
         if (splunkConnect == null) {
             splunkConnect = new SplunkConnect();
         }
-
         return splunkConnect;
     }
 
     private SplunkConnect() {
 
-        System.out.println("Criando Credenciais");
         login = Tela_Login.getInstancia();
         credenciais = Credenciais.getInstancia();
 
@@ -43,17 +43,12 @@ public final class SplunkConnect {
     }
 
     private void abrirTelaLogin() {
-
-        System.out.println("Setando TelaLogin Visible");
         login.setVisible(true);
-
     }
 
     public void efetuarLogin() {
 
-        System.out.println("Criando TelaLogin");
-
-        if (login.executando()) {
+         if (login.executando()) {
 
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -65,20 +60,17 @@ public final class SplunkConnect {
         }
 
         while (login.executando()) {
-
-            System.out.println("Aguarde login ...");
-
+     
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(SplunkConnect.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        }
+            
+       }
         
-        Avisos.setExecutando(Boolean.FALSE);
+        SplunkAvisos.setExecutando(Boolean.FALSE);
         login.setVisible(false);
-        System.out.println("Finalizado login");
         startConection();
     }
 
@@ -86,17 +78,14 @@ public final class SplunkConnect {
 
         if (credenciais.isNull()) {
 
-            System.out.println("Start - Credencial Vazia");
+            if (!SplunkAvisos.getExecutando()) {
 
-            if (!Avisos.getExecutando()) {
-
-                Avisos.setExecutando(Boolean.TRUE);
-                Avisos.setMsg("Favor preencher todos os campos.");               
+                SplunkAvisos.setExecutando(Boolean.TRUE);
+                SplunkAvisos.setMsg("Favor preencher todos os campos.");               
 
             }
 
             login.reinicializando();
-
             efetuarLogin();
         }
 
@@ -115,12 +104,10 @@ public final class SplunkConnect {
 
         } catch (RuntimeException e) {
 
-            System.out.println("Falha de Login");
+            if (!SplunkAvisos.getExecutando()) {
 
-            if (!Avisos.getExecutando()) {
-
-                Avisos.setExecutando(Boolean.TRUE);
-                Avisos.setMsg("Falha de login. Tente novamente.");
+                SplunkAvisos.setExecutando(Boolean.TRUE);
+                SplunkAvisos.setMsg("Falha de login. Tente novamente.");
 
             }
 
@@ -129,17 +116,15 @@ public final class SplunkConnect {
 
         }
         
-        if (!Avisos.getExecutando()) {
+        if (!SplunkAvisos.getExecutando()) {
 
-            Avisos.setExecutando(Boolean.TRUE);
-            Avisos.setMsg("Login realizado com sucesso!");            
+            SplunkAvisos.setExecutando(Boolean.TRUE);
+            SplunkAvisos.setMsg("Login realizado com sucesso!");            
 
         }
     }
 
     public Service getSvc() {
-
         return svc;
-
     }
 }

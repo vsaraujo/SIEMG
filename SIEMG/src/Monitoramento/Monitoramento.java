@@ -17,12 +17,11 @@ public class Monitoramento {
 
     private Integer count;
     private static Monitoramento instancia;
+    private Map<Integer, Alerta> listAlertas;
+    private Map<Integer, Thread> listThreads;
+    private final Map<Integer, MonitorStatus> listStatus;
 
-    Map<Integer, Alerta> listAlertas;
-    Map<Integer, Thread> listThreads;
-    Map<Integer, MonitorStatus> listStatus;
-
-    public Monitoramento() {
+    private Monitoramento() {
 
         count = 0;
         listAlertas = new HashMap<>();
@@ -31,22 +30,14 @@ public class Monitoramento {
 
     }
 
-    public void anexarEvento(Alerta th) {
+    public void anexarAlerta(Alerta th) {
 
         try {
             
-            System.out.println("Iniciando put no listAlertas");
-
             listAlertas.put(th.getIndice(), th);
-            
-            System.out.println("Fim put no listAlertas");
-            System.out.println("Iniciando put no listThreads");
             listThreads.put(th.getIndice(), new Thread((Runnable) th));
-            System.out.println("fim put no listThreads");
-            System.out.println("Iniciando put no listStatus");
             listStatus.put(th.getIndice(), th.getStatus());
-            System.out.println("Fim put no listStatus");
-
+           
             th.setMonitor(this);
 
             count++;
@@ -56,14 +47,13 @@ public class Monitoramento {
         }
     }
 
-    public void removerEvento(Alerta e) {
+    public void removerAlerta(Alerta e) {
 
         for (Integer id : listAlertas.keySet()) {
 
             if (listAlertas.get(id).equals(e)) {
                 
-                
-                stopEvento(id);
+                pararAlerta(id);
                         
                 listAlertas.remove(id);
                 listThreads.get(id).stop();
@@ -77,20 +67,7 @@ public class Monitoramento {
 
     }
 
-    public void verificarStatus() {
-
-        try {
-
-            for (Integer id : listAlertas.keySet()) {
-                //System.out.println("ID:"+e.toString()+"Quantidade de resultado: "+e.getStatus());
-            }
-
-        } catch (NullPointerException evt) {
-            System.out.println(evt.toString());
-        }
-    }
-
-    public void startEventos() {
+    public void inicializarAlertas() {
         try {
 
             for (Integer id : listThreads.keySet()) {
@@ -102,70 +79,48 @@ public class Monitoramento {
         }
     }
 
-    public void startEvento(Integer idx) {
+    public void inicializarAlerta(Integer idx) {
 
         try {
-
             for (Integer id : listAlertas.keySet()) {
                 if (id.equals(idx)) {
-
                     listThreads.get(id).start();
-
                 }
             }
-
         } catch (NullPointerException evt) {
             System.out.println(evt.toString());
         }
-
     }
 
-    public void restartEvento(Integer idx) {
+    public void reinicializarAlerta(Integer idx) {
 
         try {
-
             for (Integer id : listAlertas.keySet()) {
                 if (id.equals(idx)) {
-
-                    stopEvento(id);
-                    listThreads.remove(id);
-                    System.out.println("Thread removida");
-                    
+                    pararAlerta(id);
+                    listThreads.remove(id);                    
                     Alerta tmp = listAlertas.get(id);
-                    tmp.setIndice(id);
-                    
-                    System.out.println("Alerta criado");
-                    
-                    
-                    anexarEvento(tmp);
-                    System.out.println("Alerta anexado");
-                    
-                    startEvento(id);
-                    System.out.println("Alerta startado");
-
-                }
+                    tmp.setIndice(id);                    
+                    anexarAlerta(tmp);                     
+                    inicializarAlerta(id);
+                 }
             }
-
         } catch (NullPointerException evt) {
             System.out.println(evt.toString());
         }
-
     }
 
-    public void stopEvento(Integer idx) {
+    public void pararAlerta(Integer idx) {
 
         try {
-
             for (Integer id : listThreads.keySet()) {
                 if (id.equals(idx)) {
                     listThreads.get(id).interrupt();
                 }
             }
-
         } catch (NullPointerException evt) {
             System.out.println(evt.toString());
         }
-
     }
 
     public Integer getCount() {
@@ -180,7 +135,7 @@ public class Monitoramento {
         return instancia;
     }
 
-    public Map<Integer, Alerta> getListEvento() {
+    public Map<Integer, Alerta> getListAlertas() {
         return listAlertas;
     }
 
@@ -188,7 +143,7 @@ public class Monitoramento {
         return listStatus;
     }
 
-    public void setListEvento(Map<Integer, Alerta> listEvento) {
+    public void setListAlertas(Map<Integer, Alerta> listEvento) {
         this.listAlertas = listEvento;
     }
 
@@ -203,20 +158,13 @@ public class Monitoramento {
     public void setStatus(Alerta e, MonitorStatus status) {
 
         try {
-
             for (Integer id : listAlertas.keySet()) {
                 if (id.equals(e.getIndice())) {
                     listStatus.put(id, status);
                 }
             }
-
         } catch (NullPointerException evt) {
             System.out.println(evt.toString());
         }
     }
-
-    public MonitorStatus getStatus(Alerta e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

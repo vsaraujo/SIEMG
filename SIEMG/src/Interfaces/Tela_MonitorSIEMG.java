@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import Alertas.Alerta;
 import Monitoramento.MonitorStatus;
 import Monitoramento.Monitoramento;
 import java.awt.Color;
@@ -19,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import Alertas.Alerta;
 
 /**
  *
@@ -27,7 +27,7 @@ import Alertas.Alerta;
  */
 public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
-    private Monitoramento monitor;
+    private final Monitoramento monitor;
     private Color corlinha;
 
     /**
@@ -46,23 +46,15 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
     private void atualizarTabeladeEventos() {
 
         DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
-        
-        //tbEventos.getDataVector().removeAllElements();
+
         while (tbEventos.getRowCount() > 0) {
             tbEventos.removeRow(0);
         }
 
-        for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
-
+        for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
             String[] infoEvt = {evento.getValue().getIndice().toString(), evento.getValue().getTitle(), evento.getValue().getStatus().toString()};
             tbEventos.addRow(infoEvt);
-
         }
-    }
-
-    private Monitoramento obterMonitor() {
-
-        return monitor;
     }
 
     /**
@@ -219,22 +211,20 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (jTMonitorEventos.getSelectedRow() != -1) {
+
             DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
             int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
 
-            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
-                    
-                    if(evento.getValue().getStatus() == MonitorStatus.DESLIGADO)
-                        monitor.startEvento(id);
-                    else
+                    if (evento.getValue().getStatus() == MonitorStatus.DESLIGADO) {
+                        monitor.inicializarAlerta(id);
+                    } else {
                         JOptionPane.showMessageDialog(null, "Alerta já foi inicializado!");
-                    
+                    }
                 }
-
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um alerta para inicializar");
         }
@@ -243,8 +233,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
-        jTMonitorEventos.setDefaultRenderer(Object.class, new RenderSIEMG());        
-        
+        jTMonitorEventos.setDefaultRenderer(Object.class, new RenderSIEMG());
         atualizarTabeladeEventos();
         Timer timer = new Timer(5 * 1000, new ActionListener() {
 
@@ -265,53 +254,44 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
             DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
             int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
 
-            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
-
                     JDesktopPane jDeskinterno = this.getDesktopPane();
                     Tela_Resultados telaresultado = new Tela_Resultados(evento.getValue().getListaResultados());
                     jDeskinterno.add(telaresultado);
                     telaresultado.setPosicao();
                     telaresultado.setVisible(Boolean.TRUE);
-
                 }
-
             }
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um alerta para visualizar resultados");
         }
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-          if (jTMonitorEventos.getSelectedRow() != -1) {
+
+        if (jTMonitorEventos.getSelectedRow() != -1) {
 
             DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
             int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
 
-            for (Map.Entry<Integer, Alerta> evento : monitor.getListEvento().entrySet()) {
+            for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
                 if (evento.getKey().equals(id)) {
-                    
-                    if(evento.getValue().getStatus() == MonitorStatus.DISPARADO)
-                        monitor.restartEvento(id);
-                    else
+
+                    if (evento.getValue().getStatus() == MonitorStatus.DISPARADO) {
+                        monitor.reinicializarAlerta(id);
+                    } else {
                         JOptionPane.showMessageDialog(null, "Alerta não foi disparado!");
-
+                    }
                 }
-
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um alerta para restartar");
         }
-        
-        
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -332,22 +312,20 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
             String status = (String) jTMonitorEventos.getModel().getValueAt(row, 2);
 
-            if (status.equals(MonitorStatus.DESLIGADO.toString())) {                
+            if (status.equals(MonitorStatus.DESLIGADO.toString())) {
                 setForeground(Color.BLACK);
                 setBackground(Color.WHITE);
 
-            } else if (status.equals(MonitorStatus.LIGADO.toString())) {                
+            } else if (status.equals(MonitorStatus.LIGADO.toString())) {
                 setForeground(Color.BLACK);
                 setBackground(Color.GREEN);
 
-            } else if (status.equals(MonitorStatus.DISPARADO.toString())) {                
+            } else if (status.equals(MonitorStatus.DISPARADO.toString())) {
                 setForeground(Color.WHITE);
                 setBackground(Color.RED);
             }
 
             return this;
         }
-
     }
-
 }

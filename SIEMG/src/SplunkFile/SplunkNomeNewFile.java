@@ -8,16 +8,20 @@ package SplunkFile;
 /**
  *
  * @author Vítor
+ * 
+ * Classe responsável pela geração de nome de arquivo, de forma a garantir
+ * a utilização de nomes únicos, gerados através do resultado retornado pelos
+ * Alertas (Threads) do sistema.
+ *
  */
+
 public class SplunkNomeNewFile {
 
     private static SplunkNomeNewFile Instancia;
     private static int num;
 
-    public SplunkNomeNewFile() {
-
+    private SplunkNomeNewFile() {
         num = -1;
-
     }
 
     public static synchronized int getNum() {
@@ -29,13 +33,10 @@ public class SplunkNomeNewFile {
 
         if (Instancia == null) {
             Instancia = new SplunkNomeNewFile();
-             System.out.println("Criando Instancia SplunkNomeNewFile"+num);
-     
+             System.out.println("Criando Instancia SplunkNomeNewFile"+num);    
             
         }
-
         
-
         return Instancia;
     }
 

@@ -8,8 +8,11 @@ package SplunkFile;
 import Funcionalidades.TimeSIEMG;
 import Splunk.SplunkConnect;
 import Splunk.SplunkXML2Bean;
+import com.splunk.CollectionArgs;
+import com.splunk.Entity;
 import com.splunk.Job;
 import com.splunk.JobArgs;
+import com.splunk.ResultsReaderXml;
 import com.splunk.Service;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -34,78 +37,63 @@ import java.util.logging.Logger;
 public class SplunkFileXML implements SplunkFile {
 
     private String busca;
-    private String caminhoArquivo;
-    private String timeEarliest;
-    private TimeSIEMG time;
     private SplunkXML2Bean Bean;
     private static Service svc;
-    static SplunkConnect consplunk;
-   
+    private static SplunkConnect consplunk;
     private final File ResultadoXML;
+    private final String caminhoArquivo;
+    private final String timeEarliest;
 
-    public SplunkFileXML(String nameFile,String busca, TimeSIEMG time) throws IOException {
+    public SplunkFileXML(String nameFile, String busca, TimeSIEMG time) throws IOException {
 
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
         }
 
-        this.time = time;
-        timeEarliest = "-"+time.getExecucao()+"s";
-         System.out.println("Criando timeEarliest = "+timeEarliest);
-       
-        
-        caminhoArquivo = "src/Resultado/"+nameFile+".xml";        
-     
-            System.out.println("Criando ResultadoXML = "+caminhoArquivo);
-     
+        timeEarliest = "-" + time.getExecucao() + "s";
+        caminhoArquivo = "src/Resultado/" + nameFile + ".xml";
         ResultadoXML = new File(caminhoArquivo);
         ResultadoXML.createNewFile();
 
-    }    
+    }
 
     @Override
     public void gerarArquivo() {
-        
+
         try {
-            //if(consplunk==null){
-                   System.out.println("Criando SplunkConnect");
-       
-                consplunk = SplunkConnect.getSplunkConnect();
-                
-            //}
+
+            consplunk = SplunkConnect.getSplunkConnect();
             svc = consplunk.getSvc();
-            
+
             JobArgs jobArgs = new JobArgs();
             jobArgs.setExecutionMode(JobArgs.ExecutionMode.NORMAL);
             jobArgs.setSearchMode(JobArgs.SearchMode.NORMAL);
             jobArgs.setEarliestTime(timeEarliest);
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
-            System.out.println("Criando novo Job");
-            Job job = svc.getJobs().create(busca,jobArgs);
-            
+            Job job = svc.getJobs().create(busca, jobArgs);
+
             while (!job.isDone()) {
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException ex) {
                     java.util.logging.Logger.getLogger(SplunkConnect.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
 
+            InputStream results = job.getResults();
             Map<String, Object> arguments = new HashMap<>();
             arguments.put("count", 0);
-            InputStream results = job.getResults(arguments);
+            results = job.getResults(arguments);
 
-            //InputStream results = job.getResults();
             String line = null;
             BufferedReader br;
             try (FileWriter XMLnew = new FileWriter(ResultadoXML)) {
                 br = new BufferedReader(new InputStreamReader(results, "UTF-8"));
                 while ((line = br.readLine()) != null) {
                     XMLnew.write(line);
-                    //System.out.println(line);
                 }
             }
             br.close();
@@ -116,23 +104,23 @@ public class SplunkFileXML implements SplunkFile {
     }
 
     @Override
-    public Map<Integer,List<String>> getBean() {
-    
+    public Map<Integer, List<String>> getBean() {
+
         FileReader reader = null;
-        
+
         try {
             reader = new FileReader(caminhoArquivo);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-  
+
         XStream xstream = new XStream(new DomDriver());
         xstream.processAnnotations(SplunkXML2Bean.Field.class);
         xstream.processAnnotations(SplunkXML2Bean.FieldOrder.class);
         xstream.processAnnotations(SplunkXML2Bean.Meta.class);
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
-        
+
         Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         
         try {
@@ -140,10 +128,8 @@ public class SplunkFileXML implements SplunkFile {
         } catch (IOException ex) {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Bean.printConsole();   
-        
-        return Bean.getMap();        
+
+        return Bean.getMap();
     }
-    
+
 }

@@ -15,38 +15,28 @@ import java.awt.event.KeyEvent;
 public final class Tela_Login extends javax.swing.JFrame {
 
     private static Credenciais credenciais;
-
     private static Tela_Login Instancia;
     private boolean status;
 
     /**
      * Creates new form TelaLogin
      */
-    public Tela_Login() {
+    private Tela_Login() {
 
-        //Instancia = new Tela_Login(cre);
-        
         credenciais = Credenciais.getInstancia();
         status = Boolean.TRUE;
         initComponents();
 
     }
-    
-    public static Credenciais getCredenciais() {
-        return credenciais;
-    }
 
     public static synchronized Tela_Login getInstancia() {
-        
-        if(Instancia == null){
-                Instancia = new Tela_Login();
-                Instancia.setVisible(true);
-                System.out.println("#Criando Instancia Tela Login");
+
+        if (Instancia == null) {
+            Instancia = new Tela_Login();
+            Instancia.setVisible(true);
         }
-        
         return Instancia;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,16 +159,13 @@ public final class Tela_Login extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
-        }
-        //Component frame = new JFrame();
-        //JOptionPane.showMessageDialog(frame , "You've Submitted the name " + user.getText());
-        // TODO add your handling code here:
+        }      
     }//GEN-LAST:event_loginKeyPressed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
@@ -188,19 +175,19 @@ public final class Tela_Login extends javax.swing.JFrame {
     private void srvKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_srvKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_srvKeyPressed
 
     private void pwdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_pwdKeyPressed
 
     private void userKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             setCredenciais();
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_userKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
