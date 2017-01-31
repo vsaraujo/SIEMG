@@ -10,6 +10,10 @@ package Parametros;
  * @author vitor.araujo
  */
 public enum Campos {
+    
+    /**
+     * Enumeração dos Campos utilizados pelo parametros dos alertas.
+     */
 
     USER,
     COMPUTADOR,

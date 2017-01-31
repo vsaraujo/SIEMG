@@ -18,6 +18,11 @@ import java.util.Map;
  * @author Vítor
  */
 public class SplunkAuteSimples {
+    
+    /**
+     * Esta classe é responsável pela elaboração das consultas realizadas ao Splunk.
+     * Mais especificamente, ela implemnta a consulta de Autenticação Simples.
+     */
 
     private Map<Integer, List<String>> resultados;
     private SplunkFile fileresult;

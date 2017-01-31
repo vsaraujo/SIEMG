@@ -18,6 +18,11 @@ import java.util.Map;
  */
 @XStreamAlias("results")
 public class SplunkXML2Bean {
+    
+    /**
+     * Esta classe tem por finalizadade estabelecer uma mácara do arquivo XML, exportado pelo Splunk,
+     * com o auxílio da biblioteca XStream.
+     */
 
     @XStreamAlias("meta")
     private Meta meta = new Meta();

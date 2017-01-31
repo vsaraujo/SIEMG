@@ -14,6 +14,12 @@ import Alertas.Alerta;
  * @author Vítor
  */
 public class Monitoramento {
+    
+    /**
+     * Classe responsável por gerenciar todos os Alertas,Threads e Status dos alertas.
+     * Essa classe é um Singleton, por isso é instanciada apenas um única vez.
+     * Com isso é possível controlar os alertas criados e anexados a ela.
+     */
 
     private Integer count;
     private static Monitoramento instancia;
@@ -127,6 +133,8 @@ public class Monitoramento {
         return count;
     }
 
+//  Função que garante o padrão de projeto Singleton
+    
     public static synchronized Monitoramento getInstancia() {
 
         if (instancia == null) {

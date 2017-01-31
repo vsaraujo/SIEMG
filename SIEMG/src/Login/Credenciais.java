@@ -10,6 +10,12 @@ package Login;
  * @author Vítor
  */
 public class Credenciais {
+    
+    /**
+     * Esta classe armazana as credenciais de acesso ao sistema de coleta de dados.
+     * No caso do Splunk, é necessário a autenticação do usuário para obtenção dos dados.
+     * Esta classe é instanciada apenas uma vez. (Singleton)
+     */
 
     private String usuario;
     private String senha;

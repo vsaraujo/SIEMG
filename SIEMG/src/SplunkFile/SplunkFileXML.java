@@ -8,11 +8,8 @@ package SplunkFile;
 import Funcionalidades.TimeSIEMG;
 import Splunk.SplunkConnect;
 import Splunk.SplunkXML2Bean;
-import com.splunk.CollectionArgs;
-import com.splunk.Entity;
 import com.splunk.Job;
 import com.splunk.JobArgs;
-import com.splunk.ResultsReaderXml;
 import com.splunk.Service;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -35,6 +32,11 @@ import java.util.logging.Logger;
  * @author Vítor
  */
 public class SplunkFileXML implements SplunkFile {
+    
+    /**
+     * Esta classe é responsável por obter os dados da consulta ao Splunk e
+     * retorna-lo no formato XML e Objecto Java.     *  
+     */
 
     private String busca;
     private SplunkXML2Bean Bean;
@@ -46,6 +48,8 @@ public class SplunkFileXML implements SplunkFile {
 
     public SplunkFileXML(String nameFile, String busca, TimeSIEMG time) throws IOException {
 
+//      Esta validação é necessário devido a forma como o Splunk identifica uma consulta
+        
         if (!(busca.trim().startsWith("|")) && !(busca.substring(0, 6).equalsIgnoreCase("search"))) {
             this.busca = "search " + busca;
         }
@@ -62,8 +66,12 @@ public class SplunkFileXML implements SplunkFile {
 
         try {
 
+//          As credenciais de acesso são geradas a partir da classe SplunkConnect.
+
             consplunk = SplunkConnect.getSplunkConnect();
             svc = consplunk.getSvc();
+
+//          Estes jobs são criados a cada consulta no Splunk.
 
             JobArgs jobArgs = new JobArgs();
             jobArgs.setExecutionMode(JobArgs.ExecutionMode.NORMAL);
@@ -72,6 +80,8 @@ public class SplunkFileXML implements SplunkFile {
             jobArgs.setLatestTime("now");
             jobArgs.setStatusBuckets(300);
             Job job = svc.getJobs().create(busca, jobArgs);
+
+//          Aguardando a finalização da consulta realizada.
 
             while (!job.isDone()) {
 
@@ -83,10 +93,15 @@ public class SplunkFileXML implements SplunkFile {
 
             }
 
+//          Por padrão o Splunk retorna apenas 100 resultados. Para mais resultados é necessásio passar estes argumento no Job.
+
             InputStream results = job.getResults();
             Map<String, Object> arguments = new HashMap<>();
             arguments.put("count", 0);
             results = job.getResults(arguments);
+
+            
+//          Gera arquivo XML no pacote "Resultado" com o retorno da consulta
 
             String line = null;
             BufferedReader br;
@@ -114,12 +129,16 @@ public class SplunkFileXML implements SplunkFile {
             Logger.getLogger(SplunkFileXML.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+//      A classe XStream é responsável pela conversão do dados coletados no XML para um Objeto Java.
+
         XStream xstream = new XStream(new DomDriver());
         xstream.processAnnotations(SplunkXML2Bean.Field.class);
         xstream.processAnnotations(SplunkXML2Bean.FieldOrder.class);
         xstream.processAnnotations(SplunkXML2Bean.Meta.class);
         xstream.processAnnotations(SplunkXML2Bean.Result.class);
         xstream.processAnnotations(SplunkXML2Bean.Value.class);
+
+//      A classe SplunkXMLBean serve de máscara para obter os dados do XML.
 
         Bean = (SplunkXML2Bean) xstream.fromXML(reader);
         

@@ -10,6 +10,10 @@ package Parametros;
  * @author vitor.araujo
  */
 public class Parametro {
+    
+    /**
+     * Classe responsável pelo objeto Paramentro que é utilizado pelo Grupo de Parametros dos alertas gerados.
+     */
 
     private Campos campo;
     private Operadores operador;

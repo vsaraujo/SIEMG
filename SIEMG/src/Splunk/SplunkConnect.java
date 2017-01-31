@@ -18,6 +18,11 @@ import java.util.logging.Level;
  * @author vitor.araujo
  */
 public final class SplunkConnect {
+    
+    /**
+     * Esta classe é responsável pela autenticação das credenciais de acesso ao Splunk.
+     * Esta classe é do tipo Singleton, onde apenas será instanciado um só vez.
+     */
 
     private Service svc;
     private ServiceArgs loginArgs;
@@ -25,6 +30,7 @@ public final class SplunkConnect {
     private Tela_Login login = null;
     private static SplunkConnect splunkConnect;    
 
+    
     public static synchronized SplunkConnect getSplunkConnect() {
 
         if (splunkConnect == null) {

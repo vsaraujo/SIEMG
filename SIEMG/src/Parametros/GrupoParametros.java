@@ -13,6 +13,10 @@ import java.util.Map;
  * @author vitor.araujo
  */
 public class GrupoParametros {
+    
+    /**
+     * Classe responsável por armazenar um grupo de Parametros que será anexado a um Alerta.
+     */
 
     private final Map<Integer, Parametro> map;
     private int idx;

@@ -11,6 +11,10 @@ package Funcionalidades;
  */
 public class TimeSIEMG {
     
+    /**
+     * Classe responsável por armazenar a janela de execução dos alertas gerados.
+     */
+    
     private int janela;
     private int execucao; 
 

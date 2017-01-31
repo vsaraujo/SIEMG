@@ -11,6 +11,10 @@ package Monitoramento;
  */
 public enum MonitorStatus {
     
+    /**
+     * Enumeração responsável pelo Status dos Alertas
+     */
+    
     LIGADO,
     DESLIGADO,
     DISPARADO,  

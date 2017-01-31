@@ -23,6 +23,11 @@ import java.util.logging.Logger;
  * @author Vítor
  */
 public class Alerta implements Runnable {
+    
+    /**
+     * Classe responsável pela criação dos alertas
+     * Por implementar a interface Runnable, ela assume características de Threads.
+     */
 
     private TimeSIEMG time;
     private Funcionalidades funcionalidade;
@@ -43,6 +48,8 @@ public class Alerta implements Runnable {
             this.status = MonitorStatus.DESLIGADO;
             regras = new GrupoParametros();
             
+//          Funcionalidades implementadas no SIEMG
+
             switch (alerta){
                 
                 case AUTENTICACAO_SIMPLES:
@@ -76,6 +83,9 @@ public class Alerta implements Runnable {
 
     @Override
     public void run() {
+        
+//      Método responsável pela execução da Thread, onde os dados são coletados e o Alerta é LIGADO.
+
         int qntresultado = 0;
 
         setStatus(MonitorStatus.LIGADO);
@@ -94,7 +104,10 @@ public class Alerta implements Runnable {
 
         } while (qntresultado < 1);
 
+//      Alerta disparado.
+
         setStatus(MonitorStatus.DISPARADO);
+        
     }
 
     public void setTitle(String title) {

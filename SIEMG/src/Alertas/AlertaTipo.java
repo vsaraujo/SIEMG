@@ -11,6 +11,10 @@ package Alertas;
  */
 public enum AlertaTipo {
     
+    /**
+     * Enumeração responsável pelo tipo de Funcionalidade implementados no SIEMG.
+     */
+    
     AUTENTICACAO_SIMPLES,
     FALHA_AUTENTICACAO
     

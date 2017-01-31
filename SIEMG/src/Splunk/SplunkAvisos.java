@@ -15,6 +15,12 @@ import javax.swing.JOptionPane;
  */
 public class SplunkAvisos {
     
+    /**
+     * Esta classe é responsável pelo avisos gerados na classe SplunkConnect.
+     * É uma classe do tipo Singleton para garantir a exibição de mensagens de alerta único ao usuário.
+     * Isso ocorre devido aos acessos simultâneos das threads de alertas.
+     */
+    
     private static Component frame;
     private static String msg;
     private static SplunkAvisos instancia;

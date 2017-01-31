@@ -18,6 +18,11 @@ import java.util.Map;
  * @author Vítor
  */
 public class SplunkFalhaAcesso {
+    
+    /**
+     * Esta classe é responsável pela elaboração das consultas realizadas ao Splunk.
+     * Mais especificamente, ela implemnta a consulta de Falha de Acesso.
+     */
 
     private Map<Integer, List<String>> resultados;
     private SplunkFile fileresult;

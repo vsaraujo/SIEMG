@@ -10,6 +10,10 @@ package Parametros;
  * @author vitor.araujo
  */
 public enum Operadores {
+    
+    /**
+     * Enumeração dos Operadores utilizados pelo parametros dos alertas
+     */
 
     IGUAL,
     NAO_IGUAL,

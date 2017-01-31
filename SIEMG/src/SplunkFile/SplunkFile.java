@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public interface SplunkFile {
     
+    /**
+     * Interface para implementar outros formatos de exportação de dados
+     */
+    
     public void gerarArquivo();
     public Map<Integer,List<String>> getBean();
     

@@ -44,7 +44,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void atualizarTabeladeEventos() {
 
-        DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
+        DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorAlertas.getModel();
 
         while (tbEventos.getRowCount() > 0) {
             tbEventos.removeRow(0);
@@ -71,7 +71,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTMonitorEventos = new javax.swing.JTable();
+        jTMonitorAlertas = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Monitor SIEMG");
@@ -141,7 +141,7 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jTMonitorEventos.setModel(new javax.swing.table.DefaultTableModel(
+        jTMonitorAlertas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -157,11 +157,11 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTMonitorEventos);
-        if (jTMonitorEventos.getColumnModel().getColumnCount() > 0) {
-            jTMonitorEventos.getColumnModel().getColumn(0).setHeaderValue("Id");
-            jTMonitorEventos.getColumnModel().getColumn(1).setHeaderValue("Evento");
-            jTMonitorEventos.getColumnModel().getColumn(2).setHeaderValue("Status");
+        jScrollPane1.setViewportView(jTMonitorAlertas);
+        if (jTMonitorAlertas.getColumnModel().getColumnCount() > 0) {
+            jTMonitorAlertas.getColumnModel().getColumn(0).setHeaderValue("Id");
+            jTMonitorAlertas.getColumnModel().getColumn(1).setHeaderValue("Evento");
+            jTMonitorAlertas.getColumnModel().getColumn(2).setHeaderValue("Status");
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -209,10 +209,10 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (jTMonitorEventos.getSelectedRow() != -1) {
+        if (jTMonitorAlertas.getSelectedRow() != -1) {
 
-            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
-            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
+            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorAlertas.getModel();
+            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorAlertas.getSelectedRow(), 0).toString());
 
             for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
@@ -232,7 +232,9 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
-        jTMonitorEventos.setDefaultRenderer(Object.class, new RenderSIEMG());
+//      Thread criada para atualização a cada 5segundos a tela de monitor de Alertas.
+
+        jTMonitorAlertas.setDefaultRenderer(Object.class, new RenderSIEMG());
         atualizarTabeladeEventos();
         Timer timer = new Timer(5 * 1000, new ActionListener() {
 
@@ -248,10 +250,10 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        if (jTMonitorEventos.getSelectedRow() != -1) {
+        if (jTMonitorAlertas.getSelectedRow() != -1) {
 
-            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
-            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
+            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorAlertas.getModel();
+            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorAlertas.getSelectedRow(), 0).toString());
 
             for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
@@ -271,10 +273,10 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        if (jTMonitorEventos.getSelectedRow() != -1) {
+        if (jTMonitorAlertas.getSelectedRow() != -1) {
 
-            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorEventos.getModel();
-            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorEventos.getSelectedRow(), 0).toString());
+            DefaultTableModel tbEventos = (DefaultTableModel) jTMonitorAlertas.getModel();
+            int id = Integer.parseInt(tbEventos.getValueAt(jTMonitorAlertas.getSelectedRow(), 0).toString());
 
             for (Map.Entry<Integer, Alerta> evento : monitor.getListAlertas().entrySet()) {
 
@@ -299,17 +301,19 @@ public class Tela_MonitorSIEMG extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTMonitorEventos;
+    private javax.swing.JTable jTMonitorAlertas;
     // End of variables declaration//GEN-END:variables
 
     private class RenderSIEMG extends DefaultTableCellRenderer {
+        
+//      Classe responsável pela modificação das cores das linhas do Objeto JTable.
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-            String status = (String) jTMonitorEventos.getModel().getValueAt(row, 2);
+            String status = (String) jTMonitorAlertas.getModel().getValueAt(row, 2);
 
             if (status.equals(MonitorStatus.DESLIGADO.toString())) {
                 setForeground(Color.BLACK);

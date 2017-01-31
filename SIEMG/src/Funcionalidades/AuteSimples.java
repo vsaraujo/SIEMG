@@ -21,6 +21,11 @@ import java.util.logging.Logger;
  * @author Vítor
  */
 public class AuteSimples implements Funcionalidades{
+    
+    /**
+     * Classe resonsável pela interface do SIEMG e a classe de coleta de dados via Splunk
+     * Esta classe obtem os dados relacionados a Autenticação Simples retornados pelo Splunk.
+     */
 
     private SplunkAuteSimples autesimples;
     private Map<Integer,Parametro> listaregras;
@@ -62,6 +67,10 @@ public class AuteSimples implements Funcionalidades{
 
     private String converterParametroTOString(Map<Integer, Parametro> listaregras) {
         
+         /**
+         * Converte os parametros informados pelo Alerta em parametros da consulta do Splunk.
+         */
+        
         String resultado = "";
         
         for(Integer i : listaregras.keySet()){
@@ -78,6 +87,10 @@ public class AuteSimples implements Funcionalidades{
     }
 
     private String getStringCampos(Campos campo) {
+        
+         /**
+         * Método responsável pela adaptação dos Campos retornados na consulta do Splunk.
+         */
         
         String cmp = "";       
         
@@ -106,6 +119,11 @@ public class AuteSimples implements Funcionalidades{
     }
 
     private String getStringParametros(String cmp, Operadores operador, String vlr) {
+        
+         /**
+         * Método responsável pela adaptação dos Operadores na consulta do Splunk.
+         */
+        
         
         String op = "";       
         

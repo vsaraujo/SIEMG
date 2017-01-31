@@ -33,8 +33,6 @@ public class SplunkNomeNewFile {
 
         if (Instancia == null) {
             Instancia = new SplunkNomeNewFile();
-             System.out.println("Criando Instancia SplunkNomeNewFile"+num);    
-            
         }
         
         return Instancia;

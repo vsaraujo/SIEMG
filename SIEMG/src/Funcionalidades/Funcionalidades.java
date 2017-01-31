@@ -15,6 +15,11 @@ import java.util.Map;
  */
 public interface Funcionalidades {
     
+    /**
+     * Interface responsável pela implementação das Funcionalidades do SIEMG.
+     * Para adcionar novos módulos no SIEMG é necessário a implemtnação desta interface.
+     */
+    
     public Map<Integer, List<String>> obterDados(TimeSIEMG time, GrupoParametros param);
     public int getQuantideResult();
       
